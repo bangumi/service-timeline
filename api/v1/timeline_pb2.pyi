@@ -1,10 +1,6 @@
-from typing import Union as _Union
-from typing import Mapping as _Mapping
-from typing import ClassVar as _ClassVar
-from typing import Optional as _Optional
-
-from google.protobuf import message as _message
 from google.protobuf import descriptor as _descriptor
+from google.protobuf import message as _message
+from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -24,16 +20,7 @@ class Episode(_message.Message):
     series: bool
     sort: float
     type: int
-    def __init__(
-        self,
-        id: _Optional[int] = ...,
-        type: _Optional[int] = ...,
-        name: _Optional[str] = ...,
-        name_cn: _Optional[str] = ...,
-        image: _Optional[str] = ...,
-        series: bool = ...,
-        sort: _Optional[float] = ...,
-    ) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., image: _Optional[str] = ..., series: bool = ..., sort: _Optional[float] = ...) -> None: ...
 
 class EpisodeCollectRequest(_message.Message):
     __slots__ = ["last", "subject", "user_id"]
@@ -43,12 +30,7 @@ class EpisodeCollectRequest(_message.Message):
     last: Episode
     subject: Subject
     user_id: int
-    def __init__(
-        self,
-        user_id: _Optional[int] = ...,
-        last: _Optional[_Union[Episode, _Mapping]] = ...,
-        subject: _Optional[_Union[Subject, _Mapping]] = ...,
-    ) -> None: ...
+    def __init__(self, user_id: _Optional[int] = ..., last: _Optional[_Union[Episode, _Mapping]] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ...) -> None: ...
 
 class EpisodeCollectResponse(_message.Message):
     __slots__ = ["ok"]
@@ -69,16 +51,7 @@ class HelloResponse(_message.Message):
     def __init__(self, message: _Optional[str] = ...) -> None: ...
 
 class Subject(_message.Message):
-    __slots__ = [
-        "eps_total",
-        "id",
-        "image",
-        "name",
-        "name_cn",
-        "series",
-        "type",
-        "vols_total",
-    ]
+    __slots__ = ["eps_total", "id", "image", "name", "name_cn", "series", "type", "vols_total"]
     EPS_TOTAL_FIELD_NUMBER: _ClassVar[int]
     ID_FIELD_NUMBER: _ClassVar[int]
     IMAGE_FIELD_NUMBER: _ClassVar[int]
@@ -95,17 +68,7 @@ class Subject(_message.Message):
     series: bool
     type: int
     vols_total: int
-    def __init__(
-        self,
-        id: _Optional[int] = ...,
-        type: _Optional[int] = ...,
-        name: _Optional[str] = ...,
-        name_cn: _Optional[str] = ...,
-        image: _Optional[str] = ...,
-        series: bool = ...,
-        vols_total: _Optional[int] = ...,
-        eps_total: _Optional[int] = ...,
-    ) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., image: _Optional[str] = ..., series: bool = ..., vols_total: _Optional[int] = ..., eps_total: _Optional[int] = ...) -> None: ...
 
 class SubjectCollectRequest(_message.Message):
     __slots__ = ["collection", "comment", "rate", "subject", "user_id"]
@@ -119,14 +82,7 @@ class SubjectCollectRequest(_message.Message):
     rate: int
     subject: Subject
     user_id: int
-    def __init__(
-        self,
-        user_id: _Optional[int] = ...,
-        subject: _Optional[_Union[Subject, _Mapping]] = ...,
-        collection: _Optional[int] = ...,
-        comment: _Optional[str] = ...,
-        rate: _Optional[int] = ...,
-    ) -> None: ...
+    def __init__(self, user_id: _Optional[int] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ..., collection: _Optional[int] = ..., comment: _Optional[str] = ..., rate: _Optional[int] = ...) -> None: ...
 
 class SubjectCollectResponse(_message.Message):
     __slots__ = ["ok"]
@@ -144,13 +100,7 @@ class SubjectProgressRequest(_message.Message):
     subject: Subject
     user_id: int
     vols_update: int
-    def __init__(
-        self,
-        user_id: _Optional[int] = ...,
-        subject: _Optional[_Union[Subject, _Mapping]] = ...,
-        eps_update: _Optional[int] = ...,
-        vols_update: _Optional[int] = ...,
-    ) -> None: ...
+    def __init__(self, user_id: _Optional[int] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ..., eps_update: _Optional[int] = ..., vols_update: _Optional[int] = ...) -> None: ...
 
 class SubjectProgressResponse(_message.Message):
     __slots__ = ["ok"]

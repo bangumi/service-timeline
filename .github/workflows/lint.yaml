@@ -52,6 +52,7 @@ jobs:
       - name: flake8
         run: |
           flake8 \
+            --ignore=E501 \
             --max-line-length=88 \
             --exclude .venv,.git,__pycache__,docs/source/conf.py,old,build,dist,api
 
