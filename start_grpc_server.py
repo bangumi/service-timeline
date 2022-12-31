@@ -26,7 +26,7 @@ class Register(threading.Thread):
         self.lease = self.etcd.Lease(ttl=5)
         self.lease.grant()
         self.etcd.put(
-            "/be-host/query_service",
+            f"{config.etcd_prefix}/timeline/{config.node_id}",
             json.dumps(
                 {
                     "Addr": config.external_address + ":" + str(config.grpc_port),

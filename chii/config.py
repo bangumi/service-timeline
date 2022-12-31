@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     # 微服务相关的环境变量
     node_id: str = Field(str(uuid.uuid4()), env="NODE_ID")
-    etcd_prefix: str = Field("chii/services", env="ETCD_PREFIX")
+    etcd_prefix: str = Field("/chii/services", env="ETCD_PREFIX")
     etcd_addr: Optional[AnyHttpUrl] = Field(env="ETCD_ADDR")
     external_address: str = Field("127.0.0.1", env="EXTERNAL_ADDRESS")
 
