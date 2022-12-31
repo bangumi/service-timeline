@@ -249,7 +249,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def SubjectProgress(
         self, req: SubjectProgressRequest, context
     ) -> SubjectProgressResponse:
-        ProgressMemo(
+        memo = ProgressMemo(
             subject_name=req.subject.name,
             subject_id=str(req.subject.id),
             subject_type_id=str(req.subject.type),

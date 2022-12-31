@@ -5,22 +5,18 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Episode(_message.Message):
-    __slots__ = ["id", "image", "name", "name_cn", "series", "sort", "type"]
+    __slots__ = ["id", "name", "name_cn", "sort", "type"]
     ID_FIELD_NUMBER: _ClassVar[int]
-    IMAGE_FIELD_NUMBER: _ClassVar[int]
     NAME_CN_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
-    SERIES_FIELD_NUMBER: _ClassVar[int]
     SORT_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     id: int
-    image: str
     name: str
     name_cn: str
-    series: bool
     sort: float
     type: int
-    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., image: _Optional[str] = ..., series: bool = ..., sort: _Optional[float] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., sort: _Optional[float] = ...) -> None: ...
 
 class EpisodeCollectRequest(_message.Message):
     __slots__ = ["last", "subject", "user_id"]
