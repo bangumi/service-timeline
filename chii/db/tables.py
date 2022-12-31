@@ -41,7 +41,8 @@ class ChiiCharacter(Base):
 
     crt_id = Column(MEDIUMINT(8), primary_key=True)
     crt_name = Column(String(255, "utf8_unicode_ci"), nullable=False)
-    crt_role = Column(TINYINT(4), nullable=False, index=True, comment="角色，机体，组织。。")
+    crt_role = Column(TINYINT(4), nullable=False, index=True,
+                      comment="角色，机体，组织。。")
     crt_infobox: str = Column(MEDIUMTEXT, nullable=False)
     crt_summary: str = Column(MEDIUMTEXT, nullable=False)
     crt_img = Column(String(255, "utf8_unicode_ci"), nullable=False)
@@ -607,29 +608,6 @@ class ChiiSubjectRelations(Base):
         "primary_key": [rlt_subject_id, rlt_related_subject_id, rlt_vice_versa]
     }
 
-    src_subject: "ChiiSubject" = relationship(
-        "ChiiSubject",
-        primaryjoin=lambda: (
-            ChiiSubject.subject_id == foreign(ChiiSubjectRelations.rlt_subject_id)
-        ),
-        lazy="raise_on_sql",
-        innerjoin=True,
-        uselist=False,
-        back_populates="relations",
-    )  # type: ignore
-
-    dst_subject: "ChiiSubject" = relationship(
-        "ChiiSubject",
-        primaryjoin=lambda: (
-            ChiiSubject.subject_id
-            == foreign(ChiiSubjectRelations.rlt_related_subject_id)
-        ),
-        lazy="raise_on_sql",
-        innerjoin=True,
-        uselist=False,
-        back_populates="related",
-    )  # type: ignore
-
 
 class ChiiSubjectRevision(Base):
     __tablename__ = "chii_subject_revisions"
@@ -1020,7 +998,8 @@ class ChiiIndex(Base):
         Index("idx_uid", "idx_uid"),
         Index("idx_collects", "idx_collects"),
     )
-    idx_id = Column(MEDIUMINT(8), comment="自动id", primary_key=True, autoincrement=True)
+    idx_id = Column(MEDIUMINT(8), comment="自动id", primary_key=True,
+                    autoincrement=True)
     idx_type = Column(TINYINT(3), nullable=False, server_default=text("'0'"))
     idx_title = Column(VARCHAR(80), nullable=False, comment="标题")
     idx_desc = Column(MEDIUMTEXT, nullable=False, comment="简介")
