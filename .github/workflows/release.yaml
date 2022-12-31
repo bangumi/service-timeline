@@ -40,7 +40,7 @@ jobs:
           HASH_BASE_DOCKER: "${{ hashFiles('poetry.lock') }}"
         name: build base docker image
 
-      - run: echo "REF=$(git describe --match='v*')" >> $GITHUB_ENV
+      - run: echo "REF=$(git describe --match='v*' --tags)" >> $GITHUB_ENV
 
       - name: docker build
         run: docker build --build-arg "ARG_REF=${REF}" -t current -f etc/main.dockerfile .
