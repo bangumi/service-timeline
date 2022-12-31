@@ -20,6 +20,7 @@ libphpserialize = "0.0.8"
 pymysql = "1.0.2"
 pydantic = "1.10.4"
 python-dotenv = "^0.21.0"
+etcd3-py = "^0.1.6"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "2.3.0"

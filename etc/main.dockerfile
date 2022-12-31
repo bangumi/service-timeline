@@ -8,4 +8,4 @@ ENV REF=$ARG_REF
 
 COPY . ./
 
-ENTRYPOINT [ "python", "./scripts/grpc_server.py" ]
+ENTRYPOINT [ "python", "./start_grpc_server.py" ]
