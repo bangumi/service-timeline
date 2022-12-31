@@ -191,7 +191,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         """
 
-        tlType = 0
+        tlType = 2
         memo = ProgressMemo(
             ep_id=req.last.id,
             subject_name=req.subject.name,
