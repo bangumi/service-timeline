@@ -138,7 +138,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
     def EpisodeCollect(
-        self, request: EpisodeCollectRequest, context
+        self, req: EpisodeCollectRequest, context
     ) -> EpisodeCollectResponse:
         """
 
@@ -190,32 +190,118 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         }
 
         """
-        ProgressMemo(
-            ep_id=request.last.id,
-            subject_name=request.subject.name,
-            ep_name=request.last.name,
-            subject_id=str(request.subject.id),
-            subject_type_id=str(request.subject.type),
-            ep_sort=request.last.sort,
+
+        tlType = 0
+        memo = ProgressMemo(
+            ep_id=req.last.id,
+            subject_name=req.subject.name,
+            ep_name=req.last.name,
+            subject_id=str(req.subject.id),
+            subject_type_id=str(req.subject.type),
+            ep_sort=req.last.sort,
         )
+
+        img = SubjectImage(
+            subject_id=str(req.subject.id),
+            images=req.subject.image,
+        )
+
+        if config.debug:
+            print(req)
+
+        logger.info(f"expected timeline {tlType}")
+        with self.SessionMaker() as session:
+            tl: ChiiTimeline = session.scalar(
+                sa.get(
+                    ChiiTimeline,
+                    ChiiTimeline.uid == req.user_id,
+                    order=ChiiTimeline.id.desc(),
+                )
+            )
+
+            with session.begin():
+                if tl:
+                    logger.info("find previous timeline, updating")
+                    if (
+                        tl.cat == TimelineCat.Progress
+                        and tl.type == tlType
+                        and tl.batch == 0
+                        and tl.related == str(req.subject.id)
+                    ):
+                        tl.memo = php.serialize(memo)
+                        session.add(tl)
+                        return EpisodeCollectResponse(ok=True)
+
+                session.add(
+                    ChiiTimeline(
+                        uid=req.user_id,
+                        memo=php.serialize(memo.dict()),
+                        img=php.serialize(img.dict()),
+                        cat=TimelineCat.Progress,
+                        type=tlType,
+                        batch=0,
+                        related=str(req.subject.id),
+                    )
+                )
 
         return EpisodeCollectResponse(ok=True)
 
     def SubjectProgress(
-        self, request: SubjectProgressRequest, context
+        self, req: SubjectProgressRequest, context
     ) -> SubjectProgressResponse:
         ProgressMemo(
-            subject_name=request.subject.name,
-            subject_id=str(request.subject.id),
-            subject_type_id=str(request.subject.type),
-            eps_total=str(request.subject.eps_total)
-            if request.subject.eps_total
-            else "??",
-            vols_total=str(request.subject.vols_total)
-            if request.subject.vols_total
-            else "??",
-            eps_update=request.eps_update,
-            vols_update=request.vols_update,
+            subject_name=req.subject.name,
+            subject_id=str(req.subject.id),
+            subject_type_id=str(req.subject.type),
+            eps_total=str(req.subject.eps_total) if req.subject.eps_total else "??",
+            vols_total=str(req.subject.vols_total) if req.subject.vols_total else "??",
+            eps_update=req.eps_update,
+            vols_update=req.vols_update,
         )
+
+        tlType = 2
+
+        img = SubjectImage(
+            subject_id=str(req.subject.id),
+            images=req.subject.image,
+        )
+
+        if config.debug:
+            print(req)
+
+        logger.info(f"expected timeline {tlType}")
+        with self.SessionMaker() as session:
+            tl: ChiiTimeline = session.scalar(
+                sa.get(
+                    ChiiTimeline,
+                    ChiiTimeline.uid == req.user_id,
+                    order=ChiiTimeline.id.desc(),
+                )
+            )
+
+            with session.begin():
+                if tl:
+                    logger.info("find previous timeline, updating")
+                    if (
+                        tl.cat == TimelineCat.Progress
+                        and tl.type == tlType
+                        and tl.batch == 0
+                        and tl.related == str(req.subject.id)
+                    ):
+                        tl.memo = php.serialize(memo)
+                        session.add(tl)
+                        return SubjectProgressResponse(ok=True)
+
+                session.add(
+                    ChiiTimeline(
+                        uid=req.user_id,
+                        memo=php.serialize(memo.dict()),
+                        img=php.serialize(img.dict()),
+                        cat=TimelineCat.Progress,
+                        type=tlType,
+                        batch=0,
+                        related=str(req.subject.id),
+                    )
+                )
 
         return SubjectProgressResponse(ok=True)
