@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from dotenv import load_dotenv
 from pydantic import Field, AnyHttpUrl, BaseSettings
@@ -10,7 +11,7 @@ class Settings(BaseSettings):
     # 微服务相关的环境变量
     node_id: str = Field(str(uuid.uuid4()), env="NODE_ID")
     etcd_prefix: str = Field("chii/services", env="ETCD_PREFIX")
-    etcd_addr: AnyHttpUrl = Field(env="ETCD_ADDR")
+    etcd_addr: Optional[AnyHttpUrl] = Field(env="ETCD_ADDR")
     external_address: str = Field("127.0.0.1", env="EXTERNAL_ADDRESS")
 
     MYSQL_HOST: str = Field(env="MYSQL_HOST", default="127.0.0.1")
