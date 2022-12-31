@@ -211,15 +211,14 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
-            tl: ChiiTimeline = session.scalar(
-                sa.get(
-                    ChiiTimeline,
-                    ChiiTimeline.uid == req.user_id,
-                    order=ChiiTimeline.id.desc(),
-                )
-            )
-
             with session.begin():
+                tl: ChiiTimeline = session.scalar(
+                    sa.get(
+                        ChiiTimeline,
+                        ChiiTimeline.uid == req.user_id,
+                        order=ChiiTimeline.id.desc(),
+                    )
+                )
                 if tl:
                     logger.info("find previous timeline, updating")
                     if (
@@ -271,15 +270,14 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
-            tl: ChiiTimeline = session.scalar(
-                sa.get(
-                    ChiiTimeline,
-                    ChiiTimeline.uid == req.user_id,
-                    order=ChiiTimeline.id.desc(),
-                )
-            )
-
             with session.begin():
+                tl: ChiiTimeline = session.scalar(
+                    sa.get(
+                        ChiiTimeline,
+                        ChiiTimeline.uid == req.user_id,
+                        order=ChiiTimeline.id.desc(),
+                    )
+                )
                 if tl:
                     logger.info("find previous timeline, updating")
                     if (
