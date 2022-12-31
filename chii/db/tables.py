@@ -778,16 +778,6 @@ class ChiiSubject(Base):
         back_populates="src_subject",
     )
 
-    related: List[ChiiSubjectRelations] = relationship(
-        "ChiiSubjectRelations",
-        primaryjoin=lambda: (
-            ChiiSubject.subject_id
-            == foreign(ChiiSubjectRelations.rlt_related_subject_id)
-        ),
-        lazy="raise_on_sql",
-        back_populates="dst_subject",
-    )
-
     users: List["ChiiSubjectInterest"] = relationship(
         "ChiiSubjectInterest",
         primaryjoin=(
