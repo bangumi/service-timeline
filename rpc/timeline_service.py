@@ -227,7 +227,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                         and tl.batch == 0
                         and tl.related == str(req.subject.id)
                     ):
-                        tl.memo = php.serialize(memo)
+                        tl.memo = php.serialize(memo.dict())
                         session.add(tl)
                         return EpisodeCollectResponse(ok=True)
 
@@ -286,7 +286,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                         and tl.batch == 0
                         and tl.related == str(req.subject.id)
                     ):
-                        tl.memo = php.serialize(memo)
+                        tl.memo = php.serialize(memo.dict())
                         session.add(tl)
                         return SubjectProgressResponse(ok=True)
 
