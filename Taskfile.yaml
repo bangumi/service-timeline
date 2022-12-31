@@ -1,0 +1,24 @@
+version: "3"
+
+dotenv: [".env"]
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  gen:
+    desc: Build Web Server Binary
+    generates:
+      - ./api/**/*.py
+    sources:
+      - ./proto/**/*.proto
+    cmds:
+      - >-
+        python -m grpc_tools.protoc
+        -I ./proto/
+        --python_out=.
+        --pyi_out=.
+        --grpc_python_out=.
+        ./proto/api/v1/timeline.proto

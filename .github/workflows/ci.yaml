@@ -1,0 +1,69 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - "master"
+  push:
+    branches:
+      - "master"
+
+jobs:
+  #  lint:
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #
+  #      - name: Setup node
+  #        uses: actions/setup-node@v3
+  #        with:
+  #          node-version: '18'
+  #          cache: yarn
+  #
+  #      - run: yarn
+  #
+  #      - run: npx prettier --check ./
+  #      - run: npx tsc --noEmit --pretty
+  #      - run: yarn lint
+
+  #  test:
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #      - run: git clone https://github.com/bangumi/dev-env $HOME/dev-env
+  #      - run: cd ~/dev-env && docker-compose up -d
+  #
+  #      - uses: actions/checkout@v3
+  #
+  #      - name: Setup node
+  #        uses: actions/setup-node@v3
+  #        with:
+  #          node-version: '18'
+  #          cache: yarn
+  #
+  #      - run: yarn
+  #
+  #      - run: bash $HOME/dev-env/wait_mysql_ready.sh
+  #
+  #      - run: yarn test --coverage
+  #        timeout-minutes: 10
+  #        env:
+  #          HCAPTCHA_SECRET_KEY: '0x0000000000000000000000000000000000000000'
+  #          MYSQL_HOST: '127.0.0.1'
+  #          MYSQL_PORT: '3306'
+  #          MYSQL_USER: 'user'
+  #          MYSQL_PASS: 'password'
+  #          MYSQL_DB: 'bangumi'
+  #
+  #      - name: Upload Coverage to Codecov
+  #        uses: codecov/codecov-action@v3
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker build -t base-image -f etc/base.dockerfile .
+      - run: docker build -t tmp -f etc/main.dockerfile .
+      - run: docker run tmp --help
