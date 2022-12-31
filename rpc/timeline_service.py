@@ -59,9 +59,12 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     logger.info("find previous timeline, merging")
                     if tl.cat == TimelineCat.Subject and tl.type == tlType:
                         self.merge_previous_timeline(session, tl, request)
-                else:
-                    logger.info("missing previous timeline, create a new timeline")
-                    self.create_subject_collection_timeline(session, request, tlType)
+                        return SubjectCollectResponse(ok=True)
+
+                logger.info(
+                    "missing previous timeline or timeline type mismatch, create a new timeline"
+                )
+                self.create_subject_collection_timeline(session, request, tlType)
 
         return SubjectCollectResponse(ok=True)
 
