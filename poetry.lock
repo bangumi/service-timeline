@@ -1109,7 +1109,7 @@ pytest = ">=4.0.0"
 name = "python-dotenv"
 version = "0.21.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1495,4 +1495,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "232c0db4fc911698fb493becc9f7cbf2f5daa6e0a74cf5092a0411bb1d6398f9"
+content-hash = "f1463964f5ffda314232c4984e3a56b451884bc3f0be4fefaf0c5cbd5a367561"
