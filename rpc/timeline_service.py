@@ -77,7 +77,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             )
         else:
             m = parse_obj_as(SubjectMemo, phpseralize.loads(tl.memo.encode()))
-            if m.subject_id == req.subject.id:
+            if int(m.subject_id) == req.subject.id:
                 # save request called twice, just ignore
                 return
             memo = {int(m.subject_id): m}
