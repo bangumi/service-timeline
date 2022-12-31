@@ -15,6 +15,14 @@ from rpc.timeline_service import TimeLineService
 
 
 class Register(threading.Thread):
+    """
+    参照 etcd 的文档
+
+    https://etcd.io/docs/v3.5/dev-guide/grpc_naming/
+
+    go 有相关的 sdk，但是 python 没有。
+    """
+
     def __init__(self):
         super().__init__()
         self.etcd = etcd3.Client(
