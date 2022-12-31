@@ -69,5 +69,6 @@ def sync_session_maker() -> Callable[[], sqlalchemy.orm.Session]:
         pool_recycle=14400,
         pool_size=10,
         max_overflow=20,
+        echo=config.debug,
     )
-    return sessionmaker(engine, autocommit=True)
+    return sessionmaker(engine)

@@ -7,6 +7,7 @@ from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
 from api.v1 import timeline_pb2_grpc
+from chii.config import config
 from chii.db import sa
 from chii.compat import phpseralize
 from chii.timeline import (
@@ -41,6 +42,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         self, request: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
         tlType = subjectTypeMap[request.subject.type][request.collection]
+        if config.debug:
+            print(request)
         logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
             with session.begin():
@@ -55,23 +58,24 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 if tl:
                     logger.info("find previous timeline, merging")
                     if tl.cat == TimelineCat.Subject and tl.type == tlType:
-                        tl = self.merge_previous_timeline(tl, request)
-                        session.add(tl)
+                        self.merge_previous_timeline(session, tl, request)
                 else:
                     logger.info("missing previous timeline, create a new timeline")
                     self.create_subject_collection_timeline(session, request, tlType)
 
         return SubjectCollectResponse(ok=True)
 
-    def merge_previous_timeline(
-        self, tl: ChiiTimeline, req: SubjectCollectRequest
-    ) -> ChiiTimeline:
+    def merge_previous_timeline(self, session: Session, tl: ChiiTimeline,
+                                req: SubjectCollectRequest):
         if tl.batch:
             memo = parse_obj_as(
                 Dict[int, SubjectMemo], phpseralize.loads(tl.memo.encode())
             )
         else:
             m = parse_obj_as(SubjectMemo, phpseralize.loads(tl.memo.encode()))
+            if m.subject_id == req.subject.id:
+                # save request called twice, just ignore
+                return
             memo = {int(m.subject_id): m}
 
         memo[req.subject.id] = SubjectMemo(
@@ -100,7 +104,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         tl.memo = php.serialize({key: value.dict() for key, value in memo.items()})
         tl.img = php.serialize({key: value.dict() for key, value in img.items()})
 
-        return tl
+        session.add(tl)
 
     def create_subject_collection_timeline(
         self, session: Session, req: SubjectCollectRequest, type: int

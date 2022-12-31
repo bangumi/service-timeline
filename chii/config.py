@@ -1,4 +1,5 @@
 from pydantic import Field, BaseSettings
+from dotenv import load_dotenv
 
 
 class Settings(BaseSettings):
@@ -24,6 +25,7 @@ class Settings(BaseSettings):
         )
 
 
+load_dotenv()
 config = Settings()
 
 if __name__ == "__main__":
