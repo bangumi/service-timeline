@@ -258,7 +258,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             vols_update=req.vols_update,
         )
 
-        tlType = 2
+        tlType = 0
 
         img = SubjectImage(
             subject_id=str(req.subject.id),
