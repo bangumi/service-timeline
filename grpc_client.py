@@ -3,8 +3,7 @@ import logging
 import grpc
 
 from api.v1 import timeline_pb2_grpc
-from api.v1.timeline_pb2 import HelloRequest, HelloResponse, SubjectProgressResponse, \
-    SubjectCollectRequest, Subject
+from api.v1.timeline_pb2 import Subject, SubjectCollectRequest, SubjectProgressResponse
 
 
 def run():
@@ -22,12 +21,13 @@ def run():
                     name_cn="name cn",
                     series=False,
                     eps_total=0,
-                    vols_total=0
+                    vols_total=0,
                 ),
                 comment="",
                 collection=1,
                 rate=0,
-            ))
+            )
+        )
     print("Greeter client received:", response.ok)
 
 

@@ -1,5 +1,5 @@
-from pydantic import Field, BaseSettings
 from dotenv import load_dotenv
+from pydantic import Field, BaseSettings
 
 
 class Settings(BaseSettings):

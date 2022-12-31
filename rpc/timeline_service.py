@@ -7,9 +7,9 @@ from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
 from api.v1 import timeline_pb2_grpc
-from chii.config import config
 from chii.db import sa
 from chii.compat import phpseralize
+from chii.config import config
 from chii.timeline import (
     SubjectMemo,
     TimelineCat,
@@ -65,8 +65,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         return SubjectCollectResponse(ok=True)
 
-    def merge_previous_timeline(self, session: Session, tl: ChiiTimeline,
-                                req: SubjectCollectRequest):
+    def merge_previous_timeline(
+        self, session: Session, tl: ChiiTimeline, req: SubjectCollectRequest
+    ):
         if tl.batch:
             memo = parse_obj_as(
                 Dict[int, SubjectMemo], phpseralize.loads(tl.memo.encode())
