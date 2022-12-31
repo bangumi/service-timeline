@@ -2,6 +2,7 @@ from typing import Dict
 
 import phpserialize as php
 from grpc import RpcContext
+from loguru import logger
 from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
@@ -40,8 +41,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         self, request: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
         tlType = subjectTypeMap[request.subject.type][request.collection]
-
-        php.serialize({})
+        logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
             with session.begin():
                 tl: ChiiTimeline = session.scalar(
@@ -53,11 +53,12 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 )
 
                 if tl:
+                    logger.info("find previous timeline, merging")
                     if tl.cat == TimelineCat.Subject and tl.type == tlType:
                         tl = self.merge_previous_timeline(tl, request)
                         session.add(tl)
                 else:
-                    print("create timeline")
+                    logger.info("missing previous timeline, create a new timeline")
                     self.create_subject_collection_timeline(session, request, tlType)
 
         return SubjectCollectResponse(ok=True)
