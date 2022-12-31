@@ -25,6 +25,6 @@ task gen
 
 ## API
 
-[./proto/api/v1/timeline.proto](./proto/api/v1/timeline.proto)
+[./proto/api/v1/timeline.proto](https://github.com/bangumi/proto/blob/master/api/v1/timeline.proto)
 
 `SubjectProgress` 和 `EpisodeCollect` 还没有真正的实现，可以引入 break change。
