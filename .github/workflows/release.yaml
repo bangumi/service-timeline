@@ -37,7 +37,7 @@ jobs:
 
         env:
           HASH_POETRY_LOCK: "${{ hashFiles('poetry.lock') }}"
-          HASH_BASE_DOCKER: "${{ hashFiles('poetry.lock') }}"
+          HASH_BASE_DOCKER: "${{ hashFiles('etc/base.dockerfile') }}"
         name: build base docker image
 
       - run: echo "REF=$(git describe --match='v*' --tags)" >> $GITHUB_ENV
