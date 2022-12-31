@@ -140,7 +140,56 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def EpisodeCollect(
         self, request: EpisodeCollectRequest, context
     ) -> EpisodeCollectResponse:
+        """
 
+        cat 4 type 2 "看过 ep2 ${subject name}"
+        tml_id    tml_uid tml_cat tml_type tml_related
+        32073511  287622  4       2        363612
+
+        tml_memo
+        a:5:{
+
+        s:5:"ep_id";s:7:"1075441";
+
+        s:7:"ep_name";s:0:"";
+
+        s:7:"ep_sort";s:1:"2";
+
+        s:10:"subject_id";s:6:"363612";
+
+        s:12:"subject_name";s:6:"沙盒";
+
+        }
+
+        tml_img
+        a:2:{s:10:"subject_id";s:6:"363612";s:6:"images";s:22:"82/15/363612_On6wg.jpg";}
+
+        tml_batch  tml_source      tml_replies     tml_dateline
+         0         0               0               1672520183
+
+
+        cat 4 type 2 "完成了 ${subject name} {ep} of {ep_total} 话"
+
+        memo: a:7:{
+
+        s:9:"eps_total";s:2:"12";
+
+        s:10:"eps_update";i:12;
+
+        s:10:"vols_total";s:2:"??";
+
+
+        s:11:"vols_update";N;
+
+        s:10:"subject_id";s:6:"353657";
+
+        s:12:"subject_name";s:21:"勇者、辞めます";
+
+        s:15:"subject_type_id";s:1:"2";
+
+        }
+
+        """
         ProgressMemo(
             ep_id=request.last.id,
             subject_name=request.subject.name,
