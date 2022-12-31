@@ -1,6 +1,6 @@
 import zlib
 import datetime
-from typing import Any, List, Tuple, Union, Optional
+from typing import TYPE_CHECKING, Any, List, Tuple, Union, Optional
 
 from sqlalchemy import TIMESTAMP, Date, Enum, Float, Index, Table, Column, String, text
 from sqlalchemy.orm import declarative_base
@@ -876,9 +876,6 @@ class ChiiIndexRelated(Base):
     idx_rlt_order = Column(MEDIUMINT(8), nullable=False, server_default=text("'0'"))
     idx_rlt_comment = Column(MEDIUMTEXT, nullable=False)
     idx_rlt_dateline = Column(INTEGER(10), nullable=False)
-
-
-from typing import TYPE_CHECKING
 
 
 class ChiiTimeline(Base):
