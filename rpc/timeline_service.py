@@ -238,6 +238,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                         img=php.serialize(img.dict()),
                         cat=TimelineCat.Progress,
                         type=tlType,
+                        source=5,
                         batch=0,
                         related=str(req.subject.id),
                     )

@@ -1,6 +1,6 @@
 import zlib
 import datetime
-from typing import Any, List, Tuple, Union
+from typing import Any, List, Tuple, Union, Optional
 
 from sqlalchemy import TIMESTAMP, Date, Enum, Float, Index, Table, Column, String, text
 from sqlalchemy.orm import declarative_base
@@ -878,9 +878,30 @@ class ChiiIndexRelated(Base):
     idx_rlt_dateline = Column(INTEGER(10), nullable=False)
 
 
+from typing import TYPE_CHECKING
+
+
 class ChiiTimeline(Base):
     __tablename__ = "chii_timeline"
     __table_args__ = (Index("query_tml_cat", "tml_uid", "tml_cat"),)
+
+    if TYPE_CHECKING:
+
+        def __init__(
+            self,
+            uid: int,
+            cat: int,
+            type: int,
+            related: str,
+            memo: str,
+            img: str,
+            batch: int,
+            source: Optional[int] = None,
+            replies: int = 0,
+            id: Optional[int] = None,
+            dateline: Optional[int] = None,
+        ):
+            ...
 
     id = Column("tml_id", INTEGER(10), primary_key=True)
     uid = Column(
@@ -902,6 +923,7 @@ class ChiiTimeline(Base):
         nullable=False,
         server_default=text("'0'"),
         comment="更新来源",
+        default=5,
     )
     replies = Column(
         "tml_replies", MEDIUMINT(8), nullable=False, comment="回复数", default=0
