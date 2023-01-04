@@ -72,6 +72,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def merge_previous_timeline(
         self, session: Session, tl: ChiiTimeline, req: SubjectCollectRequest
     ):
+        escaped = html.escape(req.comment)
         if tl.batch:
             memo = parse_obj_as(
                 Dict[int, SubjectMemo], phpseralize.loads(tl.memo.encode())
@@ -80,7 +81,20 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             m = parse_obj_as(SubjectMemo, phpseralize.loads(tl.memo.encode()))
             if int(m.subject_id) == req.subject.id:
                 # save request called twice, just ignore
+                should_update = False
+                if m.collect_comment != escaped:
+                    should_update = True
+                    m.collect_comment = escaped
+
+                if m.collect_rate != req.rate:
+                    should_update = True
+                    m.collect_rate = req.rate
+
+                if should_update:
+                    tl.memo = php.serialize(m.dict())
+                    session.add(tl)
                 return
+
             memo = {int(m.subject_id): m}
 
         memo[req.subject.id] = SubjectMemo(
@@ -89,7 +103,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             subject_name_cn=req.subject.name,
             subject_series=req.subject.series,
             subject_name=req.subject.name_cn,
-            collect_comment=html.escape(req.comment),
+            collect_comment=escaped,
             collect_rate=req.rate,
         )
 
