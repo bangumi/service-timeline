@@ -1,3 +1,4 @@
+import html
 from typing import Dict
 
 import phpserialize as php
@@ -88,7 +89,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             subject_name_cn=req.subject.name,
             subject_series=req.subject.series,
             subject_name=req.subject.name_cn,
-            collect_comment=req.comment,
+            collect_comment=html.escape(req.comment),
             collect_rate=req.rate,
         )
 
@@ -119,7 +120,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             subject_name_cn=req.subject.name,
             subject_series=req.subject.series,
             subject_name=req.subject.name_cn,
-            collect_comment=req.comment,
+            collect_comment=html.escape(req.comment),
             collect_rate=req.rate,
         )
 
