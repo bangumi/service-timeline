@@ -39,7 +39,7 @@ flake8-pytest-style = "1.6.0"
 flake8-tidy-imports = "==4.8.0"
 mypy = "==0.991"
 requests = "==2.28.2"
-types-pytz = "2022.7.0.0"
+types-pytz = "2022.7.1.0"
 pytest-github-actions-annotate-failures = "==0.1.8"
 pytest-env = "==0.8.1"
 redis = { extras = ["hiredis"], version = "==4.4.2" }
