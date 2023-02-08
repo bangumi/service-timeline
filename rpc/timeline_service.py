@@ -1,4 +1,5 @@
 import html
+import time
 from typing import Dict
 
 import phpserialize as php
@@ -45,13 +46,13 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         tlType = subjectTypeMap[request.subject.type][request.collection]
         if config.debug:
             print(request)
-        logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
             with session.begin():
                 tl: ChiiTimeline = session.scalar(
                     sa.get(
                         ChiiTimeline,
                         ChiiTimeline.uid == request.user_id,
+                        ChiiTimeline.dateline >= int(time.time() - 15 * 60),
                         order=ChiiTimeline.id.desc(),
                     )
                 )
@@ -224,13 +225,13 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         if config.debug:
             print(req)
 
-        logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
             with session.begin():
                 tl: ChiiTimeline = session.scalar(
                     sa.get(
                         ChiiTimeline,
                         ChiiTimeline.uid == req.user_id,
+                        ChiiTimeline.dateline >= int(time.time() - 15 * 60),
                         order=ChiiTimeline.id.desc(),
                     )
                 )
@@ -284,7 +285,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         if config.debug:
             print(req)
 
-        logger.info(f"expected timeline {tlType}")
         with self.SessionMaker() as session:
             with session.begin():
                 tl: ChiiTimeline = session.scalar(
