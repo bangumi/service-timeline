@@ -93,9 +93,7 @@ class ChiiEpisode(Base):
 
     ep_id = Column(MEDIUMINT(8), primary_key=True)
     ep_subject_id = Column(MEDIUMINT(8), nullable=False, index=True)
-    ep_sort: float = Column(
-        Float, nullable=False, index=True, server_default=text("'0'")
-    )
+    ep_sort = Column(Float, nullable=False, index=True, server_default=text("'0'"))
     ep_type = Column(TINYINT(1), nullable=False)
     ep_disc = Column(
         TINYINT(3),
