@@ -17,13 +17,7 @@ from sqlalchemy import (
     update,
     create_engine,
 )
-from sqlalchemy.orm import (
-    eagerload,
-    joinedload,
-    selectinload,
-    sessionmaker,
-    subqueryload,
-)
+from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
 from sqlalchemy.dialects.mysql import insert
 
 from chii.config import config
@@ -41,7 +35,6 @@ __all__ = [
     "DateTime",
     "func",
     "join",
-    "eagerload",
     "text",
     "select",
     "update",
