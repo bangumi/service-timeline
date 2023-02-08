@@ -547,21 +547,6 @@ pycodestyle = ">=2.8.0,<2.9.0"
 pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
-name = "flake8-broken-line"
-version = "0.6.0"
-description = "Flake8 plugin to forbid backslashes for line breaks"
-category = "dev"
-optional = false
-python-versions = ">=3.7,<4.0"
-files = [
-    {file = "flake8-broken-line-0.6.0.tar.gz", hash = "sha256:a02268f11a18837c83c59013a36cc00fee9e17a042745cc0c9895f1c9f6acc16"},
-    {file = "flake8_broken_line-0.6.0-py3-none-any.whl", hash = "sha256:c0ab336ff7de228dbffbe56d67b3615bb21fb15f3ed0604fa7bdf9feb72d7d88"},
-]
-
-[package.dependencies]
-flake8 = ">=3.5,<6"
-
-[[package]]
 name = "flake8-bugbear"
 version = "22.12.6"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
@@ -2096,4 +2081,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "32c2fc72aa10fbcd7b323af67f98e272bf2b2f3f8cb82c7d514aaf2f902e82da"
+content-hash = "bbdc7ded3d93a802dd1cb66f4e44e62bf0aae1abdc24648d3da48ebb90b65eb6"
