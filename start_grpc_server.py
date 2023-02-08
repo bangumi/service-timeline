@@ -72,8 +72,8 @@ def serve():
         except KeyboardInterrupt:
             r.stop = 1
             # 保证线程执行结束了
+            server.stop(3)
             time.sleep(3)
-            server.stop(0)
 
 
 if __name__ == "__main__":
