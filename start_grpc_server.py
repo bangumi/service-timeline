@@ -55,7 +55,7 @@ def start_server():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     timeline_pb2_grpc.add_TimeLineServiceServicer_to_server(TimeLineService(), server)
     server.add_insecure_port(f"0.0.0.0:{config.grpc_port}")
-    print("Server started, listening on", config.grpc_port, flush=True)
+    logger.info("Server started, listening on {}", config.grpc_port)
     server.start()
     if not config.etcd_addr:
         logger.info("etcd not configured")
@@ -80,7 +80,7 @@ def main():
     if "-h" in sys.argv or "--help" in sys.argv:
         print("timeline micro service")
         exit(0)
-    print("starting grpc server", flush=True)
+    logger.info("starting grpc server")
     logging.basicConfig()
     start_server()
 
