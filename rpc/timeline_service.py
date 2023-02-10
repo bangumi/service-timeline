@@ -52,12 +52,11 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     sa.get(
                         ChiiTimeline,
                         ChiiTimeline.uid == request.user_id,
-                        ChiiTimeline.dateline >= int(time.time() - 15 * 60),
                         order=ChiiTimeline.id.desc(),
                     )
                 )
 
-                if tl:
+                if tl and tl.dateline >= int(time.time() - 15 * 60):
                     logger.info("find previous timeline, merging")
                     if tl.cat == TimelineCat.Subject and tl.type == tlType:
                         self.merge_previous_timeline(session, tl, request)
@@ -231,11 +230,10 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     sa.get(
                         ChiiTimeline,
                         ChiiTimeline.uid == req.user_id,
-                        ChiiTimeline.dateline >= int(time.time() - 15 * 60),
                         order=ChiiTimeline.id.desc(),
                     )
                 )
-                if tl:
+                if tl and tl.dateline >= int(time.time() - 15 * 60):
                     logger.info("find previous timeline, updating")
                     if (
                         tl.cat == TimelineCat.Progress
@@ -294,7 +292,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                         order=ChiiTimeline.id.desc(),
                     )
                 )
-                if tl:
+                if tl and tl.dateline >= int(time.time() - 15 * 60):
                     logger.info("find previous timeline, updating")
                     if (
                         tl.cat == TimelineCat.Progress

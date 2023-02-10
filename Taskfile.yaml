@@ -22,3 +22,8 @@ tasks:
         --pyi_out=.
         --grpc_python_out=.
         ./proto/api/v1/timeline.proto
+
+
+  dev:
+    cmds:
+      - watchgod start_grpc_server.main
