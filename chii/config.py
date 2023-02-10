@@ -22,6 +22,7 @@ class Settings(BaseSettings):
 
     COMMIT_REF: str = Field(env="COMMIT_REF", default="dev")
     grpc_port: int = Field(env="GRPC_PORT", default=5000)
+    grpc_max_workers: int = Field(env="GRPC_MAX_WORKERS", default=10)
 
     SLOW_SQL_MS: int = Field(env="SLOW_SQL_MS", default=0)
 

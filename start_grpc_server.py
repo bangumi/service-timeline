@@ -52,7 +52,9 @@ class Register(threading.Thread):
 
 
 def start_server():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(
+        futures.ThreadPoolExecutor(max_workers=config.grpc_max_workers)
+    )
     timeline_pb2_grpc.add_TimeLineServiceServicer_to_server(TimeLineService(), server)
     server.add_insecure_port(f"0.0.0.0:{config.grpc_port}")
     logger.info("Server started, listening on {}", config.grpc_port)
@@ -62,7 +64,9 @@ def start_server():
         server.wait_for_termination()
     else:
         logger.info(
-            f"announce with etcd, announced addr: {config.external_address}:{config.grpc_port}"
+            "announce with etcd, announced addr: {}:{}",
+            config.external_address,
+            config.grpc_port,
         )
         r = Register()
         r.start()
