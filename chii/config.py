@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     COMMIT_REF: str = Field(env="COMMIT_REF", default="dev")
     grpc_port: int = Field(env="GRPC_PORT", default=5000)
 
+    SLOW_SQL_MS: int = Field(env="SLOW_SQL_MS", default=0)
+
     @property
     def MYSQL_SYNC_DSN(self) -> str:
         return "mysql+pymysql://{}:{}@{}:{}/{}".format(

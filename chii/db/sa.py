@@ -1,3 +1,6 @@
+import time
+
+from loguru import logger
 from sqlalchemy import (
     CHAR,
     Text,
@@ -9,12 +12,14 @@ from sqlalchemy import (
     func,
     join,
     text,
+    event,
     delete,
     select,
     update,
     create_engine,
 )
 from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
+from sqlalchemy.engine import Engine
 from sqlalchemy.dialects.mysql import insert
 
 from chii.config import config
@@ -62,3 +67,20 @@ def sync_session_maker():
         echo=config.debug,
     )
     return sessionmaker(engine)
+
+
+if config.SLOW_SQL_MS:
+    duration = config.SLOW_SQL_MS * 1000000
+
+    @event.listens_for(Engine, "before_cursor_execute")
+    def before_cursor_execute(
+        conn, cursor, statement, parameters, context, executemany
+    ):
+        conn.info.setdefault("query_start_time", time.monotonic_ns())
+
+    @event.listens_for(Engine, "after_cursor_execute")
+    def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
+        total = time.monotonic_ns() - conn.info["query_start_time"]
+        print(total)
+        if total > duration:
+            logger.bind().warning("slow sql {} {}", statement, parameters)
