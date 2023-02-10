@@ -71,4 +71,4 @@ pretty = true
 plugins = ['sqlalchemy.ext.mypy.plugin', 'pydantic.mypy']
 
 [tool.black]
-target_version = ['py38']
+target_version = ['py310']
