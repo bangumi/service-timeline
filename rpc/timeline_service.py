@@ -1,6 +1,6 @@
 import html
 import time
-from typing import Dict
+from typing import Dict, Optional
 
 import phpserialize as php
 from grpc import RpcContext
@@ -47,7 +47,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         if config.debug:
             print(request)
         with self.SessionMaker.begin() as session:
-            tl: ChiiTimeline = session.scalar(
+            tl: Optional[ChiiTimeline] = session.scalar(
                 sa.get(
                     ChiiTimeline,
                     ChiiTimeline.uid == request.user_id,
@@ -224,7 +224,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             print(req)
 
         with self.SessionMaker.begin() as session:
-            tl: ChiiTimeline = session.scalar(
+            tl: Optional[ChiiTimeline] = session.scalar(
                 sa.get(
                     ChiiTimeline,
                     ChiiTimeline.uid == req.user_id,
@@ -282,7 +282,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             print(req)
 
         with self.SessionMaker.begin() as session:
-            tl: ChiiTimeline = session.scalar(
+            tl: Optional[ChiiTimeline] = session.scalar(
                 sa.get(
                     ChiiTimeline,
                     ChiiTimeline.uid == req.user_id,

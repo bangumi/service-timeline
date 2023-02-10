@@ -923,7 +923,7 @@ class ChiiTimeline(Base):
     replies = Column(
         "tml_replies", MEDIUMINT(8), nullable=False, comment="回复数", default=0
     )
-    dateline = Column(
+    dateline: int = Column(
         "tml_dateline",
         INTEGER(10),
         nullable=False,
