@@ -32,3 +32,7 @@ COPY --from=dockerize /usr/local/bin/dockerize /usr/bin/dockerize
 COPY --from=poetry /app/requirements.txt ./requirements.txt
 
 RUN pip install -r requirements.txt --no-cache-dir
+
+WORKDIR /app
+
+ENTRYPOINT [ "python", "./start_grpc_server.py" ]
