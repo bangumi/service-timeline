@@ -607,6 +607,24 @@ files = [
 ]
 
 [[package]]
+name = "flake8-pyproject"
+version = "1.2.2"
+description = "Flake8 plug-in loading the configuration from pyproject.toml"
+category = "dev"
+optional = false
+python-versions = ">= 3.6"
+files = [
+    {file = "flake8_pyproject-1.2.2-py3-none-any.whl", hash = "sha256:52d412219e7db6227faa654675b1435947b11d49b453f3eced760f19bdd6f06a"},
+]
+
+[package.dependencies]
+Flake8 = ">=5"
+TOMLi = {version = "*", markers = "python_version < \"3.11\""}
+
+[package.extras]
+dev = ["pyTest", "pyTest-cov"]
+
+[[package]]
 name = "flake8-pytest-style"
 version = "1.6.0"
 description = "A flake8 plugin checking common style issues or inconsistencies with pytest-based tests."
@@ -2078,4 +2096,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "19b21481bf9d0156676fe3b42af9bb328a528069822765376734f8c077cde963"
+content-hash = "12d448efeac502968ca329592c6ea240944e8f2f55a08e3fb21e12c1de17227a"

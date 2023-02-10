@@ -50,11 +50,7 @@ jobs:
       - run: echo "::add-matcher::.github/workflows/matcher/flake8.json"
 
       - name: flake8
-        run: |
-          flake8 \
-            --ignore=E501,W503 \
-            --max-line-length=88 \
-            --exclude .venv,.git,__pycache__,docs/source/conf.py,old,build,dist,api
+        run: flake8
 
   lint:
     runs-on: ubuntu-latest

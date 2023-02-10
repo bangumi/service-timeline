@@ -24,6 +24,6 @@ tasks:
         ./proto/api/v1/timeline.proto
 
 
-  dev:
-    cmds:
-      - watchgod start_grpc_server.main
+  dev: watchgod start_grpc_server.main
+  mypy: mypy --show-column-numbers chii rpc
+  flake8: flake8
