@@ -46,26 +46,25 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         tlType = subjectTypeMap[request.subject.type][request.collection]
         if config.debug:
             print(request)
-        with self.SessionMaker() as session:
-            with session.begin():
-                tl: ChiiTimeline = session.scalar(
-                    sa.get(
-                        ChiiTimeline,
-                        ChiiTimeline.uid == request.user_id,
-                        order=ChiiTimeline.id.desc(),
-                    )
+        with self.SessionMaker.begin() as session:
+            tl: ChiiTimeline = session.scalar(
+                sa.get(
+                    ChiiTimeline,
+                    ChiiTimeline.uid == request.user_id,
+                    order=ChiiTimeline.id.desc(),
                 )
+            )
 
-                if tl and tl.dateline >= int(time.time() - 15 * 60):
-                    logger.info("find previous timeline, merging")
-                    if tl.cat == TimelineCat.Subject and tl.type == tlType:
-                        self.merge_previous_timeline(session, tl, request)
-                        return SubjectCollectResponse(ok=True)
+            if tl and tl.dateline >= int(time.time() - 15 * 60):
+                logger.info("find previous timeline, merging")
+                if tl.cat == TimelineCat.Subject and tl.type == tlType:
+                    self.merge_previous_timeline(session, tl, request)
+                    return SubjectCollectResponse(ok=True)
 
-                logger.info(
-                    "missing previous timeline or timeline type mismatch, create a new timeline"
-                )
-                self.create_subject_collection_timeline(session, request, tlType)
+            logger.info(
+                "missing previous timeline or timeline type mismatch, create a new timeline"
+            )
+            self.create_subject_collection_timeline(session, request, tlType)
 
         return SubjectCollectResponse(ok=True)
 
@@ -224,39 +223,38 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         if config.debug:
             print(req)
 
-        with self.SessionMaker() as session:
-            with session.begin():
-                tl: ChiiTimeline = session.scalar(
-                    sa.get(
-                        ChiiTimeline,
-                        ChiiTimeline.uid == req.user_id,
-                        order=ChiiTimeline.id.desc(),
-                    )
+        with self.SessionMaker.begin() as session:
+            tl: ChiiTimeline = session.scalar(
+                sa.get(
+                    ChiiTimeline,
+                    ChiiTimeline.uid == req.user_id,
+                    order=ChiiTimeline.id.desc(),
                 )
-                if tl and tl.dateline >= int(time.time() - 15 * 60):
-                    logger.info("find previous timeline, updating")
-                    if (
-                        tl.cat == TimelineCat.Progress
-                        and tl.type == tlType
-                        and tl.batch == 0
-                        and tl.related == str(req.subject.id)
-                    ):
-                        tl.memo = php.serialize(memo.dict())
-                        session.add(tl)
-                        return EpisodeCollectResponse(ok=True)
+            )
+            if tl and tl.dateline >= int(time.time() - 15 * 60):
+                logger.info("find previous timeline, updating")
+                if (
+                    tl.cat == TimelineCat.Progress
+                    and tl.type == tlType
+                    and tl.batch == 0
+                    and tl.related == str(req.subject.id)
+                ):
+                    tl.memo = php.serialize(memo.dict())
+                    session.add(tl)
+                    return EpisodeCollectResponse(ok=True)
 
-                session.add(
-                    ChiiTimeline(
-                        uid=req.user_id,
-                        memo=php.serialize(memo.dict()),
-                        img=php.serialize(img.dict()),
-                        cat=TimelineCat.Progress,
-                        type=tlType,
-                        source=5,
-                        batch=0,
-                        related=str(req.subject.id),
-                    )
+            session.add(
+                ChiiTimeline(
+                    uid=req.user_id,
+                    memo=php.serialize(memo.dict()),
+                    img=php.serialize(img.dict()),
+                    cat=TimelineCat.Progress,
+                    type=tlType,
+                    source=5,
+                    batch=0,
+                    related=str(req.subject.id),
                 )
+            )
 
         return EpisodeCollectResponse(ok=True)
 
@@ -283,37 +281,36 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         if config.debug:
             print(req)
 
-        with self.SessionMaker() as session:
-            with session.begin():
-                tl: ChiiTimeline = session.scalar(
-                    sa.get(
-                        ChiiTimeline,
-                        ChiiTimeline.uid == req.user_id,
-                        order=ChiiTimeline.id.desc(),
-                    )
+        with self.SessionMaker.begin() as session:
+            tl: ChiiTimeline = session.scalar(
+                sa.get(
+                    ChiiTimeline,
+                    ChiiTimeline.uid == req.user_id,
+                    order=ChiiTimeline.id.desc(),
                 )
-                if tl and tl.dateline >= int(time.time() - 15 * 60):
-                    logger.info("find previous timeline, updating")
-                    if (
-                        tl.cat == TimelineCat.Progress
-                        and tl.type == tlType
-                        and tl.batch == 0
-                        and tl.related == str(req.subject.id)
-                    ):
-                        tl.memo = php.serialize(memo.dict())
-                        session.add(tl)
-                        return SubjectProgressResponse(ok=True)
+            )
+            if tl and tl.dateline >= int(time.time() - 15 * 60):
+                logger.info("find previous timeline, updating")
+                if (
+                    tl.cat == TimelineCat.Progress
+                    and tl.type == tlType
+                    and tl.batch == 0
+                    and tl.related == str(req.subject.id)
+                ):
+                    tl.memo = php.serialize(memo.dict())
+                    session.add(tl)
+                    return SubjectProgressResponse(ok=True)
 
-                session.add(
-                    ChiiTimeline(
-                        uid=req.user_id,
-                        memo=php.serialize(memo.dict()),
-                        img=php.serialize(img.dict()),
-                        cat=TimelineCat.Progress,
-                        type=tlType,
-                        batch=0,
-                        related=str(req.subject.id),
-                    )
+            session.add(
+                ChiiTimeline(
+                    uid=req.user_id,
+                    memo=php.serialize(memo.dict()),
+                    img=php.serialize(img.dict()),
+                    cat=TimelineCat.Progress,
+                    type=tlType,
+                    batch=0,
+                    related=str(req.subject.id),
                 )
+            )
 
         return SubjectProgressResponse(ok=True)

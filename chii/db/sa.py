@@ -1,6 +1,3 @@
-from typing import Callable
-
-import sqlalchemy.orm
 from sqlalchemy import (
     CHAR,
     Text,
@@ -56,7 +53,7 @@ def get(T, *where, order=None):
     return s
 
 
-def sync_session_maker() -> Callable[[], sqlalchemy.orm.Session]:
+def sync_session_maker():
     engine = create_engine(
         config.MYSQL_SYNC_DSN,
         pool_recycle=14400,
