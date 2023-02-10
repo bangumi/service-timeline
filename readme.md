@@ -26,3 +26,7 @@ task gen
 ## API
 
 [./proto/api/v1/timeline.proto](https://github.com/bangumi/proto/blob/master/api/v1/timeline.proto)
+
+## 性能
+
+chii_timeline 表目前非常大，查询条件的 where `必需` 命中索引。
