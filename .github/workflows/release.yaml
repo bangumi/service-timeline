@@ -41,7 +41,7 @@ jobs:
 
         env:
           HASH_POETRY_LOCK: "${{ hashFiles('poetry.lock') }}"
-          HASH_BASE_DOCKER: "${{ hashFiles('etc/base.dockerfile') }}"
+          HASH_BASE_DOCKER: "${{ hashFiles('etc/*.dockerfile') }}"
         name: build base docker image
 
       - run: |
