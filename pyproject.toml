@@ -48,6 +48,9 @@ watchgod = "0.8.2"
 types-protobuf = "^4.21.0.2"
 types-redis = "^4.3.21.7"
 
+[tool.poetry-plugin-bump]
+commit_msg = 'bump: v{version}'
+
 [tool.coverage.run]
 concurrency = ['thread', 'greenlet']
 
