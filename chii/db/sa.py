@@ -83,4 +83,9 @@ if config.SLOW_SQL_MS:
         total = time.monotonic_ns() - conn.info["query_start_time"]
         print(total)
         if total > duration:
-            logger.warning("slow sql {} {}", statement, parameters, duration_ns=total)
+            logger.warning(
+                "slow sql",
+                statement=statement,
+                parameters=parameters,
+                duration_ns=total,
+            )
