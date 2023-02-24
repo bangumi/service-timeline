@@ -70,25 +70,25 @@ def sync_session_maker():
 
 
 if config.SLOW_SQL_MS:
-    duration = config.SLOW_SQL_MS * 1000000
+    duration = config.SLOW_SQL_MS
 
     @event.listens_for(Engine, "before_cursor_execute")
     def before_cursor_execute(
         conn, cursor, statement, parameters, context, executemany
     ):
-        conn.info.setdefault("query_start_time", time.time_ns())
+        conn.info.setdefault("query_start_time", time.time())
 
     @event.listens_for(Engine, "after_cursor_execute")
     def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
         start = conn.info["query_start_time"]
-        end = time.time_ns()
-        total = end - start
+        end = time.time()
+        total = (end - start) * 100
         if total > duration:
             logger.warning(
                 "slow sql",
                 statement=statement,
                 parameters=parameters,
-                duration_ns=total,
-                start_ns=start,
-                end_ns=end,
+                duration_ms=total,
+                start_ms=start,
+                end_ms=end,
             )
