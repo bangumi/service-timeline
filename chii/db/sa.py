@@ -80,11 +80,15 @@ if config.SLOW_SQL_MS:
 
     @event.listens_for(Engine, "after_cursor_execute")
     def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
-        total = time.monotonic_ns() - conn.info["query_start_time"]
+        start = conn.info["query_start_time"]
+        end = time.monotonic_ns()
+        total = end - start
         if total > duration:
             logger.warning(
                 "slow sql",
                 statement=statement,
                 parameters=parameters,
                 duration_ns=total,
+                start_ns=start,
+                end_ns=end,
             )
