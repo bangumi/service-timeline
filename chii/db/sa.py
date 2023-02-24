@@ -82,7 +82,7 @@ if config.SLOW_SQL_MS:
     def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
         start = conn.info["query_start_time"]
         end = time.time()
-        total = (end - start) * 100
+        total = (end - start) * 1000
         if total > duration:
             logger.warning(
                 "slow sql",
