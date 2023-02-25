@@ -11,6 +11,7 @@
   "pre-commit": {
     "enabled": true
   },
+  "semanticCommitType": "build",
   "packageRules": [
     {
       "matchManagers": ["pre-commit"],
