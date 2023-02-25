@@ -20,3 +20,4 @@ dev-env/
 *.pyc.*
 /data/
 tmp/
+.task/

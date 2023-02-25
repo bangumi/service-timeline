@@ -7,6 +7,7 @@ from sqlalchemy import (
     Column,
     String,
     DateTime,
+    Connection,
     or_,
     and_,
     func,
@@ -19,7 +20,6 @@ from sqlalchemy import (
     create_engine,
 )
 from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
-from sqlalchemy.engine import Engine
 from sqlalchemy.dialects.mysql import insert
 
 from chii.config import config
@@ -66,29 +66,33 @@ def sync_session_maker():
         max_overflow=20,
         echo=config.debug,
     )
+
+    if config.SLOW_SQL_MS:
+        event.listen(engine, "before_cursor_execute", before_cursor_execute)
+        event.listen(engine, "after_cursor_execute", after_cursor_execute)
+
     return sessionmaker(engine)
 
 
-if config.SLOW_SQL_MS:
-    duration = config.SLOW_SQL_MS
+def before_cursor_execute(
+    conn: Connection, cursor, statement, parameters, context, executemany
+):
+    print(statement, time.time())
+    conn.info.setdefault("query_start_time", []).append(time.time())
 
-    @event.listens_for(Engine, "before_cursor_execute")
-    def before_cursor_execute(
-        conn, cursor, statement, parameters, context, executemany
-    ):
-        conn.info.setdefault("query_start_time", time.time())
 
-    @event.listens_for(Engine, "after_cursor_execute")
-    def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
-        start = conn.info["query_start_time"]
-        end = time.time()
-        total = (end - start) * 1000
-        if total > duration:
-            logger.warning(
-                "slow sql",
-                statement=statement,
-                parameters=parameters,
-                duration_ms=total,
-                start_ms=start,
-                end_ms=end,
-            )
+def after_cursor_execute(
+    conn: Connection, cursor, statement, parameters, context, executemany
+):
+    start = conn.info["query_start_time"].pop(-1)
+    end = time.time()
+    total = end - start
+    if total * 1000 > config.SLOW_SQL_MS:
+        logger.warning(
+            "slow sql",
+            statement=statement,
+            parameters=parameters,
+            duration_seconds=total,
+            start=start,
+            end=end,
+        )
