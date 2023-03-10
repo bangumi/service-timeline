@@ -17,7 +17,7 @@
       "matchManagers": ["pre-commit"],
       "semanticCommitType": "chore",
       "groupName": "pre-commit",
-      "semanticCommitScope": "dev"
+      "semanticCommitScope": ""
     },
     {
       "matchManagers": ["dockerfile"],
