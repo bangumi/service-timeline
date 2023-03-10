@@ -3,10 +3,12 @@ import json
 import time
 import logging
 import threading
+from typing import Optional
 from concurrent import futures
 
 import grpc
 import etcd3
+from etcd3 import Lease
 from loguru import logger
 
 from api.v1 import timeline_pb2_grpc
@@ -31,24 +33,41 @@ class Register(threading.Thread):
             port=config.etcd_addr.port,
         )
 
-        self.lease = self.etcd.Lease(ttl=5)
-        self.lease.grant()
-        self.etcd.put(
-            f"{config.etcd_prefix}/timeline/{config.node_id}",
-            json.dumps(
-                {
-                    "Addr": config.external_address + ":" + str(config.grpc_port),
-                    "Metadata": None,
-                }
-            ),
-            lease=self.lease.ID,
+        self.key = f"{config.etcd_prefix}/timeline/{config.node_id}".encode()
+        self.value = json.dumps(
+            {
+                "Addr": config.external_address + ":" + str(config.grpc_port),
+                "Metadata": None,
+            }
         )
+        self.lease: Optional[Lease] = None
+
+        self.announce()
+
         self.stop = 0
 
+    def announce(self):
+        self.lease = self.etcd.Lease(ttl=5)
+        self.lease.grant()
+        self.etcd.put(self.key, self.value, lease=self.lease.ID)
+
+    def need_announce(self) -> bool:
+        r = self.etcd.range(self.key).kvs
+        if not r:
+            return True
+
+        if not [x for x in r if x.key == self.key]:
+            return True
+
+        return False
+
     def run(self) -> None:
-        while True and self.stop == 0:
+        while not self.stop:
             time.sleep(2)
-            self.lease.keepalive_once()
+            if self.need_announce():
+                self.announce()
+            else:
+                self.lease.keepalive_once()
 
 
 def start_server():
