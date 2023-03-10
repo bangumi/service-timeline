@@ -56,10 +56,7 @@ class Register(threading.Thread):
         if not r:
             return True
 
-        if not [x for x in r if x.key == self.key]:
-            return True
-
-        return False
+        return self.key not in [x.key for x in r]
 
     def run(self) -> None:
         while not self.stop:
