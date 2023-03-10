@@ -16,7 +16,7 @@
     {
       "matchManagers": ["pre-commit"],
       "semanticCommitType": "chore",
-      "groupName": "deps-dev",
+      "groupName": "pre-commit",
       "semanticCommitScope": "dev"
     },
     {
