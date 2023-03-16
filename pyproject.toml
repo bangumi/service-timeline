@@ -34,7 +34,7 @@ pre-commit = "==3.1.1"
 black = "==23.1.0"
 flake8 = '6.0.0'
 flake8-comprehensions = "==3.10.1"
-flake8-bugbear = "==23.2.13"
+flake8-bugbear = "==23.3.12"
 flake8-pytest-style = "1.7.2"
 flake8-pyproject = "1.2.2"
 flake8-tidy-imports = "==4.8.0"
