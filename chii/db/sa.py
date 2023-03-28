@@ -77,7 +77,6 @@ def sync_session_maker():
 def before_cursor_execute(
     conn: Connection, cursor, statement, parameters, context, executemany
 ):
-    print(statement, time.time())
     conn.info.setdefault("query_start_time", []).append(time.time())
 
 
