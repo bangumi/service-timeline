@@ -1549,14 +1549,14 @@ files = [
 
 [[package]]
 name = "pymysql"
-version = "1.0.2"
+version = "1.0.3"
 description = "Pure Python MySQL Driver"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "PyMySQL-1.0.2-py3-none-any.whl", hash = "sha256:41fc3a0c5013d5f039639442321185532e3e2c8924687abe6537de157d403641"},
-    {file = "PyMySQL-1.0.2.tar.gz", hash = "sha256:816927a350f38d56072aeca5dfb10221fe1dc653745853d30a216637f5d7ad36"},
+    {file = "PyMySQL-1.0.3-py3-none-any.whl", hash = "sha256:89fc6ae41c0aeb6e1f7710cdd623702ea2c54d040565767a78b00a5ebb12f4e5"},
+    {file = "PyMySQL-1.0.3.tar.gz", hash = "sha256:3dda943ef3694068a75d69d071755dbecacee1adf9a1fc5b206830d2b67d25e8"},
 ]
 
 [package.extras]
@@ -2167,4 +2167,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "fd3e8c9b4a63c45cad39fd7f3aa21fd6e3b1860433cdc76d1fafc7695a1e718c"
+content-hash = "110754117475546ffe67a6b4b621cb3238cc45932e9999afd86cf9024b9436b5"
