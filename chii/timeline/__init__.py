@@ -14,7 +14,7 @@ class SubjectMemo(BaseModel):
     subject_id: str
     subject_name: str
     subject_name_cn: str
-    subject_series: bool
+    subject_series: bool = False
     subject_type_id: str
 
 
