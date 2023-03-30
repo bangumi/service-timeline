@@ -11,7 +11,7 @@ authors = []
 [tool.poetry.dependencies]
 python = "^3.10"
 # dependencies
-pytz = "==2023.2"
+pytz = "==2023.3"
 loguru = "==0.6.0"
 SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.7" }
 grpcio = "1.53.0"
@@ -42,7 +42,7 @@ requests = "==2.28.2"
 types-pytz = "2023.2.0.1"
 pytest-github-actions-annotate-failures = "==0.1.8"
 pytest-env = "==0.8.1"
-redis = { extras = ["hiredis"], version = "==4.5.3" }
+redis = { extras = ["hiredis"], version = "==4.5.4" }
 watchgod = "0.8.2"
 types-protobuf = "^4.21.0.2"
 types-redis = "^4.3.21.7"
