@@ -24,7 +24,7 @@ etcd3-py = "0.1.6"
 aiohttp = "3.8.4"
 
 [tool.poetry.group.dev.dependencies]
-sqlacodegen = "2.3.0"
+sqlacodegen = "2.3.0.post1"
 # tests
 coverage = { version = "==7.2.2", extras = ["toml"] }
 pytest = "==7.2.2"
