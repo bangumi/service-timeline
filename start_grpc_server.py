@@ -47,6 +47,7 @@ class Register(threading.Thread):
         self.stop = 0
 
     def announce(self):
+        logger.info("announce node")
         self.lease = self.etcd.Lease(ttl=5)
         self.lease.grant()
         self.etcd.put(self.key, self.value, lease=self.lease.ID)
