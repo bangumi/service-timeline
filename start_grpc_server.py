@@ -63,6 +63,7 @@ class Register(threading.Thread):
         while not self.stop:
             time.sleep(5)
             if self.need_announce():
+                logger.info("old key not exists, re-create key/value pair")
                 self.announce()
             else:
                 self.lease.keepalive_once()
