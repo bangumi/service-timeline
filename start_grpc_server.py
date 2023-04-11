@@ -10,6 +10,7 @@ import grpc
 import etcd3
 from etcd3 import Lease
 from loguru import logger
+from etcd3.utils import retry
 
 from api.v1 import timeline_pb2_grpc
 from chii.config import config
@@ -66,7 +67,7 @@ class Register(threading.Thread):
                 logger.info("old key not exists, re-create key/value pair")
                 self.announce()
             else:
-                self.lease.keepalive_once()
+                retry(self.lease.keepalive_once, max_tries=3)
 
 
 def start_server():
