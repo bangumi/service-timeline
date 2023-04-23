@@ -23,7 +23,7 @@ repos:
         args: [--remove]
 
   - repo: https://github.com/python-poetry/poetry
-    rev: "1.4.1"
+    rev: "1.4.0"
     hooks:
       - id: poetry-check
       - id: poetry-lock
@@ -37,7 +37,7 @@ repos:
         args: [--py38-plus]
 
   - repo: https://github.com/myint/autoflake
-    rev: v2.0.2
+    rev: v2.1.1
     hooks:
       - id: autoflake
         args:
