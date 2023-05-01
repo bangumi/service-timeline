@@ -26,7 +26,7 @@ aiohttp = "3.8.4"
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "2.3.0"
 # tests
-coverage = { version = "==7.2.2", extras = ["toml"] }
+coverage = { version = "==7.2.5", extras = ["toml"] }
 pytest = "==7.2.2"
 pytest-dotenv = "0.5.2"
 # linter and formatter
