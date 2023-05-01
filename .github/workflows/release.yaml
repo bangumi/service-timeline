@@ -25,7 +25,7 @@ jobs:
           password: ${{ github.token }}
 
       - run: |
-          export "TAG_HASH=1-${HASH_POETRY_LOCK:0:10}-${HASH_BASE_DOCKER:0:10}"
+          export "TAG_HASH=${FILES_HASH}"
 
           if ! docker pull "${IMAGE}:base-${TAG_HASH}"; then
             echo "build base docker image"
@@ -36,8 +36,7 @@ jobs:
           docker tag "${IMAGE}:base-${TAG_HASH}" base-image
 
         env:
-          HASH_POETRY_LOCK: "${{ hashFiles('poetry.lock') }}"
-          HASH_BASE_DOCKER: "${{ hashFiles('etc/*.dockerfile') }}"
+          FILES_HASH: "${{ hashFiles('poetry.lock', 'etc/*.dockerfile') }}"
         name: build base docker image
 
       - run: |
