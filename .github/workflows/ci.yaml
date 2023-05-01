@@ -65,5 +65,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker build -t base-image -f etc/base.dockerfile .
-      - run: docker build -t tmp -f etc/main.dockerfile .
+      - run: docker build -t tmp -f etc/final.dockerfile .
       - run: docker run tmp --help

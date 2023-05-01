@@ -13,10 +13,12 @@ jobs:
     env:
       IMAGE: "ghcr.io/${{ github.repository_owner }}/ms-timeline"
 
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.sha }}
+      cancel-in-progress: false
+
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - uses: docker/login-action@v2
         with:
@@ -24,38 +26,55 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - run: |
-          export "TAG_HASH=${FILES_HASH}"
-
-          if ! docker pull "${IMAGE}:base-${TAG_HASH}"; then
-            echo "build base docker image"
-            docker build -t "${IMAGE}:base-${TAG_HASH}" -f etc/base.dockerfile .
-            docker push "${IMAGE}:base-${TAG_HASH}"
-          fi
-
-          docker tag "${IMAGE}:base-${TAG_HASH}" base-image
-
+      - name: build base docker image
         env:
           FILES_HASH: "${{ hashFiles('poetry.lock', 'etc/*.dockerfile') }}"
-        name: build base docker image
-
-      - run: |
-          echo "TAG=master-$(git describe --match='v*' --tags)" >> $GITHUB_ENV
-          echo "REF=master" >> $GITHUB_ENV
-        if: "${{ !startsWith(github.ref, 'refs/tags/') }}"
-
-      - run: |
-          echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          echo "REF=latest" >> $GITHUB_ENV
-        if: "${{ startsWith(github.ref, 'refs/tags/') }}"
-
-      - name: docker build
-        run: docker build --build-arg "ARG_REF=${TAG}" -t current -f etc/main.dockerfile .
-
-      - name: push tags
         run: |
-          docker tag current "${IMAGE}:${REF}"
-          docker push "${IMAGE}:${REF}"
+          export "TAG_HASH=base-${FILES_HASH}"
+          echo "TAG_HASH=${TAG_HASH}" >>$GITHUB_ENV
 
-          docker tag current "${IMAGE}:${TAG}"
-          docker push "${IMAGE}:${TAG}"
+          if ! docker pull "${IMAGE}:${TAG_HASH}"; then
+            echo "NEED_BUILD_BASE=true" >>$GITHUB_ENV
+          else
+            echo "NEED_BUILD_BASE=false" >>$GITHUB_ENV
+          fi
+
+      - name: Build Base Docker Image (if needed)
+        uses: docker/build-push-action@v4
+        if: ${{ env.NEED_BUILD_BASE }}
+        with:
+          context: ./
+          file: ./etc/base.dockerfile
+          provenance: false
+          push: true
+          tags: ${{ env.IMAGE }}:${{ env.TAG_HASH }}
+
+      - run: docker tag "${IMAGE}:${TAG_HASH}" base-image
+
+      - run: echo "SHA=$(git show --no-patch --no-notes --date=short-local --pretty='%as-%h')" >> $GITHUB_ENV
+        env:
+          TZ: UTC
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern=v{{version}}
+
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=ref,event=branch,suffix=-${{ env.SHA }}
+
+            type=raw,value=${{ env.SHA }}
+
+      - name: Build Final Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./
+          provenance: false
+          file: ./etc/final.dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
