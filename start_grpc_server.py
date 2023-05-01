@@ -58,11 +58,7 @@ class Register(threading.Thread):
         if not r:
             return True
 
-        for x in r:
-            if x.key == self.key:
-                return True
-
-        return False
+        return any(x.key == self.key for x in r)
 
     def run(self) -> None:
         while not self.stop:
@@ -106,7 +102,7 @@ def start_server():
 def main():
     if "-h" in sys.argv or "--help" in sys.argv:
         print("timeline micro service")
-        exit(0)
+        sys.exit(0)
     logger.info("starting grpc server")
     logging.basicConfig()
     start_server()

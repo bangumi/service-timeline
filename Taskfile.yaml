@@ -26,4 +26,7 @@ tasks:
 
   dev: watchgod start_grpc_server.main
   mypy: mypy --show-column-numbers chii rpc
-  flake8: flake8
+
+  lint:
+    - poetry run mypy chii rpc
+    - poetry run ruff check .

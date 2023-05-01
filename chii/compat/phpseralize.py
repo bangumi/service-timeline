@@ -62,7 +62,7 @@ def load(
             char = fp.read(1)
             if char == delim:
                 break
-            elif not char:  # pragma: no cover
+            if not char:  # pragma: no cover
                 raise ValueError("unexpected end of stream")
             buf.append(char)
         return b"".join(buf)
@@ -137,5 +137,5 @@ def dict_to_list(d):
     d = dict(d)
     try:
         return [d[x] for x in range(len(d))]
-    except KeyError:  # pragma: no cover
-        raise ValueError("dict is not a sequence")
+    except KeyError as e:  # pragma: no cover
+        raise ValueError("dict is not a sequence") from e

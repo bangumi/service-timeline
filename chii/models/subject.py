@@ -42,7 +42,6 @@ class Ep(BaseModel):
     airdate: str = Field(alias="ep_airdate")
     online: str = Field(alias="ep_online")
     comment: int = Field(alias="ep_comment")
-    # resources: int = Field(alias="ep_resources")
     desc: str = Field(alias="ep_desc")
     dateline: datetime.datetime = Field(alias="ep_dateline")
     lastpost: datetime.datetime = Field(alias="ep_lastpost")

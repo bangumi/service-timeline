@@ -13,11 +13,11 @@ from chii.db import sa
 from chii.compat import phpseralize
 from chii.config import config
 from chii.timeline import (
+    SUBJECT_TYPE_MAP,
     SubjectMemo,
     TimelineCat,
     ProgressMemo,
     SubjectImage,
-    subjectTypeMap,
 )
 from chii.db.tables import ChiiTimeline
 from api.v1.timeline_pb2 import (
@@ -43,7 +43,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def SubjectCollect(
         self, request: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
-        tlType = subjectTypeMap[request.subject.type][request.collection]
+        tlType = SUBJECT_TYPE_MAP[request.subject.type][request.collection]
         if config.debug:
             print(request)
         with self.SessionMaker.begin() as session:

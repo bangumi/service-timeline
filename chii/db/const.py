@@ -65,7 +65,7 @@ class Gender(IntEnum):
     def str(self):
         if self.value == self.male:
             return "male"
-        elif self.value == self.female:
+        if self.value == self.female:
             return "female"
         raise ValueError(f"{self.value} is not valid gender")
 

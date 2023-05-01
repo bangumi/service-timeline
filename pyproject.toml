@@ -31,12 +31,6 @@ pytest = "==7.3.1"
 pytest-dotenv = "0.5.2"
 # linter and formatter
 pre-commit = "==3.2.2"
-flake8 = '6.0.0'
-flake8-comprehensions = "==3.11.1"
-flake8-bugbear = "==23.3.23"
-flake8-pytest-style = "1.7.2"
-flake8-pyproject = "1.2.3"
-flake8-tidy-imports = "==4.8.0"
 mypy = "==1.2.0"
 requests = "==2.29.0"
 types-pytz = "2023.3.0.0"
@@ -46,6 +40,7 @@ redis = { extras = ["hiredis"], version = "==4.5.4" }
 watchgod = "0.8.2"
 types-protobuf = "^4.21.0.2"
 types-redis = "^4.3.21.7"
+ruff = "^0.0.263"
 
 [tool.poetry-plugin-bump]
 commit_msg = 'bump: v{version}'
@@ -76,9 +71,117 @@ plugins = ['sqlalchemy.ext.mypy.plugin', 'pydantic.mypy']
 [tool.black]
 target_version = ['py310']
 
+[tool.ruff]
+extend-exclude = [".venv", "api"]
 
-[tool.flake8]
-max-line-length = 88
-ignore = ['W503', 'B008', 'E203', 'E501']
-exclude = ['.venv', '.git', '__pycache__', 'docs/source/conf.py', 'old', 'build', 'dist', 'tmp', 'api']
-ban-relative-imports = 'parents'
+select = [
+  "B",
+  "C",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "W",
+  "BLE",
+  #  "DJ",
+  "ERA",
+  "EXE",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  #  "DTZ",
+  #  "PTH",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "YTT",
+]
+ignore = [
+  'N806',
+  'N802',
+  'N803',
+  'E501',
+  'BLE001',
+  'RUF002',
+  'S301',
+  'S314',
+  'S101',
+  'N815',
+  'S104',
+  'C901',
+  'ISC003',
+  'PLR0913',
+  'I001',
+  'RUF001',
+  'SIM108',
+  'TCH003',
+  'RUF003',
+  'RET504',
+  'TRY300',
+  'TRY003',
+  'TRY201',
+  'TRY301',
+  'PLR0912',
+  'PLR0915',
+  'PLR2004',
+  'PGH003',
+]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = [
+  "A",
+  "B",
+  "C",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "W",
+  "BLE",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "YTT",
+]
+
+target-version = "py310"

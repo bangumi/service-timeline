@@ -31,12 +31,6 @@ def main():
                 last_id = tl.tml_id
                 timeline.parseTimeLine(tl)
                 # if tl.tml_memo:
-                #     try:
-                #         memo = phpseralize.loads(tl.tml_memo.encode())
-                #     except Exception as e:
-                #         print(tl.tml_memo)
-                #         print("memo", e)
-                #         continue
 
                 if tl.tml_img:
                     try:
@@ -45,7 +39,6 @@ def main():
                         print("image", e)
                         continue
 
-                    # json.dumps(memo, ensure_ascii=False, sort_keys=True)
                     parse_obj_as(Union[Dict[int, timeline.Image], timeline.Image], img)
 
             if last_id >= max_tml_id:

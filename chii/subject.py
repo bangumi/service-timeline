@@ -21,12 +21,12 @@ class SubjectType(enum.IntEnum):
     def str(self) -> str:
         if self == self.book:
             return "书籍"
-        elif self == self.anime:
+        if self == self.anime:
             return "动画"
-        elif self == self.music:
+        if self == self.music:
             return "音乐"
-        elif self == self.game:
+        if self == self.game:
             return "游戏"
-        elif self == self.real:
+        if self == self.real:
             return "三次元"
         raise ValueError(f"unexpected SubjectType {self}")

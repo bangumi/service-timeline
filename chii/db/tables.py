@@ -328,8 +328,7 @@ class GzipPHPSerializedBlob(MEDIUMBLOB):
     def compare_values(self, x, y):
         if self.comparator:
             return self.comparator(x, y)
-        else:
-            return x == y
+        return x == y
 
 
 class ChiiRevText(Base):

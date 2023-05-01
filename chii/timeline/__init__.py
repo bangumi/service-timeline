@@ -70,7 +70,7 @@ class Timeline(BaseModel):
     memo: Any
 
 
-subjectTypeMap: Dict[int, List[int]] = {
+SUBJECT_TYPE_MAP: Dict[int, List[int]] = {
     SubjectType.book: [0, 1, 5, 9, 13, 14],
     SubjectType.anime: [0, 2, 6, 10, 13, 14],
     SubjectType.music: [0, 3, 7, 11, 13, 14],
@@ -80,26 +80,25 @@ subjectTypeMap: Dict[int, List[int]] = {
 
 
 def parseMemo(cat: int, type: int, batch: bool, memo: str):
-    if cat == TimelineCat.Relation:
-        if type in [2, 3, 4]:
-            return phpseralize.loads(memo)
+    if cat == TimelineCat.Relation and type in [2, 3, 4]:
+        return phpseralize.loads(memo)
 
     if cat == TimelineCat.Say:
         if type == 2:
             return phpseralize.loads(memo)
         return phpseralize.loads(memo)
+    return None
 
 
 def parseTimeLine(tl: ChiiTimeline) -> Timeline:
     memo = parseMemo(tl.cat, tl.type, bool(tl.batch), tl.memo)
 
     if not memo:
-        raise Exception(
+        raise ValueError(
             f"unexpected timeline<id=${tl.id}> cat ${tl.cat} type ${tl.type} ${tl.memo}"
         )
 
-    if tl.cat == TimelineCat.Relation:
-        if type in [2, 3, 4]:
-            return Timeline(id=tl.id, cat=tl.cat, type=tl.type, memo=memo)
+    if tl.cat == TimelineCat.Relation and type in [2, 3, 4]:
+        return Timeline(id=tl.id, cat=tl.cat, type=tl.type, memo=memo)
 
     raise ValueError("unknown timeline")

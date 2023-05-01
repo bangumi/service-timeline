@@ -17,7 +17,7 @@ class UserGroup(enum.IntEnum):
 class Role:
     def allow_nsfw(self) -> bool:
         """if this user can see nsfw contents"""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_user_id(self) -> Optional[int]:
-        raise NotImplementedError()
+        raise NotImplementedError
