@@ -32,7 +32,6 @@ pytest-dotenv = "0.5.2"
 # linter and formatter
 pre-commit = "==3.2.2"
 mypy = "==1.2.0"
-requests = "==2.29.0"
 types-pytz = "2023.3.0.0"
 pytest-github-actions-annotate-failures = "==0.1.8"
 pytest-env = "==0.8.1"
