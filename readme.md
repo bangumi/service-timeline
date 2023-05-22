@@ -29,4 +29,4 @@ task gen
 
 ## 性能
 
-chii_timeline 表目前非常大，查询条件的 where `必需` 命中索引。
+chii_timeline 表目前非常大，查询条件的 where 条件 **必需** 命中索引。
