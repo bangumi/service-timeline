@@ -99,9 +99,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         memo[req.subject.id] = SubjectMemo(
             subject_id=str(req.subject.id),
             subject_type_id=str(req.subject.type),
-            subject_name_cn=req.subject.name,
+            subject_name_cn=req.subject.name_cn,
             subject_series=req.subject.series,
-            subject_name=req.subject.name_cn,
+            subject_name=req.subject.name,
             collect_comment=escaped,
             collect_rate=req.rate,
         )
@@ -130,9 +130,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         memo = SubjectMemo(
             subject_id=str(req.subject.id),
             subject_type_id=str(req.subject.type),
-            subject_name_cn=req.subject.name,
+            subject_name_cn=req.subject.name_cn,
             subject_series=req.subject.series,
-            subject_name=req.subject.name_cn,
+            subject_name=req.subject.name,
             collect_comment=html.escape(req.comment),
             collect_rate=req.rate,
         )
