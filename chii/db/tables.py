@@ -1,22 +1,22 @@
-import zlib
 import datetime
-from typing import TYPE_CHECKING, Any, List, Tuple, Union, Optional
+import zlib
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
 
-from sqlalchemy import TIMESTAMP, Date, Enum, Float, Index, Table, Column, String, text
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import TIMESTAMP, Column, Date, Enum, Float, Index, String, Table, text
 from sqlalchemy.dialects.mysql import (
     CHAR,
     ENUM,
-    TEXT,
-    YEAR,
     INTEGER,
+    MEDIUMBLOB,
+    MEDIUMINT,
+    MEDIUMTEXT,
+    SMALLINT,
+    TEXT,
     TINYINT,
     VARCHAR,
-    SMALLINT,
-    MEDIUMINT,
-    MEDIUMBLOB,
-    MEDIUMTEXT,
+    YEAR,
 )
+from sqlalchemy.orm import declarative_base
 
 from chii.compat import phpseralize
 from chii.compat.phpseralize import dict_to_list

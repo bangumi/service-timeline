@@ -5,8 +5,8 @@ from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
 from chii import timeline
-from chii.db import sa
 from chii.compat import phpseralize
+from chii.db import sa
 from chii.db.tables import ChiiTimeline
 
 step = 100

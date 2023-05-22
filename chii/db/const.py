@@ -1,15 +1,15 @@
 import enum
 from typing import Dict, NamedTuple
 
-from chii.subject import SubjectType
 from chii.db._const import (
     Staff,
+    staff_job_anime,
     staff_job_book,
     staff_job_game,
-    staff_job_real,
-    staff_job_anime,
     staff_job_music,
+    staff_job_real,
 )
+from chii.subject import SubjectType
 
 
 class IntEnum(enum.IntEnum):

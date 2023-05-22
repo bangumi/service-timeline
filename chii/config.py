@@ -2,7 +2,7 @@ import uuid
 from typing import Optional
 
 from dotenv import load_dotenv
-from pydantic import Field, AnyHttpUrl, BaseSettings
+from pydantic import AnyHttpUrl, BaseSettings, Field
 
 
 class Settings(BaseSettings):

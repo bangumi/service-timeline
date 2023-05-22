@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 
 
 class Subject(BaseModel):

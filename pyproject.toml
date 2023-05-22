@@ -39,7 +39,6 @@ redis = { extras = ["hiredis"], version = "==4.5.4" }
 watchgod = "0.8.2"
 types-protobuf = "^4.21.0.2"
 types-redis = "^4.3.21.7"
-ruff = "0.0.263"
 
 [tool.poetry-plugin-bump]
 commit_msg = 'bump: v{version}'
@@ -125,7 +124,6 @@ ignore = [
   'C901',
   'ISC003',
   'PLR0913',
-  'I001',
   'RUF001',
   'SIM108',
   'TCH003',

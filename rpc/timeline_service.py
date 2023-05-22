@@ -9,26 +9,26 @@ from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
 from api.v1 import timeline_pb2_grpc
-from chii.db import sa
-from chii.compat import phpseralize
-from chii.config import config
-from chii.timeline import (
-    SUBJECT_TYPE_MAP,
-    SubjectMemo,
-    TimelineCat,
-    ProgressMemo,
-    SubjectImage,
-)
-from chii.db.tables import ChiiTimeline
 from api.v1.timeline_pb2 import (
+    EpisodeCollectRequest,
+    EpisodeCollectResponse,
     HelloRequest,
     HelloResponse,
-    EpisodeCollectRequest,
     SubjectCollectRequest,
-    EpisodeCollectResponse,
     SubjectCollectResponse,
     SubjectProgressRequest,
     SubjectProgressResponse,
+)
+from chii.compat import phpseralize
+from chii.config import config
+from chii.db import sa
+from chii.db.tables import ChiiTimeline
+from chii.timeline import (
+    SUBJECT_TYPE_MAP,
+    ProgressMemo,
+    SubjectImage,
+    SubjectMemo,
+    TimelineCat,
 )
 
 

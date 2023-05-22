@@ -3,24 +3,24 @@ import time
 from loguru import logger
 from sqlalchemy import (
     CHAR,
-    Text,
     Column,
-    String,
-    DateTime,
     Connection,
-    or_,
+    DateTime,
+    String,
+    Text,
     and_,
+    create_engine,
+    delete,
+    event,
     func,
     join,
-    text,
-    event,
-    delete,
+    or_,
     select,
+    text,
     update,
-    create_engine,
 )
-from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
 from sqlalchemy.dialects.mysql import insert
+from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
 
 from chii.config import config
 

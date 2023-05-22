@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from chii.compat.phpseralize import loads, dict_to_list
+from chii.compat.phpseralize import dict_to_list, loads
 
 fixtures_path = Path(__file__).parent.joinpath("fixtures")
 

@@ -1,16 +1,16 @@
-import sys
 import json
-import time
 import logging
+import sys
 import threading
-from typing import Optional
+import time
 from concurrent import futures
+from typing import Optional
 
-import grpc
 import etcd3
+import grpc
 from etcd3 import Lease
-from loguru import logger
 from etcd3.utils import retry
+from loguru import logger
 
 from api.v1 import timeline_pb2_grpc
 from chii.config import config

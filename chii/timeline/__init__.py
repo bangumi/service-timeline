@@ -3,9 +3,9 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
 from chii.compat import phpseralize
-from chii.subject import SubjectType
 from chii.db.const import IntEnum
 from chii.db.tables import ChiiTimeline
+from chii.subject import SubjectType
 
 
 class SubjectMemo(BaseModel):

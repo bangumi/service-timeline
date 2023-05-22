@@ -5,9 +5,9 @@ import grpc
 from api.v1 import timeline_pb2_grpc
 from api.v1.timeline_pb2 import (
     Episode,
-    Subject,
     EpisodeCollectRequest,
     EpisodeCollectResponse,
+    Subject,
 )
 
 

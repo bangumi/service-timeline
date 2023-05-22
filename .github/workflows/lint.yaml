@@ -34,22 +34,6 @@ jobs:
       - name: mypy
         run: mypy --show-column-numbers chii rpc
 
-  ruff:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - uses: Trim21/setup-poetry@dist/v1
-
-      - uses: Trim21/install-poetry-project@dist/v1
-
-      - name: ruff
-        run: ruff check . --format=github
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -59,18 +43,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - uses: Trim21/setup-poetry@dist/v1
-
-      - uses: Trim21/install-poetry-project@dist/v1
-
-      - name: Get Latest tools version
-        run: echo "PY=$(python -VV | md5sum | cut -d' ' -f1)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pre-commit
-          key: precommit-2-${{ env.PY }}-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: precommit-2-${{ env.PY }}-
-
-      - name: pre-commit
-        run: pre-commit run --all-files --show-diff-on-failure && pre-commit gc
+      - uses: trim21/setup-poetry@dist/v1
+      - uses: trim21/install-poetry-project@dist/v1
+      - uses: trim21/actions/pre-commit@master
