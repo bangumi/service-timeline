@@ -58,7 +58,7 @@ class Register(threading.Thread):
         if not r:
             return True
 
-        return any(x.key == self.key for x in r)
+        return all(x.key != self.key for x in r)
 
     def run(self) -> None:
         while not self.stop:
