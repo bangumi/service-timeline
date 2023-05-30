@@ -62,7 +62,7 @@ class Register(threading.Thread):
 
     def run(self) -> None:
         while not self.stop:
-            time.sleep(5)
+            time.sleep(3)
             if self.need_announce():
                 logger.info("old key not exists, re-create key/value pair")
                 self.announce()
