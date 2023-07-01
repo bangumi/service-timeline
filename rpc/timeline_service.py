@@ -1,11 +1,11 @@
 import html
 import time
-from typing import Dict, Optional
+from typing import Optional
 
 import phpserialize as php
+import pydantic
 from grpc import RpcContext
 from loguru import logger
-from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
 from api.v1 import timeline_pb2_grpc
@@ -73,11 +73,11 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     ):
         escaped = html.escape(req.comment)
         if tl.batch:
-            memo = parse_obj_as(
-                Dict[int, SubjectMemo], phpseralize.loads(tl.memo.encode())
-            )
+            memo: dict[int, SubjectMemo] = pydantic.TypeAdapter(
+                dict[int, SubjectMemo]
+            ).validate_python(phpseralize.loads(tl.memo.encode()))
         else:
-            m = parse_obj_as(SubjectMemo, phpseralize.loads(tl.memo.encode()))
+            m = SubjectMemo.model_validate(phpseralize.loads(tl.memo.encode()))
             if int(m.subject_id) == req.subject.id:
                 # save request called twice, just ignore
                 should_update = False
@@ -107,11 +107,11 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         if tl.batch:
-            img = parse_obj_as(
-                Dict[int, SubjectImage], phpseralize.loads(tl.img.encode())
-            )
+            img: dict[int, SubjectImage] = pydantic.TypeAdapter(
+                dict[int, SubjectImage]
+            ).validate_python(phpseralize.loads(tl.img.encode()))
         else:
-            i = parse_obj_as(SubjectImage, phpseralize.loads(tl.img.encode()))
+            i = SubjectImage.model_validate(phpseralize.loads(tl.img.encode()))
             img = {int(i.subject_id): i}
 
         img[req.subject.id] = SubjectImage(
@@ -119,8 +119,10 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         tl.batch = 1
-        tl.memo = php.serialize({key: value.dict() for key, value in memo.items()})
-        tl.img = php.serialize({key: value.dict() for key, value in img.items()})
+        tl.memo = php.serialize(
+            {key: value.model_dump() for key, value in memo.items()}
+        )
+        tl.img = php.serialize({key: value.model_dump() for key, value in img.items()})
 
         session.add(tl)
 
@@ -144,8 +146,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 cat=TimelineCat.Subject,
                 type=type,
                 uid=req.user_id,
-                memo=php.serialize(memo.dict()),
-                img=php.serialize(img.dict()),
+                memo=php.serialize(memo.model_dump()),
+                img=php.serialize(img.model_dump()),
                 batch=0,
                 related=str(req.subject.id),
             )
@@ -239,15 +241,15 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     and tl.batch == 0
                     and tl.related == str(req.subject.id)
                 ):
-                    tl.memo = php.serialize(memo.dict())
+                    tl.memo = php.serialize(memo.model_dump())
                     session.add(tl)
                     return EpisodeCollectResponse(ok=True)
 
             session.add(
                 ChiiTimeline(
                     uid=req.user_id,
-                    memo=php.serialize(memo.dict()),
-                    img=php.serialize(img.dict()),
+                    memo=php.serialize(memo.model_dump()),
+                    img=php.serialize(img.model_dump()),
                     cat=TimelineCat.Progress,
                     type=tlType,
                     source=5,
@@ -297,15 +299,15 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     and tl.batch == 0
                     and tl.related == str(req.subject.id)
                 ):
-                    tl.memo = php.serialize(memo.dict())
+                    tl.memo = php.serialize(memo.model_dump())
                     session.add(tl)
                     return SubjectProgressResponse(ok=True)
 
             session.add(
                 ChiiTimeline(
                     uid=req.user_id,
-                    memo=php.serialize(memo.dict()),
-                    img=php.serialize(img.dict()),
+                    memo=php.serialize(memo.model_dump()),
+                    img=php.serialize(img.model_dump()),
                     cat=TimelineCat.Progress,
                     type=tlType,
                     batch=0,
