@@ -1,6 +1,6 @@
 import html
 import time
-from typing import Dict, Optional
+from typing import Optional
 
 import phpserialize as php
 import pydantic
@@ -73,9 +73,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     ):
         escaped = html.escape(req.comment)
         if tl.batch:
-            memo = pydantic.TypeAdapter(Dict[int, SubjectMemo]).validate_python(
-                phpseralize.loads(tl.memo.encode())
-            )
+            memo: dict[int, SubjectMemo] = pydantic.TypeAdapter(
+                dict[int, SubjectMemo]
+            ).validate_python(phpseralize.loads(tl.memo.encode()))
         else:
             m = SubjectMemo.model_validate(phpseralize.loads(tl.memo.encode()))
             if int(m.subject_id) == req.subject.id:
@@ -107,9 +107,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         if tl.batch:
-            img = pydantic.TypeAdapter(dict[int, SubjectImage]).validate_python(
-                phpseralize.loads(tl.img.encode())
-            )
+            img: dict[int, SubjectImage] = pydantic.TypeAdapter(
+                dict[int, SubjectImage]
+            ).validate_python(phpseralize.loads(tl.img.encode()))
         else:
             i = SubjectImage.model_validate(phpseralize.loads(tl.img.encode()))
             img = {int(i.subject_id): i}

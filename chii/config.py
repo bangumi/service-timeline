@@ -39,7 +39,7 @@ class Settings(BaseSettings):
 
 
 load_dotenv()
-config = Settings()
+config = Settings()  # type: ignore
 
 if __name__ == "__main__":
     print(config.dict())
