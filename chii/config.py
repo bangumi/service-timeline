@@ -42,4 +42,4 @@ load_dotenv()
 config = Settings()  # type: ignore
 
 if __name__ == "__main__":
-    print(config.dict())
+    print(config.model_dump())
