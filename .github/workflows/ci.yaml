@@ -17,6 +17,9 @@ jobs:
       - run: cd ~/dev-env && docker-compose up -d
 
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - uses: trim21/setup-poetry@dist/v1
       - uses: trim21/install-poetry-project@dist/v1
 
