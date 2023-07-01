@@ -1146,7 +1146,7 @@ name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = "*"
 files = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
@@ -1266,6 +1266,21 @@ typing-extensions = [
     {version = ">=4.6.0", markers = "platform_python_implementation != \"PyPy\""},
     {version = ">=4.6.0,<4.7.0", markers = "platform_python_implementation == \"PyPy\""},
 ]
+
+[[package]]
+name = "pydantic-settings"
+version = "2.0.0"
+description = "Settings management using Pydantic"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pydantic_settings-2.0.0-py3-none-any.whl", hash = "sha256:11179e6f1837a129bd7854bcce21006cbcb7e8a988f8ae7239a09a28d2ad35fd"},
+    {file = "pydantic_settings-2.0.0.tar.gz", hash = "sha256:0dc7b6c599fd2150583d2acce1f8d95cccde426ee31d1e0d2d374d58e74d37e4"},
+]
+
+[package.dependencies]
+pydantic = ">=2.0b3"
+python-dotenv = ">=0.21.0"
 
 [[package]]
 name = "pymysql"
@@ -1818,4 +1833,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "985c64d2f572c774826ec3611c00b710417b0b6e8c91e799b4cadbdce23dea6d"
+content-hash = "e71eccb83fe9feb262799bc50688220fd2c1cb873a94adf8bb4db19cdcd07e1e"
