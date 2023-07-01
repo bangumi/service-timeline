@@ -1,6 +1,6 @@
 import datetime
 import zlib
-from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, ClassVar, List, Optional, Tuple, Union
 
 from sqlalchemy import TIMESTAMP, Column, Date, Enum, Float, Index, String, Table, text
 from sqlalchemy.dialects.mysql import (
@@ -191,8 +191,10 @@ class ChiiPersonCollect(Base):
 
 
 class ChiiPersonCsIndex(Base):
-    __tablename__ = "chii_person_cs_index"
-    __table_args__ = {"comment": "subjects' credits/creator & staff (c&s)index"}
+    __tablename__: ClassVar[str] = "chii_person_cs_index"
+    __table_args__: ClassVar[dict[str, Any]] = {
+        "comment": "subjects' credits/creator & staff (c&s)index"
+    }
 
     prsn_type = Column(ENUM("prsn", "crt"), primary_key=True, nullable=False)
     prsn_id = Column(
@@ -217,7 +219,7 @@ class ChiiPersonCsIndex(Base):
 
 class ChiiPersonField(Base):
     __tablename__ = "chii_person_fields"
-    __table_args__ = {"extend_existing": True}
+    __table_args__: ClassVar[dict[str, Any]] = {"extend_existing": True}
 
     prsn_id = Column(INTEGER(8), primary_key=True, nullable=False, index=True)
     prsn_cat = Column(ENUM("prsn", "crt"), nullable=False)
@@ -226,11 +228,14 @@ class ChiiPersonField(Base):
     birth_year = Column(YEAR(4), nullable=False)
     birth_mon = Column(TINYINT(2), nullable=False)
     birth_day = Column(TINYINT(2), nullable=False)
-    __mapper_args__ = {"polymorphic_on": prsn_cat, "polymorphic_identity": "prsn"}
+    __mapper_args__: ClassVar[dict[str, Any]] = {
+        "polymorphic_on": prsn_cat,
+        "polymorphic_identity": "prsn",
+    }
 
 
 class ChiiCharacterField(ChiiPersonField):
-    __mapper_args__ = {"polymorphic_identity": "crt"}
+    __mapper_args__: ClassVar[dict[str, Any]] = {"polymorphic_identity": "crt"}
 
 
 t_chii_person_relationship = Table(
@@ -248,7 +253,7 @@ t_chii_person_relationship = Table(
 
 class ChiiPerson(Base):
     __tablename__ = "chii_persons"
-    __table_args__ = {"comment": "（现实）人物表"}
+    __table_args__: ClassVar[dict[str, Any]] = {"comment": "（现实）人物表"}
 
     prsn_id = Column(MEDIUMINT(8), primary_key=True)
     prsn_name = Column(String(255, "utf8_unicode_ci"), nullable=False)
@@ -490,7 +495,7 @@ class ChiiSubjectRelations(Base):
     rlt_vice_versa = Column("rlt_vice_versa", TINYINT(1), nullable=False)
     rlt_order = Column("rlt_order", TINYINT(3), nullable=False, comment="关联排序")
 
-    __mapper_args__ = {
+    __mapper_args__: ClassVar[dict[str, Any]] = {
         "primary_key": [rlt_subject_id, rlt_related_subject_id, rlt_vice_versa]
     }
 
