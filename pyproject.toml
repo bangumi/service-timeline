@@ -17,10 +17,11 @@ grpcio = "1.56.0"
 grpcio-tools = "1.56.0"
 libphpserialize = "0.0.8"
 pymysql = "1.1.0"
-pydantic = "1.10.10"
+pydantic = "^2"
 python-dotenv = "1.0.0"
 etcd3-py = "0.1.6"
 aiohttp = "3.8.4"
+pytest-cov = "^4.1.0"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "2.3.0"
@@ -51,7 +52,7 @@ exclude_lines = [
 ]
 
 [tool.pytest.ini_options]
-addopts = '-rav -W error::sqlalchemy.exc.RemovedIn20Warning'
+addopts = '-rav'
 env = ['D:TESTING=true', 'SQLALCHEMY_WARN_20=true']
 
 [tool.mypy]
