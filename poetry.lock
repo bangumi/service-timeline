@@ -1287,17 +1287,17 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
 name = "pydantic-settings"
-version = "2.0.0"
+version = "2.0.1"
 description = "Settings management using Pydantic"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pydantic_settings-2.0.0-py3-none-any.whl", hash = "sha256:11179e6f1837a129bd7854bcce21006cbcb7e8a988f8ae7239a09a28d2ad35fd"},
-    {file = "pydantic_settings-2.0.0.tar.gz", hash = "sha256:0dc7b6c599fd2150583d2acce1f8d95cccde426ee31d1e0d2d374d58e74d37e4"},
+    {file = "pydantic_settings-2.0.1-py3-none-any.whl", hash = "sha256:579bbcbec3501e62bab73867b097ae10218201950e897463c98a182ffe7ed104"},
+    {file = "pydantic_settings-2.0.1.tar.gz", hash = "sha256:f440ec7cfb6dc63f03226c47b0e7803750d1b66a49ed944ac23eb4f0c84f8722"},
 ]
 
 [package.dependencies]
-pydantic = ">=2.0b3"
+pydantic = ">=2.0.1"
 python-dotenv = ">=0.21.0"
 
 [[package]]
@@ -1841,4 +1841,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9f0e87fe27f187f4e1f99c8cf626adbd9bfb561d52a5f7674bbc86c6711409bc"
+content-hash = "f832408a18899204e54a399e9983aff8305551e73fbfcb13d203a8947bb7f620"
