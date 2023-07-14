@@ -4,7 +4,6 @@ import sys
 import threading
 import time
 from concurrent import futures
-from typing import Optional
 
 import etcd3
 import grpc
@@ -26,8 +25,13 @@ class Register(threading.Thread):
     go 有相关的 sdk，但是 python 没有。
     """
 
-    def __init__(self):
+    lease: Lease
+
+    def __init__(self) -> None:
         super().__init__()
+        if not config.etcd_addr:
+            raise ValueError("missing etcd_addr")
+
         self.etcd = etcd3.Client(
             protocol=config.etcd_addr.scheme,
             host=config.etcd_addr.host,
@@ -41,7 +45,6 @@ class Register(threading.Thread):
                 "Metadata": None,
             }
         )
-        self.lease: Optional[Lease] = None
 
         self.announce()
 

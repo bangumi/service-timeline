@@ -13,7 +13,7 @@ step = 100
 
 
 @logger.catch()
-def main():
+def main() -> None:
     SessionMaker = sa.sync_session_maker()
     with SessionMaker() as session:
         max_tml_id = get_max_timeline_id(session)

@@ -11,7 +11,7 @@ from api.v1.timeline_pb2 import (
 )
 
 
-def run():
+def run() -> None:
     print("Will try to greet world ...")
     with grpc.insecure_channel("127.0.0.1:5000") as channel:
         stub = timeline_pb2_grpc.TimeLineServiceStub(channel)
