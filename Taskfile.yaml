@@ -24,7 +24,7 @@ tasks:
         ./proto/api/v1/timeline.proto
 
 
-  dev: watchgod start_grpc_server.main
+  dev: poetry run watchgod start_grpc_server.main
   mypy: mypy --show-column-numbers chii rpc
 
   lint:

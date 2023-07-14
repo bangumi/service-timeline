@@ -34,6 +34,7 @@ from chii.timeline import (
 BatchMeme: pydantic.TypeAdapter[dict[int, SubjectMemo]] = pydantic.TypeAdapter(
     dict[int, SubjectMemo]
 )
+
 BatchSubjectImage: pydantic.TypeAdapter[dict[int, SubjectImage]] = pydantic.TypeAdapter(
     dict[int, SubjectImage]
 )

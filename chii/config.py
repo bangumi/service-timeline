@@ -1,31 +1,34 @@
+import os
 import uuid
 from typing import Optional
 
 from dotenv import load_dotenv
-from pydantic import AnyHttpUrl, Field
+from pydantic import AnyHttpUrl
 from pydantic_settings import BaseSettings
 
+load_dotenv()
 
-class Settings(BaseSettings):
-    debug: bool = Field(env="DEBUG", default=False)
+
+class Settings(BaseSettings, validate_default=True):
+    debug: bool = os.environ.get("DEBUG", False)
 
     # 微服务相关的环境变量
-    node_id: str = Field(str(uuid.uuid4()), env="NODE_ID")
-    etcd_prefix: str = Field("/chii/services", env="ETCD_PREFIX")
-    etcd_addr: Optional[AnyHttpUrl] = Field(None, env="ETCD_ADDR")
-    external_address: str = Field("127.0.0.1", env="EXTERNAL_ADDRESS")
+    node_id: str = os.getenv("NODE_ID") or str(uuid.uuid4())
+    etcd_prefix: str = os.getenv("ETCD_PREFIX") or "/chii/services"
+    etcd_addr: Optional[AnyHttpUrl] = os.getenv("ETCD_ADDR") or None
+    external_address: str = os.getenv("EXTERNAL_ADDRESS") or "127.0.0.1"
 
-    MYSQL_HOST: str = Field(env="MYSQL_HOST", default="127.0.0.1")
-    MYSQL_PORT: int = Field(env="MYSQL_PORT", default=3306)
-    MYSQL_USER: str = Field(env="MYSQL_USER", default="user")
-    MYSQL_PASS: str = Field(env="MYSQL_PASS", default="password")
-    MYSQL_DB: str = Field(env="MYSQL_DB", default="bangumi")
+    MYSQL_HOST: str = os.getenv("MYSQL_HOST") or "127.0.0.1"
+    MYSQL_PORT: int = os.getenv("MYSQL_PORT") or 3306
+    MYSQL_USER: str = os.getenv("MYSQL_USER") or "user"
+    MYSQL_PASS: str = os.getenv("MYSQL_PASS") or "password"
+    MYSQL_DB: str = os.getenv("MYSQL_DB") or "bangumi"
 
-    COMMIT_REF: str = Field(env="COMMIT_REF", default="dev")
-    grpc_port: int = Field(env="GRPC_PORT", default=5000)
-    grpc_max_workers: int = Field(env="GRPC_MAX_WORKERS", default=10)
+    COMMIT_REF: str = os.getenv("COMMIT_REF") or "dev"
+    grpc_port: int = os.getenv("GRPC_PORT") or 5000
+    grpc_max_workers: int = os.getenv("GRPC_MAX_WORKERS") or 10
 
-    SLOW_SQL_MS: int = Field(env="SLOW_SQL_MS", default=0)
+    SLOW_SQL_MS: int = os.getenv("SLOW_SQL_MS") or 0
 
     @property
     def MYSQL_SYNC_DSN(self) -> str:
@@ -38,7 +41,6 @@ class Settings(BaseSettings):
         )
 
 
-load_dotenv()
 config = Settings()
 
 if __name__ == "__main__":
