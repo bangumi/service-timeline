@@ -72,6 +72,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 "missing previous timeline or timeline type mismatch, create a new timeline"
             )
             self.create_subject_collection_timeline(session, request, tlType)
+            session.commit()
 
         return SubjectCollectResponse(ok=True)
 
@@ -260,6 +261,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     related=str(req.subject.id),
                 )
             )
+            session.commit()
 
         return EpisodeCollectResponse(ok=True)
 
@@ -304,6 +306,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 ):
                     tl.memo = php.serialize(memo.model_dump())
                     session.add(tl)
+                    session.commit()
                     return SubjectProgressResponse(ok=True)
 
             session.add(
@@ -317,5 +320,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     related=str(req.subject.id),
                 )
             )
+            session.commit()
 
         return SubjectProgressResponse(ok=True)
