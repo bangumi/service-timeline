@@ -28,9 +28,8 @@ jobs:
 
       - name: build base docker image
         env:
-          FILES_HASH: "${{ hashFiles('poetry.lock', 'etc/*.dockerfile') }}"
+          TAG_HASH: "base-${{ hashFiles('poetry.lock', 'etc/*.dockerfile') }}"
         run: |
-          export "TAG_HASH=base-${FILES_HASH}"
           echo "TAG_HASH=${TAG_HASH}" >>$GITHUB_ENV
 
           if ! docker pull "${IMAGE}:${TAG_HASH}"; then
