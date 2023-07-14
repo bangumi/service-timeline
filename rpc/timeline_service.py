@@ -31,6 +31,13 @@ from chii.timeline import (
     TimelineCat,
 )
 
+BatchMeme: pydantic.TypeAdapter[dict[int, SubjectMemo]] = pydantic.TypeAdapter(
+    dict[int, SubjectMemo]
+)
+BatchSubjectImage: pydantic.TypeAdapter[dict[int, SubjectImage]] = pydantic.TypeAdapter(
+    dict[int, SubjectImage]
+)
+
 
 class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def __init__(self):
@@ -73,9 +80,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     ):
         escaped = html.escape(req.comment)
         if tl.batch:
-            memo: dict[int, SubjectMemo] = pydantic.TypeAdapter(
-                dict[int, SubjectMemo]
-            ).validate_python(phpseralize.loads(tl.memo.encode()))
+            memo = BatchMeme.validate_python(phpseralize.loads(tl.memo.encode()))
         else:
             m = SubjectMemo.model_validate(phpseralize.loads(tl.memo.encode()))
             if int(m.subject_id) == req.subject.id:
@@ -107,9 +112,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         if tl.batch:
-            img: dict[int, SubjectImage] = pydantic.TypeAdapter(
-                dict[int, SubjectImage]
-            ).validate_python(phpseralize.loads(tl.img.encode()))
+            img = BatchSubjectImage.validate_python(phpseralize.loads(tl.img.encode()))
         else:
             i = SubjectImage.model_validate(phpseralize.loads(tl.img.encode()))
             img = {int(i.subject_id): i}
