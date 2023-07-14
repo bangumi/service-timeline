@@ -16,7 +16,7 @@ tasks:
       - ./proto/**/*.proto
     cmds:
       - >-
-        python -m grpc_tools.protoc
+        poetry run python -m grpc_tools.protoc
         -I ./proto/
         --python_out=.
         --pyi_out=.
