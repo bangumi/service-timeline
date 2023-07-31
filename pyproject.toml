@@ -14,7 +14,7 @@ python = "^3.10"
 loguru = "==0.7.0"
 SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.18" }
 grpcio = "1.56.2"
-grpcio-tools = "1.56.0"
+grpcio-tools = "1.56.2"
 libphpserialize = "0.0.8"
 pymysql = "1.1.0"
 pydantic = "2.0.2"
