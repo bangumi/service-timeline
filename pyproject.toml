@@ -21,7 +21,7 @@ pydantic = "2.1.1"
 python-dotenv = "1.0.0"
 etcd3-py = "0.1.6"
 aiohttp = "3.8.5"
-pydantic-settings = "2.0.2"
+pydantic-settings = "2.0.3"
 typing-extensions = '4.7.1'
 
 [tool.poetry.group.dev.dependencies]
