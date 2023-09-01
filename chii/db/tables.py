@@ -309,7 +309,7 @@ class GzipPHPSerializedBlob(MEDIUMBLOB):
     @staticmethod
     def load_array(d: List[Tuple[Union[int, str], Any]]):
         for i, (k, v) in enumerate(d):
-            if type(k) == int:
+            if isinstance(k, int):
                 d[i] = (str(k), v)
         return dict(d)
 
