@@ -35,7 +35,7 @@ pytest-github-actions-annotate-failures = "==0.2.0"
 pytest-env = "==1.0.1"
 # linter and formatter
 pre-commit = "==3.3.3"
-mypy = "==1.4.1"
+mypy = "==1.5.1"
 watchgod = "0.8.2"
 types-protobuf = "^4.21.0.2"
 
