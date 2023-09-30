@@ -22,7 +22,7 @@ python-dotenv = "1.0.0"
 etcd3-py = "0.1.6"
 aiohttp = "3.8.5"
 pydantic-settings = "2.0.3"
-typing-extensions = '4.7.1'
+typing-extensions = '4.8.0'
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "2.3.0"
