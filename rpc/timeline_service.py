@@ -1,6 +1,6 @@
 import html
 import time
-from typing import Optional
+from typing import Any, Optional
 
 import phpserialize as php
 import pydantic
@@ -31,9 +31,7 @@ from chii.timeline import (
     TimelineCat,
 )
 
-BatchMeme: pydantic.TypeAdapter[dict[int, SubjectMemo]] = pydantic.TypeAdapter(
-    dict[int, SubjectMemo]
-)
+BatchMeme: pydantic.TypeAdapter[dict[int, Any]] = pydantic.TypeAdapter(dict[int, Any])
 
 BatchSubjectImage: pydantic.TypeAdapter[dict[int, SubjectImage]] = pydantic.TypeAdapter(
     dict[int, SubjectImage]
