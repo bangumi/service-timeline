@@ -1,6 +1,6 @@
 import html
 import time
-from typing import Optional
+from typing import Any, Optional
 
 import phpserialize as php
 import pydantic
@@ -31,12 +31,10 @@ from chii.timeline import (
     TimelineCat,
 )
 
-BatchMeme: pydantic.TypeAdapter[dict[int, SubjectMemo]] = pydantic.TypeAdapter(
-    dict[int, SubjectMemo]
-)
+BatchMeme: pydantic.TypeAdapter[dict[int, Any]] = pydantic.TypeAdapter(dict[int, Any])
 
-BatchSubjectImage: pydantic.TypeAdapter[dict[int, SubjectImage]] = pydantic.TypeAdapter(
-    dict[int, SubjectImage]
+BatchSubjectImage: pydantic.TypeAdapter[dict[int, Any]] = pydantic.TypeAdapter(
+    dict[int, Any]
 )
 
 
@@ -77,8 +75,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         return SubjectCollectResponse(ok=True)
 
+    @staticmethod
     def merge_previous_timeline(
-        self, session: Session, tl: ChiiTimeline, req: SubjectCollectRequest
+        session: Session, tl: ChiiTimeline, req: SubjectCollectRequest
     ):
         escaped = html.escape(req.comment)
         if tl.batch:
@@ -105,10 +104,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         memo[req.subject.id] = SubjectMemo(
             subject_id=str(req.subject.id),
-            subject_type_id=str(req.subject.type),
-            subject_name_cn=req.subject.name_cn,
-            subject_series=req.subject.series,
-            subject_name=req.subject.name,
             collect_comment=escaped,
             collect_rate=req.rate,
         )
@@ -131,15 +126,12 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         session.add(tl)
 
+    @staticmethod
     def create_subject_collection_timeline(
-        self, session: Session, req: SubjectCollectRequest, type: int
+        session: Session, req: SubjectCollectRequest, type: int
     ):
         memo = SubjectMemo(
             subject_id=str(req.subject.id),
-            subject_type_id=str(req.subject.type),
-            subject_name_cn=req.subject.name_cn,
-            subject_series=req.subject.series,
-            subject_name=req.subject.name,
             collect_comment=html.escape(req.comment),
             collect_rate=req.rate,
         )
