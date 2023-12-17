@@ -101,13 +101,13 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     session.add(tl)
                 return
 
-            memo = {int(m.subject_id): m}
+            memo = {int(m.subject_id): m.model_dump()}
 
         memo[req.subject.id] = SubjectMemo(
             subject_id=str(req.subject.id),
             collect_comment=escaped,
             collect_rate=req.rate,
-        )
+        ).model_dump()
 
         if tl.batch:
             img = BatchSubjectImage.validate_python(phpseralize.loads(tl.img.encode()))
@@ -120,9 +120,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         tl.batch = 1
-        tl.memo = php.serialize(
-            {key: value.model_dump() for key, value in memo.items()}
-        )
+        tl.memo = php.serialize(memo)
         tl.img = php.serialize({key: value.model_dump() for key, value in img.items()})
 
         session.add(tl)
