@@ -97,7 +97,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     m.collect_rate = req.rate
 
                 if should_update:
-                    tl.memo = php.serialize(m.dict())
+                    tl.memo = php.serialize(m.model_dump())
                     session.add(tl)
                 return
 
