@@ -33,8 +33,8 @@ from chii.timeline import (
 
 BatchMeme: pydantic.TypeAdapter[dict[int, Any]] = pydantic.TypeAdapter(dict[int, Any])
 
-BatchSubjectImage: pydantic.TypeAdapter[dict[int, Any]] = pydantic.TypeAdapter(
-    dict[int, Any]
+BatchSubjectImage: pydantic.TypeAdapter[dict[int, SubjectImage]] = pydantic.TypeAdapter(
+    dict[int, SubjectImage]
 )
 
 
@@ -113,15 +113,15 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             img = BatchSubjectImage.validate_python(phpseralize.loads(tl.img.encode()))
         else:
             i = SubjectImage.model_validate(phpseralize.loads(tl.img.encode()))
-            img = {int(i.subject_id): i.model_dump}
+            img = {int(i.subject_id): i}
 
         img[req.subject.id] = SubjectImage(
             subject_id=str(req.subject.id), images=req.subject.image
-        ).model_dump()
+        )
 
         tl.batch = 1
         tl.memo = php.serialize(memo)
-        tl.img = php.serialize(img)
+        tl.img = php.serialize({key: value.model_dump() for key, value in img.items()})
 
         session.add(tl)
 
