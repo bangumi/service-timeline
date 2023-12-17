@@ -46,6 +46,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         print(f"{config.node_id} rpc hello {request.name}")
         return HelloResponse(message=f"{config.node_id}: hello {request.name}")
 
+    @logger.catch(reraise=True)
     def SubjectCollect(
         self, request: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
@@ -150,6 +151,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             )
         )
 
+    @logger.catch(reraise=True)
     def EpisodeCollect(
         self, req: EpisodeCollectRequest, context
     ) -> EpisodeCollectResponse:
@@ -258,6 +260,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         return EpisodeCollectResponse(ok=True)
 
+    @logger.catch(reraise=True)
     def SubjectProgress(
         self, req: SubjectProgressRequest, context
     ) -> SubjectProgressResponse:
