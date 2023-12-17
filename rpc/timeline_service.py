@@ -104,7 +104,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         memo[req.subject.id] = SubjectMemo(
             subject_id=str(req.subject.id),
-            subject_series=req.subject.series,
             collect_comment=escaped,
             collect_rate=req.rate,
         )
@@ -133,7 +132,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     ):
         memo = SubjectMemo(
             subject_id=str(req.subject.id),
-            subject_series=req.subject.series,
             collect_comment=html.escape(req.comment),
             collect_rate=req.rate,
         )

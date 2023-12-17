@@ -12,7 +12,6 @@ class SubjectMemo(BaseModel):
     collect_comment: str
     collect_rate: int
     subject_id: str
-    subject_series: bool = False
 
 
 class SubjectImage(BaseModel):
