@@ -125,6 +125,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             subject_id=str(req.subject.id),
             collect_comment=html.escape(req.comment),
             collect_rate=req.rate,
+            collect_id=req.collection_id,
         )
 
         session.add(
