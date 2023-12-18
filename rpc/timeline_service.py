@@ -1,6 +1,6 @@
 import html
 import time
-from typing import Any, Optional
+from typing import Optional
 
 import phpserialize as php
 import pydantic
@@ -26,15 +26,12 @@ from chii.db.tables import ChiiTimeline
 from chii.timeline import (
     SUBJECT_TYPE_MAP,
     ProgressMemo,
-    SubjectImage,
     SubjectMemo,
     TimelineCat,
 )
 
-BatchMeme: pydantic.TypeAdapter[dict[int, Any]] = pydantic.TypeAdapter(dict[int, Any])
-
-BatchSubjectImage: pydantic.TypeAdapter[dict[int, SubjectImage]] = pydantic.TypeAdapter(
-    dict[int, SubjectImage]
+BatchMeme: pydantic.TypeAdapter[dict[int, SubjectMemo]] = pydantic.TypeAdapter(
+    dict[int, SubjectMemo]
 )
 
 
@@ -50,6 +47,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def SubjectCollect(
         self, request: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
+        """
+        https://github.com/bangumi/dev-docs/blob/master/Timeline.md#cat_sbj_collect-条目收藏
+        """
         tlType = SUBJECT_TYPE_MAP[request.subject.type][request.collection]
         if config.debug:
             print(request)
@@ -62,7 +62,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 )
             )
 
-            if tl and tl.dateline >= int(time.time() - 15 * 60):
+            if tl and tl.dateline >= int(time.time() - 10 * 60):
                 logger.info("find previous timeline, merging")
                 if tl.cat == TimelineCat.Subject and tl.type == tlType:
                     self.merge_previous_timeline(session, tl, request)
@@ -101,27 +101,19 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     session.add(tl)
                 return
 
-            memo = {int(m.subject_id): m.model_dump()}
+            memo = {int(m.subject_id): m}
 
         memo[req.subject.id] = SubjectMemo(
             subject_id=str(req.subject.id),
             collect_comment=escaped,
             collect_rate=req.rate,
-        ).model_dump()
-
-        if tl.batch:
-            img = BatchSubjectImage.validate_python(phpseralize.loads(tl.img.encode()))
-        else:
-            i = SubjectImage.model_validate(phpseralize.loads(tl.img.encode()))
-            img = {int(i.subject_id): i}
-
-        img[req.subject.id] = SubjectImage(
-            subject_id=str(req.subject.id), images=req.subject.image
+            collect_id=req.collection_id,
         )
 
         tl.batch = 1
-        tl.memo = php.serialize(memo)
-        tl.img = php.serialize({key: value.model_dump() for key, value in img.items()})
+        tl.memo = php.serialize(
+            {key: value.model_dump() for key, value in memo.items()}
+        )
 
         session.add(tl)
 
@@ -135,15 +127,12 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             collect_rate=req.rate,
         )
 
-        img = SubjectImage(subject_id=str(req.subject.id), images=req.subject.image)
-
         session.add(
             ChiiTimeline(
                 cat=TimelineCat.Subject,
                 type=type,
                 uid=req.user_id,
                 memo=php.serialize(memo.model_dump()),
-                img=php.serialize(img.model_dump()),
                 batch=0,
                 related=str(req.subject.id),
             )
@@ -154,54 +143,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         self, req: EpisodeCollectRequest, context
     ) -> EpisodeCollectResponse:
         """
-
         cat 4 type 2 "看过 ep2 ${subject name}"
-        tml_id    tml_uid tml_cat tml_type tml_related
-        32073511  287622  4       2        363612
-
-        tml_memo
-        a:5:{
-
-        s:5:"ep_id";s:7:"1075441";
-
-        s:7:"ep_name";s:0:"";
-
-        s:7:"ep_sort";s:1:"2";
-
-        s:10:"subject_id";s:6:"363612";
-
-        s:12:"subject_name";s:6:"沙盒";
-
-        }
-
-        tml_img
-        a:2:{s:10:"subject_id";s:6:"363612";s:6:"images";s:22:"82/15/363612_On6wg.jpg";}
-
-        tml_batch  tml_source      tml_replies     tml_dateline
-         0         0               0               1672520183
-
-
-        cat 4 type 2 "完成了 ${subject name} {ep} of {ep_total} 话"
-
-        memo: a:7:{
-
-        s:9:"eps_total";s:2:"12";
-
-        s:10:"eps_update";i:12;
-
-        s:10:"vols_total";s:2:"??";
-
-
-        s:11:"vols_update";N;
-
-        s:10:"subject_id";s:6:"353657";
-
-        s:12:"subject_name";s:21:"勇者、辞めます";
-
-        s:15:"subject_type_id";s:1:"2";
-
-        }
-
         """
 
         tlType = 2
@@ -212,11 +154,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             subject_id=str(req.subject.id),
             subject_type_id=str(req.subject.type),
             ep_sort=req.last.sort,
-        )
-
-        img = SubjectImage(
-            subject_id=str(req.subject.id),
-            images=req.subject.image,
         )
 
         if config.debug:
@@ -246,7 +183,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 ChiiTimeline(
                     uid=req.user_id,
                     memo=php.serialize(memo.model_dump()),
-                    img=php.serialize(img.model_dump()),
                     cat=TimelineCat.Progress,
                     type=tlType,
                     source=5,
@@ -273,11 +209,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         tlType = 0
-
-        img = SubjectImage(
-            subject_id=str(req.subject.id),
-            images=req.subject.image,
-        )
 
         if config.debug:
             print(req)
@@ -307,7 +238,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 ChiiTimeline(
                     uid=req.user_id,
                     memo=php.serialize(memo.model_dump()),
-                    img=php.serialize(img.model_dump()),
                     cat=TimelineCat.Progress,
                     type=tlType,
                     batch=0,

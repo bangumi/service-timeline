@@ -12,6 +12,7 @@ class SubjectMemo(BaseModel):
     collect_comment: str
     collect_rate: int
     subject_id: str
+    collect_id: int = 0
 
 
 class SubjectImage(BaseModel):

@@ -893,8 +893,8 @@ class ChiiTimeline(Base):
             type: int,
             related: str,
             memo: str,
-            img: str,
             batch: int,
+            img: str = "",
             source: Optional[int] = None,
             replies: int = 0,
             id: Optional[int] = None,
@@ -914,7 +914,8 @@ class ChiiTimeline(Base):
         "tml_related", CHAR(255), nullable=False, server_default=text("'0'"), default=0
     )
     memo: str = Column("tml_memo", MEDIUMTEXT, nullable=False)
-    img: str = Column("tml_img", MEDIUMTEXT, nullable=False)
+    #: deprecated
+    img: str = Column("tml_img", MEDIUMTEXT, nullable=False, default="")
     batch = Column("tml_batch", TINYINT(3), nullable=False, index=True)
     source = Column(
         "tml_source",

@@ -69,18 +69,20 @@ class Episode(_message.Message):
     def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., sort: _Optional[float] = ...) -> None: ...
 
 class SubjectCollectRequest(_message.Message):
-    __slots__ = ["user_id", "subject", "collection", "comment", "rate"]
+    __slots__ = ["user_id", "subject", "collection", "comment", "rate", "collection_id"]
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     SUBJECT_FIELD_NUMBER: _ClassVar[int]
     COLLECTION_FIELD_NUMBER: _ClassVar[int]
     COMMENT_FIELD_NUMBER: _ClassVar[int]
     RATE_FIELD_NUMBER: _ClassVar[int]
+    COLLECTION_ID_FIELD_NUMBER: _ClassVar[int]
     user_id: int
     subject: Subject
     collection: int
     comment: str
     rate: int
-    def __init__(self, user_id: _Optional[int] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ..., collection: _Optional[int] = ..., comment: _Optional[str] = ..., rate: _Optional[int] = ...) -> None: ...
+    collection_id: int
+    def __init__(self, user_id: _Optional[int] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ..., collection: _Optional[int] = ..., comment: _Optional[str] = ..., rate: _Optional[int] = ..., collection_id: _Optional[int] = ...) -> None: ...
 
 class EpisodeCollectRequest(_message.Message):
     __slots__ = ["user_id", "last", "subject"]
