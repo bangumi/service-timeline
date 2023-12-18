@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
@@ -67,12 +67,12 @@ class Timeline(BaseModel):
     memo: Any
 
 
-SUBJECT_TYPE_MAP: Dict[int, List[int]] = {
-    SubjectType.book: [0, 1, 5, 9, 13, 14],
-    SubjectType.anime: [0, 2, 6, 10, 13, 14],
-    SubjectType.music: [0, 3, 7, 11, 13, 14],
-    SubjectType.game: [0, 4, 8, 12, 13, 14],
-    SubjectType.real: [0, 2, 6, 10, 13, 14],
+SUBJECT_TYPE_MAP: Dict[int, Dict[int, int]] = {
+    SubjectType.book: {1: 1, 2: 5, 3: 9, 4: 13, 5: 14},
+    SubjectType.anime: {1: 2, 2: 6, 3: 10, 4: 13, 5: 14},
+    SubjectType.music: {1: 3, 2: 7, 3: 11, 4: 13, 5: 14},
+    SubjectType.game: {1: 4, 2: 8, 3: 12, 4: 13, 5: 14},
+    SubjectType.real: {1: 2, 2: 6, 3: 10, 4: 13, 5: 14},
 }
 
 

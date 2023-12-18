@@ -48,6 +48,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         self, request: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
         """
+        cat 3 看过/读过/抛弃了...
+
         https://github.com/bangumi/dev-docs/blob/master/Timeline.md#cat_sbj_collect-条目收藏
         """
         tlType = SUBJECT_TYPE_MAP[request.subject.type][request.collection]
@@ -199,6 +201,14 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     def SubjectProgress(
         self, req: SubjectProgressRequest, context
     ) -> SubjectProgressResponse:
+        """
+        cat 4 type 0
+        """
+        tlType = 0
+
+        if config.debug:
+            print(req)
+
         memo = ProgressMemo(
             subject_name=req.subject.name,
             subject_id=str(req.subject.id),
@@ -208,11 +218,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             eps_update=req.eps_update,
             vols_update=req.vols_update,
         )
-
-        tlType = 0
-
-        if config.debug:
-            print(req)
 
         with self.SessionMaker.begin() as session:
             tl: Optional[ChiiTimeline] = session.scalar(
