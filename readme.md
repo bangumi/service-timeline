@@ -22,11 +22,15 @@ use [go-task](https://github.com/go-task/task)
 task gen
 ```
 
-
 ## API
 
-[./proto/api/v1/timeline.proto](https://github.com/bangumi/proto/blob/master/api/v1/timeline.proto)
+[proto/api/v1/timeline.proto](https://github.com/bangumi/proto/blob/master/api/v1/timeline.proto)
 
 ## 性能
 
 chii_timeline 表目前非常大，查询条件的 where 条件 **必需** 命中索引。
+
+
+## 文档
+
+https://github.com/bangumi/dev-docs/blob/master/Timeline.md
