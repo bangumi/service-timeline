@@ -12,7 +12,7 @@ authors = []
 python = "^3.10"
 # dependencies
 loguru = "==0.7.2"
-SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.24" }
+SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.23" }
 grpcio = "1.59.3"
 grpcio-tools = "1.59.3"
 libphpserialize = "0.0.8"
