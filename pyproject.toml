@@ -20,7 +20,7 @@ pymysql = "1.1.0"
 pydantic = "2.5.3"
 python-dotenv = "1.0.0"
 etcd3-py = "0.1.6"
-aiohttp = "3.9.2"
+aiohttp = "3.9.3"
 pydantic-settings = "2.1.0"
 typing-extensions = '4.9.0'
 
