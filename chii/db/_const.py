@@ -70,7 +70,9 @@ staff_job_game = {
     1027: Staff(cn="系列构成", jp="シリーズ構成", en=""),
     1031: Staff(cn="作画监督", jp="作画監督", en=""),
     1013: Staff(cn="原画", jp="", en=""),
-    1008: Staff(cn="人物设定", jp="キャラ設定 キャラクターデザイン", en="Character Design"),
+    1008: Staff(
+        cn="人物设定", jp="キャラ設定 キャラクターデザイン", en="Character Design"
+    ),
     1029: Staff(cn="机械设定", jp="メカニック設定", en="Mechanical Design"),
     1005: Staff(cn="美工", jp="美術", en=""),
     1023: Staff(cn="CG监修", jp="CG監修", en=""),
@@ -79,7 +81,11 @@ staff_job_game = {
     1030: Staff(cn="音响监督", jp="", en="Sound Director"),
     1006: Staff(cn="音乐", jp="音楽", en=""),
     1021: Staff(cn="程序", jp="プログラム", en="Program"),
-    1014: Staff(cn="动画制作", jp="アニメーション制作 アニメ制作 アニメーション", en="Animation Work"),
+    1014: Staff(
+        cn="动画制作",
+        jp="アニメーション制作 アニメ制作 アニメーション",
+        en="Animation Work",
+    ),
     1017: Staff(cn="动画监督", jp="アニメーション監督", en=""),
     1020: Staff(cn="动画剧本", jp="アニメーション脚本", en=""),
     1018: Staff(cn="制作总指挥", jp="", en=""),
@@ -95,33 +101,51 @@ staff_job_game = {
 staff_job_anime = {
     1: Staff(cn="原作", jp="", en="Original Creator/Original Work"),
     74: Staff(cn="总导演", jp="総監督", en="Chief Director"),
-    2: Staff(cn="导演", jp="監督 シリーズ監督", en="Director/Direction", rdf="directedBy"),
+    2: Staff(
+        cn="导演", jp="監督 シリーズ監督", en="Director/Direction", rdf="directedBy"
+    ),
     3: Staff(cn="脚本", jp="シナリオ", en="Script/Screenplay"),
-    4: Staff(cn="分镜", jp="コンテ  ストーリーボード  画コンテ  絵コンテ", en="Storyboard"),
+    4: Staff(
+        cn="分镜", jp="コンテ  ストーリーボード  画コンテ  絵コンテ", en="Storyboard"
+    ),
     5: Staff(cn="演出", jp="", en="Episode Director"),
     6: Staff(cn="音乐", jp="楽曲  音楽", en="Music"),
     7: Staff(cn="人物原案", jp="キャラ原案", en="Original Character Design"),
     8: Staff(cn="人物设定", jp="キャラ設定", en="Character Design"),
     9: Staff(cn="分镜构图", jp="レイアウト", en="Layout"),
-    10: Staff(cn="系列构成", jp="シナリオディレクター  構成  シリーズ構成  脚本構成", en="Series Composition"),
+    10: Staff(
+        cn="系列构成",
+        jp="シナリオディレクター  構成  シリーズ構成  脚本構成",
+        en="Series Composition",
+    ),
     72: Staff(cn="副导演", jp="助監督", en="Assistant director"),
     11: Staff(cn="美术监督", jp="アートディレクション 背景監督", en="Art Direction"),
     71: Staff(cn="美术设计", jp="美術設定", en="Art Design"),
     13: Staff(cn="色彩设计", jp="色彩設定", en="Color Design"),
     14: Staff(cn="总作画监督", jp="チーフ作画監督", en="Chief Animation Director"),
     15: Staff(cn="作画监督", jp="作監 アニメーション演出", en="Animation Direction"),
-    70: Staff(cn="机械作画监督", jp="メカニック作監", en="Mechanical Animation Direction"),
-    77: Staff(cn="动作作画监督", jp="アクション作画監督", en="Action Animation Direction"),
+    70: Staff(
+        cn="机械作画监督", jp="メカニック作監", en="Mechanical Animation Direction"
+    ),
+    77: Staff(
+        cn="动作作画监督", jp="アクション作画監督", en="Action Animation Direction"
+    ),
     16: Staff(cn="机械设定", jp="メカニック設定", en="Mechanical Design"),
     17: Staff(cn="摄影监督", jp="撮影監督", en="Director of Photography"),
     69: Staff(cn="CG 导演", jp="CG 監督", en="CG Director"),
-    18: Staff(cn="监修", jp="シリーズ監修 スーパーバイザー", en="Supervision/Supervisor"),
+    18: Staff(
+        cn="监修", jp="シリーズ監修 スーパーバイザー", en="Supervision/Supervisor"
+    ),
     19: Staff(cn="道具设计", jp="プロップデザイン", en="Prop Design"),
     20: Staff(cn="原画", jp="作画 原画", en="Key Animation"),
     21: Staff(cn="第二原画", jp="原画協力", en="2nd Key Animation"),
     22: Staff(cn="动画检查", jp="動画チェック", en="Animation Check"),
     63: Staff(cn="制作", jp="製作 製作スタジオ", en="Production"),
-    67: Staff(cn="动画制作", jp="アニメーション制作 アニメ制作 アニメーション", en="Animation Work"),
+    67: Staff(
+        cn="动画制作",
+        jp="アニメーション制作 アニメ制作 アニメーション",
+        en="Animation Work",
+    ),
     73: Staff(cn="OP・ED 分镜", jp="OP・ED 分鏡", en="OP ED"),
     65: Staff(cn="音乐制作", jp="楽曲制作 音楽制作", en="Music Work"),
     23: Staff(cn="助理制片人", jp="協力プロデューサー", en="Assistant Producer"),
@@ -130,7 +154,9 @@ staff_job_anime = {
     26: Staff(cn="色彩指定", jp="", en="Color Setting"),
     27: Staff(cn="数码绘图", jp="", en="Digital Paint"),
     75: Staff(cn="3DCG", jp="", en="3DCG"),
-    37: Staff(cn="制作管理", jp="制作マネージャー 制作担当 制作班長", en="Production Manager"),
+    37: Staff(
+        cn="制作管理", jp="制作マネージャー 制作担当 制作班長", en="Production Manager"
+    ),
     28: Staff(cn="剪辑", jp="編集", en="Editing"),
     29: Staff(cn="原案", jp="", en="Original Plan"),
     30: Staff(cn="主题歌编曲", jp="", en="Theme Song Arrangement"),
@@ -139,8 +165,12 @@ staff_job_anime = {
     33: Staff(cn="主题歌演出", jp="", en="Theme Song Performance"),
     34: Staff(cn="插入歌演出", jp="", en="Inserted Song Performance"),
     35: Staff(cn="企画", jp="プランニング  企画開発", en="Planning"),
-    36: Staff(cn="", jp="企画プロデューサー  企画営業プロデューサー", en="Planning Producer"),
-    38: Staff(cn="宣传", jp="パブリシティ  宣伝  広告宣伝  番組宣伝  製作宣伝", en="Publicity"),
+    36: Staff(
+        cn="", jp="企画プロデューサー  企画営業プロデューサー", en="Planning Producer"
+    ),
+    38: Staff(
+        cn="宣传", jp="パブリシティ  宣伝  広告宣伝  番組宣伝  製作宣伝", en="Publicity"
+    ),
     39: Staff(cn="录音", jp="録音", en="Recording"),
     40: Staff(cn="录音助理", jp="録音アシスタント  録音助手", en="Recording Assistant"),
     41: Staff(cn="系列监督", jp="", en="Series Production Director"),
@@ -159,12 +189,22 @@ staff_job_anime = {
     54: Staff(cn="制片人", jp="プロデュース  プロデューサー", en="Producer"),
     55: Staff(cn="助理录音师", jp="", en="Assistant Engineer"),
     56: Staff(cn="助理制片协调", jp="", en="Assistant Production Coordinat"),
-    57: Staff(cn="演员监督", jp="キャスティングコーディネーター監督", en="Casting Director"),
-    58: Staff(cn="总制片", jp="チーフプロデューサー  チーフ制作  総合プロデューサー", en="Chief Producer"),
+    57: Staff(
+        cn="演员监督", jp="キャスティングコーディネーター監督", en="Casting Director"
+    ),
+    58: Staff(
+        cn="总制片",
+        jp="チーフプロデューサー  チーフ制作  総合プロデューサー",
+        en="Chief Producer",
+    ),
     59: Staff(cn="联合制片人", jp="", en="Co-Producer"),
     60: Staff(cn="台词编辑", jp="台詞編集", en="Dialogue Editing"),
-    61: Staff(cn="后期制片协调", jp="ポストプロダクション協力", en="Post-Production Assistant"),
-    62: Staff(cn="制作助手", jp="制作アシスタント 制作補佐 製作補", en="Production Assistant"),
+    61: Staff(
+        cn="后期制片协调", jp="ポストプロダクション協力", en="Post-Production Assistant"
+    ),
+    62: Staff(
+        cn="制作助手", jp="制作アシスタント 制作補佐 製作補", en="Production Assistant"
+    ),
     64: Staff(cn="制作协调", jp="制作コーディネーター", en="Production Coordination"),
     76: Staff(cn="制作协力", jp="制作協力 / 作品協力", en="Work Assistance"),
     66: Staff(cn="友情協力", jp="特别鸣谢", en="Special Thanks"),
