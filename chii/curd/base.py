@@ -9,5 +9,5 @@ T = TypeVar("T", bound=Base)
 
 
 async def count(db: AsyncSession, *where) -> int:
-    query = sa.select(sa.func.count(1)).where(*where)
+    query = sa.select(sa.func.count(1)).where(*where)  # type: ignore
     return int(await db.scalar(query))
