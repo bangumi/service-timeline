@@ -30,7 +30,9 @@ class ChiiCharacter(Base):
 
     crt_id = Column(MEDIUMINT(8), primary_key=True)
     crt_name = Column(String(255, "utf8_unicode_ci"), nullable=False)
-    crt_role = Column(TINYINT(4), nullable=False, index=True, comment="角色，机体，组织。。")
+    crt_role = Column(
+        TINYINT(4), nullable=False, index=True, comment="角色，机体，组织。。"
+    )
     crt_infobox: str = Column(MEDIUMTEXT, nullable=False)
     crt_summary: str = Column(MEDIUMTEXT, nullable=False)
     crt_img = Column(String(255, "utf8_unicode_ci"), nullable=False)
@@ -55,10 +57,15 @@ class ChiiCrtCastIndex(Base):
     prsn_id: int = Column(MEDIUMINT(9), primary_key=True, nullable=False, index=True)
     subject_id: int = Column(MEDIUMINT(9), primary_key=True, nullable=False, index=True)
     subject_type_id: int = Column(
-        TINYINT(3), nullable=False, index=True, comment="根据人物归类查询角色，动画，书籍，游戏"
+        TINYINT(3),
+        nullable=False,
+        index=True,
+        comment="根据人物归类查询角色，动画，书籍，游戏",
     )
     summary = Column(
-        String(255, "utf8_unicode_ci"), nullable=False, comment="幼年，男乱马，女乱马，变身形态，少女形态。。"
+        String(255, "utf8_unicode_ci"),
+        nullable=False,
+        comment="幼年，男乱马，女乱马，变身形态，少女形态。。",
     )
 
 
@@ -69,7 +76,9 @@ class ChiiCrtSubjectIndex(Base):
     subject_id = Column(MEDIUMINT(9), primary_key=True, nullable=False, index=True)
     subject_type_id = Column(TINYINT(4), nullable=False, index=True)
     crt_type: int = Column(TINYINT(4), nullable=False, index=True, comment="主角，配角")
-    ctr_appear_eps = Column(MEDIUMTEXT, nullable=False, comment="可选，角色出场的的章节")
+    ctr_appear_eps = Column(
+        MEDIUMTEXT, nullable=False, comment="可选，角色出场的的章节"
+    )
     crt_order = Column(TINYINT(3), nullable=False)
 
 
@@ -204,7 +213,11 @@ class ChiiPersonCsIndex(Base):
         index=True,
     )
     prsn_position: int = Column(
-        SMALLINT(5), primary_key=True, nullable=False, index=True, comment="监督，原案，脚本,.."
+        SMALLINT(5),
+        primary_key=True,
+        nullable=False,
+        index=True,
+        comment="监督，原案，脚本,..",
     )
     subject_id = Column(
         MEDIUMINT(9),
@@ -245,7 +258,9 @@ t_chii_person_relationship = Table(
     Column("prsn_id", MEDIUMINT(9), nullable=False),
     Column("relat_prsn_type", ENUM("prsn", "crt"), nullable=False),
     Column("relat_prsn_id", MEDIUMINT(9), nullable=False),
-    Column("relat_type", SMALLINT(6), nullable=False, comment="任职于，从属,聘用,嫁给，"),
+    Column(
+        "relat_type", SMALLINT(6), nullable=False, comment="任职于，从属,聘用,嫁给，"
+    ),
     Index("relat_prsn_type", "relat_prsn_type", "relat_prsn_id"),
     Index("prsn_type", "prsn_type", "prsn_id"),
 )
@@ -257,17 +272,27 @@ class ChiiPerson(Base):
 
     prsn_id = Column(MEDIUMINT(8), primary_key=True)
     prsn_name = Column(String(255, "utf8_unicode_ci"), nullable=False)
-    prsn_type = Column(TINYINT(4), nullable=False, index=True, comment="个人，公司，组合")
+    prsn_type = Column(
+        TINYINT(4), nullable=False, index=True, comment="个人，公司，组合"
+    )
     prsn_infobox: str = Column(MEDIUMTEXT, nullable=False)
     prsn_producer = Column(TINYINT(1), nullable=False, index=True)
     prsn_mangaka = Column(TINYINT(1), nullable=False, index=True)
     prsn_artist = Column(TINYINT(1), nullable=False, index=True)
     prsn_seiyu = Column(TINYINT(1), nullable=False, index=True)
     prsn_writer = Column(
-        TINYINT(4), nullable=False, index=True, server_default=text("'0'"), comment="作家"
+        TINYINT(4),
+        nullable=False,
+        index=True,
+        server_default=text("'0'"),
+        comment="作家",
     )
     prsn_illustrator = Column(
-        TINYINT(4), nullable=False, index=True, server_default=text("'0'"), comment="绘师"
+        TINYINT(4),
+        nullable=False,
+        index=True,
+        server_default=text("'0'"),
+        comment="绘师",
     )
     prsn_actor = Column(TINYINT(1), nullable=False, index=True, comment="演员")
     prsn_summary: str = Column(MEDIUMTEXT, nullable=False)
@@ -490,7 +515,10 @@ class ChiiSubjectRelations(Base):
         comment="关联目标 ID",
     )
     rlt_related_subject_type_id: int = Column(
-        "rlt_related_subject_type_id", TINYINT(3), nullable=False, comment="关联目标类型"
+        "rlt_related_subject_type_id",
+        TINYINT(3),
+        nullable=False,
+        comment="关联目标类型",
     )
     rlt_vice_versa = Column("rlt_vice_versa", TINYINT(1), nullable=False)
     rlt_order = Column("rlt_order", TINYINT(3), nullable=False, comment="关联排序")
@@ -811,7 +839,9 @@ class ChiiIndex(Base):
         Index("idx_uid", "idx_uid"),
         Index("idx_collects", "idx_collects"),
     )
-    idx_id = Column(MEDIUMINT(8), comment="自动id", primary_key=True, autoincrement=True)
+    idx_id = Column(
+        MEDIUMINT(8), comment="自动id", primary_key=True, autoincrement=True
+    )
     idx_type = Column(TINYINT(3), nullable=False, server_default=text("'0'"))
     idx_title = Column(VARCHAR(80), nullable=False, comment="标题")
     idx_desc = Column(MEDIUMTEXT, nullable=False, comment="简介")
@@ -899,8 +929,7 @@ class ChiiTimeline(Base):
             replies: int = 0,
             id: Optional[int] = None,
             dateline: Optional[int] = None,
-        ):
-            ...
+        ): ...
 
     id = Column("tml_id", INTEGER(10), primary_key=True)
     uid = Column(

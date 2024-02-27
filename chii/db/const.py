@@ -105,17 +105,29 @@ class Relation(NamedTuple):
 
 
 RELATION_SERIES: Dict[int, Relation] = {
-    1: Relation(en="Adaptation", cn="改编", desc="同系列不同平台作品，如柯南漫画与动画版"),
+    1: Relation(
+        en="Adaptation", cn="改编", desc="同系列不同平台作品，如柯南漫画与动画版"
+    ),
     2: Relation(en="Prequel", cn="前传", desc="发生在故事之前"),
     3: Relation(en="Sequel", cn="续集", desc="发生在故事之后"),
     4: Relation(en="Summary", cn="总集篇", desc="对故事的概括版本"),
     5: Relation(en="Full Story", cn="全集", desc="相对于剧场版/总集篇的完整故事"),
     6: Relation(en="Side Story", cn="番外篇"),
     7: Relation(en="Character", cn="角色出演", desc="相同角色，没有关联的故事"),
-    8: Relation(en="Same setting", cn="相同世界观", desc="发生在同一个世界观/时间线下，不同的出演角色"),
-    9: Relation(en="Alternative setting", cn="不同世界观", desc="相同的出演角色，不同的世界观/时间线设定"),
+    8: Relation(
+        en="Same setting",
+        cn="相同世界观",
+        desc="发生在同一个世界观/时间线下，不同的出演角色",
+    ),
+    9: Relation(
+        en="Alternative setting",
+        cn="不同世界观",
+        desc="相同的出演角色，不同的世界观/时间线设定",
+    ),
     10: Relation(
-        en="Alternative version", cn="不同演绎", desc="相同设定、角色，不同的演绎方式（如EVA原作与新剧场版)"
+        en="Alternative version",
+        cn="不同演绎",
+        desc="相同设定、角色，不同的演绎方式（如EVA原作与新剧场版)",
     ),
     11: Relation(en="Spin-off", cn="衍生", desc="如柯南与魔术快斗"),
     12: Relation(en="Parent Story", cn="主线故事"),
@@ -123,7 +135,9 @@ RELATION_SERIES: Dict[int, Relation] = {
 }
 
 RELATION_BOOK: Dict[int, Relation] = {
-    1: Relation(en="Adaptation", cn="改编", desc="同系列不同平台作品，如柯南漫画与动画版"),
+    1: Relation(
+        en="Adaptation", cn="改编", desc="同系列不同平台作品，如柯南漫画与动画版"
+    ),
     1003: Relation(en="Offprint", cn="单行本"),
     1002: Relation(en="Series", cn="系列"),
     1004: Relation(en="Album", cn="画集"),
@@ -133,8 +147,16 @@ RELATION_BOOK: Dict[int, Relation] = {
     1008: Relation(en="Parent Story", cn="主线故事"),
     1010: Relation(en="Alternative version", cn="不同版本"),
     1011: Relation(en="Character", cn="角色出演", desc="相同角色，没有关联的故事"),
-    1012: Relation(en="Same setting", cn="相同世界观", desc="发生在同一个世界观/时间线下，不同的出演角色"),
-    1013: Relation(en="Alternative setting", cn="不同世界观", desc="相同的出演角色，不同的世界观/时间线设定"),
+    1012: Relation(
+        en="Same setting",
+        cn="相同世界观",
+        desc="发生在同一个世界观/时间线下，不同的出演角色",
+    ),
+    1013: Relation(
+        en="Alternative setting",
+        cn="不同世界观",
+        desc="相同的出演角色，不同的世界观/时间线设定",
+    ),
     1099: Relation(en="Other", cn="其他"),
 }
 
@@ -150,15 +172,27 @@ RELATION_MUSIC: Dict[int, Relation] = {
 }
 
 RELATION_GAME: Dict[int, Relation] = {
-    1: Relation(en="Adaptation", cn="改编", desc="同系列不同平台作品，如 CLANNAD 游戏与动画版"),
+    1: Relation(
+        en="Adaptation", cn="改编", desc="同系列不同平台作品，如 CLANNAD 游戏与动画版"
+    ),
     4002: Relation(en="Prequel", cn="前传", desc="发生在故事之前"),
     4003: Relation(en="Sequel", cn="续集", desc="发生在故事之后"),
     4006: Relation(en="Side Story", cn="资料片、外传"),
     4012: Relation(en="Parent Story", cn="主线故事"),
     4007: Relation(en="Character", cn="角色出演", desc="相同角色，没有关联的故事"),
-    4008: Relation(en="Same setting", cn="相同世界观", desc="发生在同一个世界观/时间线下，不同的出演角色"),
-    4009: Relation(en="Alternative setting", cn="不同世界观", desc="相同的出演角色，不同的世界观/时间线设定"),
-    4010: Relation(en="Alternative version", cn="不同演绎", desc="相同设定、角色，不同的演绎方式"),
+    4008: Relation(
+        en="Same setting",
+        cn="相同世界观",
+        desc="发生在同一个世界观/时间线下，不同的出演角色",
+    ),
+    4009: Relation(
+        en="Alternative setting",
+        cn="不同世界观",
+        desc="相同的出演角色，不同的世界观/时间线设定",
+    ),
+    4010: Relation(
+        en="Alternative version", cn="不同演绎", desc="相同设定、角色，不同的演绎方式"
+    ),
     4099: Relation(en="Other", cn="其他"),
 }
 
