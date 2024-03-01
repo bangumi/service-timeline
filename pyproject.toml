@@ -25,7 +25,7 @@ pydantic-settings = "2.1.0"
 typing-extensions = '4.9.0'
 
 [tool.poetry.group.dev.dependencies]
-sqlacodegen = "2.3.0"
+sqlacodegen = "2.3.0.post1"
 # tests
 coverage = { version = "==7.4.3", extras = ["toml"] }
 pytest = "==7.4.4"
