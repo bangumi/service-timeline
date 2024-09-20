@@ -8,10 +8,10 @@ WORKDIR /app
 ENV PIP_ROOT_USER_ACTION=ignore
 
 COPY requirements-poetry.txt ./
-RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked pip install -r requirements-poetry.txt
+RUN pip install -r requirements-poetry.txt
 
 COPY pyproject.toml poetry.lock ./
-RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked poetry export -f requirements.txt --output requirements.txt
+RUN poetry export -f requirements.txt --output requirements.txt
 
 ### final image ###
 FROM python:3.10-slim@sha256:80619a5316afae7045a3c13371b0ee670f39bac46ea1ed35081d2bf91d6c3dbd
@@ -24,7 +24,7 @@ COPY --from=poetry /app/requirements.txt ./requirements.txt
 
 ENV PIP_ROOT_USER_ACTION=ignore
 
-RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked pip install -U pip && \
+RUN pip install -U pip && \
     pip install -r requirements.txt
 
 WORKDIR /app
