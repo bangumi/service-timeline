@@ -52,8 +52,11 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         https://github.com/bangumi/dev-docs/blob/master/Timeline.md#cat_sbj_collect-条目收藏
         """
 
-        with logger.catch(msg="exception in SubjectCollect"):
+        try:
             return self.__subject_collect(req)
+        except:
+            logger.exception(msg="exception in SubjectCollect")
+            raise
 
     def __subject_collect(self, req: SubjectCollectRequest) -> SubjectCollectResponse:
         tlType = SUBJECT_TYPE_MAP[req.subject.type][req.collection]
@@ -150,8 +153,11 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         cat 4 type 2 "看过 ep2 ${subject name}"
         """
 
-        with logger.catch(msg="exception in EpisodeCollectRequest"):
+        try:
             return self.__episode_collect(req)
+        except:
+            logger.exception(msg="exception in EpisodeCollectRequest")
+            raise
 
     def __episode_collect(self, req: EpisodeCollectRequest) -> EpisodeCollectResponse:
         """
@@ -212,8 +218,11 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         cat 4 type 0
         """
 
-        with logger.catch(msg="exception in SubjectProgress"):
+        try:
             return self.__subject_progress(req)
+        except:
+            logger.exception(msg="exception in SubjectProgress")
+            raise
 
     def __subject_progress(
         self, req: SubjectProgressRequest
