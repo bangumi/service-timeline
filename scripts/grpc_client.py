@@ -1,5 +1,3 @@
-import logging
-
 import grpc
 
 from api.v1 import timeline_pb2_grpc
@@ -41,5 +39,4 @@ def run() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig()
     run()
