@@ -8,7 +8,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "^3.10"
 # dependencies
-SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.35" }
+SQLAlchemy = { version = "2.0.35" }
 grpcio = "1.66.1"
 libphpserialize = "0.0.8"
 pymysql = "1.1.1"
@@ -61,8 +61,8 @@ ignore_missing_imports = true
 warn_return_any = true
 warn_unused_configs = true
 show_error_codes = true
-pretty = true
 plugins = ['sqlalchemy.ext.mypy.plugin', 'pydantic.mypy']
+explicit_package_bases = true
 
 [tool.black]
 target_version = ['py310']
