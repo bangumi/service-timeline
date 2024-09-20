@@ -19,7 +19,7 @@ etcd3-py = "0.1.6"
 aiohttp = "3.10.5"
 pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
-sslog = "^0.0.0a43"
+sslog = "0.0.0a43"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"
