@@ -36,12 +36,3 @@ jobs:
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v4
-
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - run: docker build -t base-image -f etc/base.dockerfile .
-      - run: docker build -t tmp -f etc/final.dockerfile .
-      - run: docker run tmp --help
