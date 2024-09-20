@@ -40,24 +40,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # https://docs.docker.com/build/ci/github-actions/cache/#cache-mounts
-      - name: Go Build Cache for Docker
-        uses: actions/cache@v4
-        with:
-          path: pip-wheel-cache
-          key: ${{ runner.os }}-pip-cache-${{ hashFiles('**/poetry.lock') }}
-          restore-keys:
-            ${{ runner.os }}-pip-cache-
-
-      - name: inject pip-wheel-cache into docker
-        uses: reproducible-containers/buildkit-cache-dance@v3.1.2
-        with:
-          cache-map: |
-            {
-              "pip-wheel-cache": "/root/.cache/pip"
-            }
-          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
-
       - name: Build Final Docker Image
         uses: docker/build-push-action@v6
         with:
