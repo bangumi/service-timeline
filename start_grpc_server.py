@@ -7,6 +7,7 @@ from concurrent import futures
 
 import etcd3
 import grpc
+import sslog
 from etcd3 import Lease
 from etcd3.utils import retry
 from sslog import logger
@@ -107,7 +108,13 @@ def main():
         print("timeline micro service")
         sys.exit(0)
     logger.info("starting grpc server")
-    logging.basicConfig()
+    logging.basicConfig(
+        handlers=[
+            sslog.InterceptHandler(
+                level=logging.NOTSET if config.debug else logging.INFO
+            )
+        ]
+    )
     start_server()
 
 
