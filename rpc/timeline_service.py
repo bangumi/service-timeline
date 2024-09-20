@@ -67,6 +67,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 .where(ChiiTimeline_column_uid == req.user_id)
                 .order_by(ChiiTimeline_column_id.desc())
                 .limit(1)
+                .scalar()
             )
 
             if tl and tl.dateline >= int(time.time() - 10 * 60):
@@ -182,6 +183,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 .where(ChiiTimeline_column_uid == req.user_id)
                 .order_by(ChiiTimeline_column_id.desc())
                 .limit(1)
+                .scalar()
             )
 
             if tl and tl.dateline >= int(time.time() - 15 * 60):
@@ -251,6 +253,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 .where(ChiiTimeline_column_uid == req.user_id)
                 .order_by(ChiiTimeline_column_id.desc())
                 .limit(1)
+                .scalar()
             )
 
             if tl and tl.dateline >= int(time.time() - 15 * 60):
