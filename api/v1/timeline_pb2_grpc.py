@@ -103,7 +103,7 @@ def add_TimeLineServiceServicer_to_server(servicer, server):
                     response_serializer=api_dot_v1_dot_timeline__pb2.SubjectCollectResponse.SerializeToString,
             ),
             'SubjectProgress': grpc.unary_unary_rpc_method_handler(
-                    servicer.__SubjectProgress,
+                    servicer.SubjectProgress,
                     request_deserializer=api_dot_v1_dot_timeline__pb2.SubjectProgressRequest.FromString,
                     response_serializer=api_dot_v1_dot_timeline__pb2.SubjectProgressResponse.SerializeToString,
             ),
