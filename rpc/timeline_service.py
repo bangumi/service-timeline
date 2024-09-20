@@ -55,7 +55,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         try:
             return self.__subject_collect(req)
         except:
-            logger.exception(msg="exception in SubjectCollect")
+            logger.exception("exception in SubjectCollect")
             raise
 
     def __subject_collect(self, req: SubjectCollectRequest) -> SubjectCollectResponse:
@@ -156,7 +156,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         try:
             return self.__episode_collect(req)
         except:
-            logger.exception(msg="exception in EpisodeCollectRequest")
+            logger.exception("exception in EpisodeCollectRequest")
             raise
 
     def __episode_collect(self, req: EpisodeCollectRequest) -> EpisodeCollectResponse:
@@ -221,7 +221,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         try:
             return self.__subject_progress(req)
         except:
-            logger.exception(msg="exception in SubjectProgress")
+            logger.exception("exception in SubjectProgress")
             raise
 
     def __subject_progress(
