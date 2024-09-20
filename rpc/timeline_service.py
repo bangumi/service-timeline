@@ -51,6 +51,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         https://github.com/bangumi/dev-docs/blob/master/Timeline.md#cat_sbj_collect-条目收藏
         """
+        if config.debug:
+            logger.debug("request {!r}", req)
 
         try:
             return self.__subject_collect(req)
@@ -153,6 +155,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         """
         cat 4 type 2 "看过 ep2 ${subject name}"
         """
+        if config.debug:
+            logger.debug("request {!r}", req)
 
         try:
             return self.__episode_collect(req)
@@ -173,9 +177,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             subject_type_id=str(req.subject.type),
             ep_sort=req.last.sort,
         )
-
-        if config.debug:
-            print(req)
 
         with self.SessionMaker.begin() as session:
             tl: Optional[ChiiTimeline] = (
@@ -219,6 +220,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         """
         cat 4 type 0
         """
+        if config.debug:
+            logger.debug("request {!r}", req)
 
         try:
             return self.__subject_progress(req)
@@ -233,9 +236,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         cat 4 type 0
         """
         tlType = 0
-
-        if config.debug:
-            print(req)
 
         memo = ProgressMemo(
             subject_name=req.subject.name,

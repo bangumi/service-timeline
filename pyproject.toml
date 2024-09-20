@@ -10,7 +10,6 @@ python = "^3.10"
 # dependencies
 SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.35" }
 grpcio = "1.66.1"
-grpcio-tools = "1.66.1"
 libphpserialize = "0.0.8"
 pymysql = "1.1.1"
 pydantic = "2.9.2"
@@ -24,6 +23,9 @@ protobuf = "5.27.2"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"
+# grpc py generator
+grpcio-tools = "1.66.1"
+
 # tests
 coverage = { version = "==7.6.1", extras = ["toml"] }
 pytest = "==8.3.3"
