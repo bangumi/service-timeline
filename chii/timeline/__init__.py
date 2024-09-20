@@ -1,10 +1,8 @@
-from typing import Any, Dict, Optional
+from typing import Dict, Optional
 
 from pydantic import BaseModel
 
-from chii.compat import phpseralize
-from chii.db.const import IntEnum
-from chii.db.tables import ChiiTimeline
+from chii.db.const import CollectionType, IntEnum
 from chii.subject import SubjectType
 
 
@@ -60,42 +58,40 @@ class TimelineCat(IntEnum):
     Doujin = 9
 
 
-class Timeline(BaseModel):
-    type: int
-    cat: int
-    id: int
-    memo: Any
-
-
 SUBJECT_TYPE_MAP: Dict[int, Dict[int, int]] = {
-    SubjectType.book: {1: 1, 2: 5, 3: 9, 4: 13, 5: 14},
-    SubjectType.anime: {1: 2, 2: 6, 3: 10, 4: 13, 5: 14},
-    SubjectType.music: {1: 3, 2: 7, 3: 11, 4: 13, 5: 14},
-    SubjectType.game: {1: 4, 2: 8, 3: 12, 4: 13, 5: 14},
-    SubjectType.real: {1: 2, 2: 6, 3: 10, 4: 13, 5: 14},
+    SubjectType.book: {
+        CollectionType.wish: 1,
+        CollectionType.done: 5,
+        CollectionType.doing: 9,
+        CollectionType.on_hold: 13,
+        CollectionType.dropped: 14,
+    },
+    SubjectType.anime: {
+        CollectionType.wish: 2,
+        CollectionType.done: 6,
+        CollectionType.doing: 10,
+        CollectionType.on_hold: 13,
+        CollectionType.dropped: 14,
+    },
+    SubjectType.music: {
+        CollectionType.wish: 3,
+        CollectionType.done: 7,
+        CollectionType.doing: 11,
+        CollectionType.on_hold: 13,
+        CollectionType.dropped: 14,
+    },
+    SubjectType.game: {
+        CollectionType.wish: 4,
+        CollectionType.done: 8,
+        CollectionType.doing: 12,
+        CollectionType.on_hold: 13,
+        CollectionType.dropped: 14,
+    },
+    SubjectType.real: {
+        CollectionType.wish: 2,
+        CollectionType.done: 6,
+        CollectionType.doing: 10,
+        CollectionType.on_hold: 13,
+        CollectionType.dropped: 14,
+    },
 }
-
-
-def parseMemo(cat: int, type: int, batch: bool, memo: str):
-    if cat == TimelineCat.Relation and type in [2, 3, 4]:
-        return phpseralize.loads(memo)
-
-    if cat == TimelineCat.Say:
-        if type == 2:
-            return phpseralize.loads(memo)
-        return phpseralize.loads(memo)
-    return None
-
-
-def parseTimeLine(tl: ChiiTimeline) -> Timeline:
-    memo = parseMemo(tl.cat, tl.type, bool(tl.batch), tl.memo)
-
-    if not memo:
-        raise ValueError(
-            f"unexpected timeline<id=${tl.id}> cat ${tl.cat} type ${tl.type} ${tl.memo}"
-        )
-
-    if tl.cat == TimelineCat.Relation and type in [2, 3, 4]:
-        return Timeline(id=tl.id, cat=tl.cat, type=tl.type, memo=memo)
-
-    raise ValueError("unknown timeline")

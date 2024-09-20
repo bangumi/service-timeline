@@ -1,6 +1,7 @@
 import enum
 
 
+@enum.unique
 class SubjectType(enum.IntEnum):
     """条目类型
     - `1` 为 书籍

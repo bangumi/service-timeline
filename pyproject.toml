@@ -3,15 +3,11 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "chii"
-version = "0.0.4"
-description = ""
-authors = []
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
 # dependencies
-loguru = "==0.7.2"
 SQLAlchemy = { extras = ["mypy", "asyncio"], version = "2.0.35" }
 grpcio = "1.66.1"
 grpcio-tools = "1.66.1"
@@ -23,9 +19,10 @@ etcd3-py = "0.1.6"
 aiohttp = "3.10.5"
 pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
+sslog = "^0.0.0a43"
 
 [tool.poetry.group.dev.dependencies]
-sqlacodegen = "2.3.0"
+sqlacodegen = "3.0.0rc5"
 # tests
 coverage = { version = "==7.6.1", extras = ["toml"] }
 pytest = "==8.3.3"
@@ -68,7 +65,7 @@ plugins = ['sqlalchemy.ext.mypy.plugin', 'pydantic.mypy']
 [tool.black]
 target_version = ['py310']
 
-extend-exclude="api/v1"
+extend-exclude = "api/v1"
 
 [tool.ruff]
 extend-exclude = [".venv", "api"]

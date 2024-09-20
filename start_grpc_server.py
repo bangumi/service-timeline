@@ -9,7 +9,7 @@ import etcd3
 import grpc
 from etcd3 import Lease
 from etcd3.utils import retry
-from loguru import logger
+from sslog import logger
 
 from api.v1 import timeline_pb2_grpc
 from chii.config import config

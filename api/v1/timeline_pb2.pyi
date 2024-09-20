@@ -5,37 +5,37 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class HelloRequest(_message.Message):
-    __slots__ = ["name"]
+    __slots__ = ("name",)
     NAME_FIELD_NUMBER: _ClassVar[int]
     name: str
     def __init__(self, name: _Optional[str] = ...) -> None: ...
 
 class HelloResponse(_message.Message):
-    __slots__ = ["message"]
+    __slots__ = ("message",)
     MESSAGE_FIELD_NUMBER: _ClassVar[int]
     message: str
     def __init__(self, message: _Optional[str] = ...) -> None: ...
 
 class SubjectCollectResponse(_message.Message):
-    __slots__ = ["ok"]
+    __slots__ = ("ok",)
     OK_FIELD_NUMBER: _ClassVar[int]
     ok: bool
     def __init__(self, ok: bool = ...) -> None: ...
 
 class SubjectProgressResponse(_message.Message):
-    __slots__ = ["ok"]
+    __slots__ = ("ok",)
     OK_FIELD_NUMBER: _ClassVar[int]
     ok: bool
     def __init__(self, ok: bool = ...) -> None: ...
 
 class EpisodeCollectResponse(_message.Message):
-    __slots__ = ["ok"]
+    __slots__ = ("ok",)
     OK_FIELD_NUMBER: _ClassVar[int]
     ok: bool
     def __init__(self, ok: bool = ...) -> None: ...
 
 class Subject(_message.Message):
-    __slots__ = ["id", "type", "name", "name_cn", "image", "series", "vols_total", "eps_total"]
+    __slots__ = ("id", "type", "name", "name_cn", "image", "series", "vols_total", "eps_total")
     ID_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
@@ -55,7 +55,7 @@ class Subject(_message.Message):
     def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., image: _Optional[str] = ..., series: bool = ..., vols_total: _Optional[int] = ..., eps_total: _Optional[int] = ...) -> None: ...
 
 class Episode(_message.Message):
-    __slots__ = ["id", "type", "name", "name_cn", "sort"]
+    __slots__ = ("id", "type", "name", "name_cn", "sort")
     ID_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
@@ -69,7 +69,7 @@ class Episode(_message.Message):
     def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., sort: _Optional[float] = ...) -> None: ...
 
 class SubjectCollectRequest(_message.Message):
-    __slots__ = ["user_id", "subject", "collection", "comment", "rate", "collection_id"]
+    __slots__ = ("user_id", "subject", "collection", "comment", "rate", "collection_id")
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     SUBJECT_FIELD_NUMBER: _ClassVar[int]
     COLLECTION_FIELD_NUMBER: _ClassVar[int]
@@ -85,7 +85,7 @@ class SubjectCollectRequest(_message.Message):
     def __init__(self, user_id: _Optional[int] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ..., collection: _Optional[int] = ..., comment: _Optional[str] = ..., rate: _Optional[int] = ..., collection_id: _Optional[int] = ...) -> None: ...
 
 class EpisodeCollectRequest(_message.Message):
-    __slots__ = ["user_id", "last", "subject"]
+    __slots__ = ("user_id", "last", "subject")
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     LAST_FIELD_NUMBER: _ClassVar[int]
     SUBJECT_FIELD_NUMBER: _ClassVar[int]
@@ -95,7 +95,7 @@ class EpisodeCollectRequest(_message.Message):
     def __init__(self, user_id: _Optional[int] = ..., last: _Optional[_Union[Episode, _Mapping]] = ..., subject: _Optional[_Union[Subject, _Mapping]] = ...) -> None: ...
 
 class SubjectProgressRequest(_message.Message):
-    __slots__ = ["user_id", "subject", "eps_update", "vols_update"]
+    __slots__ = ("user_id", "subject", "eps_update", "vols_update")
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     SUBJECT_FIELD_NUMBER: _ClassVar[int]
     EPS_UPDATE_FIELD_NUMBER: _ClassVar[int]

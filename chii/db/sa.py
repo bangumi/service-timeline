@@ -1,6 +1,5 @@
 import time
 
-from loguru import logger
 from sqlalchemy import (
     CHAR,
     Column,
@@ -21,6 +20,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.dialects.mysql import insert
 from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
+from sslog import logger
 
 from chii.config import config
 

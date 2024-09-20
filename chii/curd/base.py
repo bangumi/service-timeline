@@ -3,9 +3,8 @@ from typing import TypeVar
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from chii.db import sa
-from chii.db.tables import Base
 
-T = TypeVar("T", bound=Base)
+T = TypeVar("T")
 
 
 async def count(db: AsyncSession, *where) -> int:

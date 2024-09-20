@@ -8,8 +8,8 @@ tasks:
     cmds:
       - task --list-all
 
-  gen:
-    desc: Build Web Server Binary
+  gen-grpc:
+    desc: generate grpc python files
     generates:
       - ./api/**/*.py
     sources:
@@ -22,6 +22,17 @@ tasks:
         --pyi_out=.
         --grpc_python_out=.
         ./proto/api/v1/timeline.proto
+
+  gen-orm:
+    desc: generate dataclasses from database
+    dotenv:
+      - .env
+    cmds:
+      - >-
+        sqlacodegen --generator dataclasses
+        --outfile chii/db/models.py
+        --noviews
+        'mysql+pymysql://{{.MYSQL_USER}}:{{.MYSQL_PASS}}@{{.MYSQL_HOST}}:{{.MYSQL_PORT}}/{{.MYSQL_DB}}'
 
 
   dev: poetry run watchgod start_grpc_server.main

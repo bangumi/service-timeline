@@ -39,8 +39,8 @@ class CollectionType(IntEnum):
     """
 
     wish = 1  # 想看
-    doing = 2  # 看过
-    collect = 3  # 在看
+    done = 2  # 看过
+    doing = 3  # 在看
     on_hold = 4  # 搁置
     dropped = 5  # 抛弃
 

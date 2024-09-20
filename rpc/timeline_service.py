@@ -5,8 +5,8 @@ from typing import Optional
 import phpserialize as php
 import pydantic
 from grpc import RpcContext
-from loguru import logger
 from sqlalchemy.orm import Session
+from sslog import logger
 
 from api.v1 import timeline_pb2_grpc
 from api.v1.timeline_pb2 import (
@@ -22,7 +22,7 @@ from api.v1.timeline_pb2 import (
 from chii.compat import phpseralize
 from chii.config import config
 from chii.db import sa
-from chii.db.tables import ChiiTimeline
+from chii.db.tables import ChiiTimeline, ChiiTimeline_column_id, ChiiTimeline_column_uid
 from chii.timeline import (
     SUBJECT_TYPE_MAP,
     ProgressMemo,
@@ -43,37 +43,39 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         print(f"{config.node_id} rpc hello {request.name}")
         return HelloResponse(message=f"{config.node_id}: hello {request.name}")
 
-    @logger.catch(reraise=True)
     def SubjectCollect(
-        self, request: SubjectCollectRequest, context: RpcContext
+        self, req: SubjectCollectRequest, context: RpcContext
     ) -> SubjectCollectResponse:
         """
         cat 3 看过/读过/抛弃了...
 
         https://github.com/bangumi/dev-docs/blob/master/Timeline.md#cat_sbj_collect-条目收藏
         """
-        tlType = SUBJECT_TYPE_MAP[request.subject.type][request.collection]
-        if config.debug:
-            print(request)
+
+        with logger.catch(msg="exception in SubjectCollect"):
+            return self.__subject_collect(req)
+
+    def __subject_collect(self, req: SubjectCollectRequest) -> SubjectCollectResponse:
+        tlType = SUBJECT_TYPE_MAP[req.subject.type][req.collection]
+        logger.debug("request: {!r}", req)
         with self.SessionMaker.begin() as session:
-            tl: Optional[ChiiTimeline] = session.scalar(
-                sa.get(
-                    ChiiTimeline,
-                    ChiiTimeline.uid == request.user_id,
-                    order=ChiiTimeline.id.desc(),
-                )
+            tl: Optional[ChiiTimeline] = (
+                session.query(ChiiTimeline)
+                .where(ChiiTimeline_column_uid == req.user_id)
+                .order_by(ChiiTimeline_column_id.desc())
+                .limit(1)
             )
 
             if tl and tl.dateline >= int(time.time() - 10 * 60):
                 logger.info("find previous timeline, merging")
                 if tl.cat == TimelineCat.Subject and tl.type == tlType:
-                    self.merge_previous_timeline(session, tl, request)
+                    self.merge_previous_timeline(session, tl, req)
                     return SubjectCollectResponse(ok=True)
 
             logger.info(
                 "missing previous timeline or timeline type mismatch, create a new timeline"
             )
-            self.create_subject_collection_timeline(session, request, tlType)
+            self.create_subject_collection_timeline(session, req, tlType)
             session.commit()
 
         return SubjectCollectResponse(ok=True)
@@ -141,7 +143,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             )
         )
 
-    @logger.catch(reraise=True)
     def EpisodeCollect(
         self, req: EpisodeCollectRequest, context
     ) -> EpisodeCollectResponse:
@@ -149,6 +150,13 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         cat 4 type 2 "看过 ep2 ${subject name}"
         """
 
+        with logger.catch(msg="exception in EpisodeCollectRequest"):
+            return self.__episode_collect(req)
+
+    def __episode_collect(self, req: EpisodeCollectRequest) -> EpisodeCollectResponse:
+        """
+        cat 4 type 2 "看过 ep2 ${subject name}"
+        """
         tlType = 2
         memo = ProgressMemo(
             ep_id=req.last.id,
@@ -163,13 +171,13 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             print(req)
 
         with self.SessionMaker.begin() as session:
-            tl: Optional[ChiiTimeline] = session.scalar(
-                sa.get(
-                    ChiiTimeline,
-                    ChiiTimeline.uid == req.user_id,
-                    order=ChiiTimeline.id.desc(),
-                )
+            tl: Optional[ChiiTimeline] = (
+                session.query(ChiiTimeline)
+                .where(ChiiTimeline_column_uid == req.user_id)
+                .order_by(ChiiTimeline_column_id.desc())
+                .limit(1)
             )
+
             if tl and tl.dateline >= int(time.time() - 15 * 60):
                 logger.info("find previous timeline, updating")
                 if (
@@ -197,9 +205,18 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
 
         return EpisodeCollectResponse(ok=True)
 
-    @logger.catch(reraise=True)
     def SubjectProgress(
         self, req: SubjectProgressRequest, context
+    ) -> SubjectProgressResponse:
+        """
+        cat 4 type 0
+        """
+
+        with logger.catch(msg="exception in SubjectProgress"):
+            return self.__subject_progress(req)
+
+    def __subject_progress(
+        self, req: SubjectProgressRequest
     ) -> SubjectProgressResponse:
         """
         cat 4 type 0
@@ -220,13 +237,13 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         with self.SessionMaker.begin() as session:
-            tl: Optional[ChiiTimeline] = session.scalar(
-                sa.get(
-                    ChiiTimeline,
-                    ChiiTimeline.uid == req.user_id,
-                    order=ChiiTimeline.id.desc(),
-                )
+            tl: Optional[ChiiTimeline] = (
+                session.query(ChiiTimeline)
+                .where(ChiiTimeline_column_uid == req.user_id)
+                .order_by(ChiiTimeline_column_id.desc())
+                .limit(1)
             )
+
             if tl and tl.dateline >= int(time.time() - 15 * 60):
                 logger.info("find previous timeline, updating")
                 if (

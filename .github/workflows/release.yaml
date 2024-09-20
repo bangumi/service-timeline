@@ -1,4 +1,4 @@
-name: release
+name: Release(Docker)
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     env:
-      IMAGE: "ghcr.io/${{ github.repository_owner }}/ms-timeline"
+      IMAGE: 'ghcr.io/${{ github.repository_owner }}/ms-timeline'
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.sha }}
@@ -26,34 +26,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: build base docker image
-        env:
-          TAG_HASH: "base-${{ hashFiles('poetry.lock', 'etc/*.dockerfile') }}"
-        run: |
-          echo "TAG_HASH=${TAG_HASH}" >>$GITHUB_ENV
-
-          if ! docker pull "${IMAGE}:${TAG_HASH}"; then
-            echo "NEED_BUILD_BASE=true" >>$GITHUB_ENV
-          else
-            echo "NEED_BUILD_BASE=false" >>$GITHUB_ENV
-          fi
-
-      - name: Build Base Docker Image (if needed)
-        uses: docker/build-push-action@v6
-        if: ${{ fromJSON(env.NEED_BUILD_BASE) }}
-        with:
-          context: ./
-          file: ./etc/base.dockerfile
-          provenance: false
-          push: true
-          tags: ${{ env.IMAGE }}:${{ env.TAG_HASH }}
-
-      - run: docker tag "${IMAGE}:${TAG_HASH}" base-image
-
-      - run: echo "SHA=$(git show --no-patch --no-notes --date=short-local --pretty='%as-%h')" >> $GITHUB_ENV
-        env:
-          TZ: UTC
-
       - name: Docker metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -63,17 +35,37 @@ jobs:
             type=semver,pattern=v{{version}}
 
             type=ref,event=branch
-            type=sha,prefix={{branch}}-
-            type=ref,event=branch,suffix=-${{ env.SHA }}
+            type=ref,event=branch,suffix=-{{ sha }}
 
-            type=raw,value=${{ env.SHA }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # https://docs.docker.com/build/ci/github-actions/cache/#cache-mounts
+      - name: Go Build Cache for Docker
+        uses: actions/cache@v4
+        with:
+          path: pip-wheel-cache
+          key: ${{ runner.os }}-pip-cache-${{ hashFiles('**/poetry.lock') }}
+          restore-keys:
+            ${{ runner.os }}-pip-cache-
+
+      - name: inject pip-wheel-cache into docker
+        uses: reproducible-containers/buildkit-cache-dance@v3.1.2
+        with:
+          cache-map: |
+            {
+              "pip-wheel-cache": "/root/.cache/pip"
+            }
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Build Final Docker Image
         uses: docker/build-push-action@v6
         with:
           context: ./
           provenance: false
-          file: ./etc/final.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          github-token: ${{ github.token }}
