@@ -6,7 +6,6 @@ import time
 from concurrent import futures
 
 import etcd3
-import google.protobuf
 import grpc
 from etcd3 import Lease
 from etcd3.utils import retry
@@ -15,8 +14,6 @@ from sslog import logger
 from api.v1 import timeline_pb2_grpc
 from chii.config import config
 from rpc.timeline_service import TimeLineService
-
-print(google.protobuf.__version__)
 
 
 class Register(threading.Thread):
