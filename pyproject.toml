@@ -20,6 +20,7 @@ aiohttp = "3.10.5"
 pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
 sslog = "0.0.0a45"
+protobuf = "^5.28.2"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"
@@ -33,8 +34,6 @@ pytest-env = "==1.1.5"
 # linter and formatter
 pre-commit = "==3.8.0"
 mypy = "==1.11.2"
-watchgod = "0.8.2"
-types-protobuf = "^4.21.0.2"
 
 [tool.poetry-plugin-bump]
 commit_msg = 'bump: v{version}'

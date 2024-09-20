@@ -14,6 +14,7 @@ tasks:
       - ./api/**/*.py
     sources:
       - ./proto/**/*.proto
+      - poetry.lock
     cmds:
       - >-
         poetry run python -m grpc_tools.protoc
@@ -34,10 +35,18 @@ tasks:
         --noviews
         'mysql+pymysql://{{.MYSQL_USER}}:{{.MYSQL_PASS}}@{{.MYSQL_HOST}}:{{.MYSQL_PORT}}/{{.MYSQL_DB}}'
 
+  dev:
+    dotenv:
+      - .env
+    sources:
+      - chii/**/*.py
+      - rpc/**/*.py
+    generates:
+      - a-file-not-exists-so-it-always-rerun
+    cmd: python start_grpc_server.py
 
-  dev: poetry run watchgod start_grpc_server.main
   mypy: mypy --show-column-numbers chii rpc
 
   lint:
-    - poetry run mypy chii rpc
     - poetry run ruff check .
+    - poetry run mypy chii rpc
