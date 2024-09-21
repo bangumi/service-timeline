@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - master
-      - 'fix/*'
-      - 'feat/*'
+      - 'fix/**'
+      - 'feat/**'
+      - 'refactor/**'
 
 jobs:
   docker:
