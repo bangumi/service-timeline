@@ -15,7 +15,7 @@ def test_Hello():
     assert (
         TimeLineService()
         .Hello(HelloRequest(name="nn"), None)
-        .message.endswith(": hello nn")
+        .message.endswith("hello from nn")
     )
 
 

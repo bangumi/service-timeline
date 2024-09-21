@@ -40,8 +40,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         self.SessionMaker = sa.sync_session_maker()
 
     def Hello(self, request: HelloRequest, context) -> HelloResponse:
-        logger.info(f"{config.node_id} rpc hello {request.name}")
-        return HelloResponse(message=f"{config.node_id}: hello {request.name}")
+        logger.info(f"rpc hello from {request.name}")
+        return HelloResponse(message=f"hello from {request.name}")
 
     def SubjectCollect(
         self, req: SubjectCollectRequest, context: RpcContext
