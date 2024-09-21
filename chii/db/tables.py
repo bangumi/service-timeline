@@ -38,9 +38,7 @@ class ChiiTimeline:
             )
         }
     )
-    cat: int = field(
-        metadata={"sa": Column("tml_cat", SMALLINT(6), nullable=False, index=True)}
-    )
+    cat: int = field(metadata={"sa": Column("tml_cat", SMALLINT(6), nullable=False)})
     type: int = field(
         metadata={
             "sa": Column(

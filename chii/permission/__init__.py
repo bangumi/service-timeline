@@ -1,8 +1,9 @@
-import enum
 from typing import Optional
 
+from chii.const import IntEnum
 
-class UserGroup(enum.IntEnum):
+
+class UserGroup(IntEnum):
     admin = 1  # 管理员
     bangumi_admin = 2  # Bangumi 管理猿
     window_admin = 3  # 天窗管理猿

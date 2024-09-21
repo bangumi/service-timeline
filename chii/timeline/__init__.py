@@ -2,8 +2,7 @@ from typing import Dict, Optional
 
 from pydantic import BaseModel
 
-from chii.db.const import CollectionType, IntEnum
-from chii.subject import SubjectType
+from chii.const import CollectionType, IntEnum, SubjectType
 
 
 class SubjectMemo(BaseModel):

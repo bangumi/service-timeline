@@ -3,10 +3,9 @@ from typing import Optional
 from sqlalchemy import select
 
 from api.v1.timeline_pb2 import HelloRequest
+from chii.const import CollectionType, SubjectType
 from chii.db import sa
-from chii.db.const import CollectionType
 from chii.db.tables import ChiiTimeline, ChiiTimeline_column_id, ChiiTimeline_column_uid
-from chii.subject import SubjectType
 from chii.timeline import SUBJECT_TYPE_MAP, TimelineCat
 from rpc.timeline_service import TimeLineService
 

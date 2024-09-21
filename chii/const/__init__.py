@@ -1,7 +1,7 @@
 import enum
 from typing import Dict, NamedTuple
 
-from chii.db._const import (
+from chii.const._const import (
     Staff,
     staff_job_anime,
     staff_job_book,
@@ -9,10 +9,17 @@ from chii.db._const import (
     staff_job_music,
     staff_job_real,
 )
-from chii.subject import SubjectType
 
 
-class IntEnum(enum.IntEnum):
+class IntEnum(enum.IntEnum):  # noqa: TID251
+    """helper class to make enum.IntEnum work with sqlalchemy and pymysql"""
+
+    def __str__(self):
+        """
+        https://github.com/PyMySQL/PyMySQL/blob/ec27bade879ad05fda214188d035c1fe3f255a35/pymysql/converters.py#L49-L50
+        """
+        return str(self.value)
+
     def translate(self, _escape_table):
         """sqlalchemy method called inside pymysql or aiomysql to get real value,
         so you can use `Table.column == SubjectType.book`
@@ -20,6 +27,38 @@ class IntEnum(enum.IntEnum):
         _escape_table: character code => escaped value
         """
         return self.value
+
+
+@enum.unique
+class SubjectType(IntEnum):
+    """条目类型
+    - `1` 为 书籍
+    - `2` 为 动画
+    - `3` 为 音乐
+    - `4` 为 游戏
+    - `6` 为 三次元
+
+    没有 `5`
+    """
+
+    book = 1
+    anime = 2
+    music = 3
+    game = 4
+    real = 6
+
+    def str(self) -> str:
+        if self == self.book:
+            return "书籍"
+        if self == self.anime:
+            return "动画"
+        if self == self.music:
+            return "音乐"
+        if self == self.game:
+            return "游戏"
+        if self == self.real:
+            return "三次元"
+        raise ValueError(f"unexpected SubjectType {self}")
 
 
 class BloodType(IntEnum):

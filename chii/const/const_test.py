@@ -1,6 +1,6 @@
 import pytest
 
-from chii.db.const import Gender, StaffMap
+from chii.const import Gender, StaffMap
 
 
 def test_valid_type():
