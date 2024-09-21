@@ -11,6 +11,7 @@ class Settings(BaseSettings, validate_default=True):
     MYSQL_USER: str = os.getenv("MYSQL_USER") or "user"  # type: ignore
     MYSQL_PASS: str = os.getenv("MYSQL_PASS") or "password"  # type: ignore
     MYSQL_DB: str = os.getenv("MYSQL_DB") or "bangumi"  # type: ignore
+    MYSQL_STMT_TIMEOUT: float = os.getenv("MYSQL_STMT_TIMEOUT") or 10.0  # type: ignore
 
     COMMIT_REF: str = os.getenv("COMMIT_REF") or "dev"  # type: ignore
     grpc_port: int = os.getenv("GRPC_PORT") or 5000  # type: ignore

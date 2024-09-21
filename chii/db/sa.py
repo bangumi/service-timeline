@@ -65,6 +65,7 @@ def sync_session_maker():
         pool_size=10,
         max_overflow=20,
         echo=config.debug,
+        execution_options={"statement_timeout": config.MYSQL_STMT_TIMEOUT},
     )
 
     if config.SLOW_SQL_MS:
