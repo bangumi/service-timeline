@@ -43,6 +43,10 @@ class Image(BaseModel):
     images: str
 
 
+class TimelineSource(IntEnum):
+    api = 5
+
+
 class TimelineCat(IntEnum):
     Unknown = 0
     Relation = 1  # add friends, join group

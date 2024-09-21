@@ -31,6 +31,7 @@ from chii.timeline import (
     ProgressMemo,
     SubjectMemo,
     TimelineCat,
+    TimelineSource,
 )
 
 BatchMeme: pydantic.TypeAdapter[dict[int, SubjectMemo]] = pydantic.TypeAdapter(
@@ -149,6 +150,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 memo=phpseralize.dumps(memo.model_dump()),
                 batch=0,
                 related=str(req.subject.id),
+                source=TimelineSource.api,
             )
         )
 
@@ -199,6 +201,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     and tl.related == str(req.subject.id)
                 ):
                     tl.memo = phpseralize.dumps(memo.model_dump())
+                    tl.source = TimelineSource.api
                     session.add(tl)
                     return EpisodeCollectResponse(ok=True)
 
@@ -208,7 +211,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     memo=phpseralize.dumps(memo.model_dump()),
                     cat=TimelineCat.Progress,
                     type=tlType,
-                    source=5,
+                    source=TimelineSource.api,
                     batch=0,
                     related=str(req.subject.id),
                 )
@@ -268,6 +271,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     and tl.related == str(req.subject.id)
                 ):
                     tl.memo = phpseralize.dumps(memo.model_dump())
+                    tl.source = TimelineSource.api
                     session.add(tl)
                     session.commit()
                     return SubjectProgressResponse(ok=True)
@@ -280,6 +284,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     type=tlType,
                     batch=0,
                     related=str(req.subject.id),
+                    source=TimelineSource.api,
                 )
             )
             session.commit()
