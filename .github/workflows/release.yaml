@@ -2,10 +2,10 @@ name: Release(Docker)
 
 on:
   push:
-    tags:
-      - v*
     branches:
       - master
+      - 'fix/*'
+      - 'feat/*'
 
 jobs:
   docker:
