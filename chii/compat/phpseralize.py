@@ -8,7 +8,12 @@ Copyright 2021-2022 by Trim21 <trim21.me@gmail.com>
 Copyright 2007-2016 by Armin Ronacher.
 """
 
+from __future__ import annotations
+
+from collections import OrderedDict
 from io import BytesIO
+from types import MappingProxyType
+from typing import Any, Mapping
 
 default_errors = "strict"
 
@@ -16,6 +21,7 @@ __all__ = (
     "dict_to_list",
     "load",
     "loads",
+    "dumps",
 )
 
 
@@ -139,3 +145,123 @@ def dict_to_list(d):
         return [d[x] for x in range(len(d))]
     except KeyError as e:  # pragma: no cover
         raise ValueError("dict is not a sequence") from e
+
+
+class PHPSerializeError(Exception):
+    """Bencode encode error."""
+
+
+def dumps(value: Any, /) -> bytes:
+    """Encode value into the phpserialize format."""
+    with BytesIO() as r:
+        __encode(value, r, set())
+        return r.getvalue()
+
+
+def __encode(value: Any, r: BytesIO, seen: set[int]) -> None:
+    if isinstance(value, str):
+        return __encode_bytes(value.encode("UTF-8"), r)
+
+    if isinstance(value, int):
+        return __encode_int(value, r)
+
+    if isinstance(value, float):
+        r.write(f"d:{value};".encode())
+        return None
+
+    if isinstance(value, bytes):
+        return __encode_bytes(value, r)
+
+    if isinstance(value, bool):
+        if value:
+            r.write(b"b:1;")
+        else:
+            r.write(b"b:0;")
+        return None
+
+    if value is None:
+        r.write(b"N;")
+        return None
+
+    i = id(value)
+    if isinstance(value, (dict, OrderedDict, MappingProxyType)):
+        if i in seen:
+            raise PHPSerializeError(f"circular reference found {value!r}")
+        seen.add(i)
+        __encode_mapping(value, r, seen)
+        seen.remove(i)
+        return None
+
+    if isinstance(value, (list, tuple)):
+        if i in seen:
+            raise PHPSerializeError(f"circular reference found {value!r}")
+        seen.add(i)
+
+        r.write(f"a:{len(value)}:{{".encode())
+        for index, item in enumerate(value):
+            __encode_int(index, r)
+            __encode(item, r, seen)
+        r.write(b"}")
+
+        seen.remove(i)
+        return None
+
+    if isinstance(value, bytearray):
+        __encode_bytes(bytes(value), r)
+        return None
+
+    raise TypeError(f"type '{type(value)!r}' not supported")
+
+
+def __encode_int(value: int, r: BytesIO) -> None:
+    r.write(b"i:")
+    # will handle bool and enum.IntEnum
+    r.write(str(int(value)).encode())
+    r.write(b";")
+
+
+def __encode_bytes(x: bytes, r: BytesIO) -> None:
+    r.write(b"s:")
+    r.write(str(len(x)).encode())
+    r.write(b':"')
+    r.write(x)
+    r.write(b'";')
+
+
+def __encode_mapping(x: Mapping[Any, Any], r: BytesIO, seen: set[int]) -> None:
+    r.write(b"a:")
+    r.write(str(len(x)).encode())
+    r.write(b":{")
+
+    # force all keys to bytes, because str and bytes are incomparable
+    for k, v in x.items():
+        __encode_bytes(__key_to_binary(k), r)
+        __encode(v, r, seen)
+
+    r.write(b"}")
+
+
+def __check_duplicated_keys(s: list[tuple[bytes, object]]) -> None:
+    last_key: bytes = s[0][0]
+    for current, _ in s[1:]:
+        if last_key == current:
+            raise PHPSerializeError(
+                f"find duplicated keys {last_key!r} and {current.decode()}"
+            )
+        last_key = current
+
+
+def __key_to_binary(key: Any) -> bytes:
+    if isinstance(key, bytes):
+        return key
+
+    if isinstance(key, str):
+        return key.encode()
+
+    if isinstance(key, int):
+        return str(key).encode()
+
+    if key is None:
+        return b""
+
+    raise TypeError(f"expected value as dict key {key!r}")

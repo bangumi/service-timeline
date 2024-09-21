@@ -40,8 +40,8 @@ tasks:
       - .env
     sources:
       - '*.py'
-      - 'chii/**.py'
-      - 'rpc/**.py'
+      - 'chii/**/*.py'
+      - 'rpc/**/*.py'
     generates:
       - a-file-not-exists-so-it-always-rerun
     cmd: python start_grpc_server.py

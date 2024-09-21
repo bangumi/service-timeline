@@ -413,17 +413,6 @@ files = [
 ]
 
 [[package]]
-name = "libphpserialize"
-version = "0.0.8"
-description = "A port of PHP's serialize function, in pure python"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "libphpserialize-0.0.8-py3-none-any.whl", hash = "sha256:7f2940ae00e22978076323fc7471531eb95967d45edd940fa0f014466e4d9519"},
-    {file = "libphpserialize-0.0.8.tar.gz", hash = "sha256:ad72e7ff47ddad6d576e7ff7b1ce26d0d4f0d2c0c5a578cb10c4181c39b34856"},
-]
-
-[[package]]
 name = "more-itertools"
 version = "10.5.0"
 description = "More routines for operating on iterables, beyond itertools"
@@ -1143,4 +1132,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7c4cdfbf6ecdf39cc8beed4d8c8059b92416b9fba076449efbb78b1416aec548"
+content-hash = "9deae6ff84848edaf08417f7f0fc531743e318d93be4b5e2ecfe7e8f5188874b"

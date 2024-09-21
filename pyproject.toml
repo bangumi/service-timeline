@@ -10,7 +10,6 @@ python = "^3.10"
 # dependencies
 SQLAlchemy = { version = "2.0.35" }
 grpcio = "1.66.1"
-libphpserialize = "0.0.8"
 pymysql = "1.1.1"
 pydantic = "2.9.2"
 pydantic-settings = "2.5.2"
@@ -68,7 +67,9 @@ extend-exclude = "api/v1"
 
 [tool.ruff]
 extend-exclude = [".venv", "api"]
+target-version = "py310"
 
+[tool.ruff.lint]
 select = [
   "B",
   "C",
@@ -130,10 +131,9 @@ ignore = [
   'TRY003',
   'TRY201',
   'TRY301',
+  'PLR0911',
   'PLR0912',
   'PLR0915',
   'PLR2004',
   'PGH003',
 ]
-
-target-version = "py310"
