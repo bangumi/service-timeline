@@ -1,4 +1,3 @@
-import datetime
 import html
 import time
 from dataclasses import dataclass, field
@@ -18,14 +17,17 @@ from sqlalchemy.orm import registry
 reg: registry = registry()
 
 
-@reg.mapped
 @dataclass(kw_only=True)
 class ChiiTimeline:
     __tablename__ = "chii_timeline"
     __sa_dataclass_metadata_key__ = "sa"
 
+    # mysql will generate ID for AUTO_INCREMENT field if value is 0
     id: int = field(
-        init=False, metadata={"sa": Column("tml_id", INTEGER(10), primary_key=True)}
+        default=0,
+        metadata={
+            "sa": Column("tml_id", INTEGER(10), primary_key=True, autoincrement=True)
+        },
     )
     uid: int = field(
         metadata={
@@ -97,11 +99,15 @@ class ChiiTimeline:
                 INTEGER(10),
                 nullable=False,
                 server_default=text("'0'"),
-                default=lambda: int(datetime.datetime.now().timestamp()),
+                default=lambda: int(time.time()),
             )
         },
     )
 
+
+# normally we should just use @reg.mapped
+# but it make pycharm think `ChiiTimeline` is not a dataclasses
+reg.mapped(ChiiTimeline)
 
 # type helper for ChiiTimeline.uid.desc()
 ChiiTimeline_column_id: Column[int] = cast(Column[int], ChiiTimeline.id)
@@ -122,7 +128,6 @@ class HTMLEscapedString(types.TypeDecorator):
         return html.unescape(value)
 
 
-@reg.mapped
 @dataclass(kw_only=True)
 class ChiiSubject:
     __tablename__ = "chii_subjects"
@@ -228,3 +233,6 @@ class ChiiSubject:
     ban: int = field(
         metadata={"sa": Column("subject_ban", TINYINT(1), server_default=text("'0'"))}
     )
+
+
+reg.mapped(ChiiSubject)
