@@ -15,23 +15,14 @@ from io import BytesIO
 from types import MappingProxyType
 from typing import Any, Mapping
 
-default_errors = "strict"
-
 __all__ = (
     "dict_to_list",
-    "load",
     "loads",
     "dumps",
 )
 
 
-def load(
-    fp,
-    charset="utf-8",
-    errors=default_errors,
-    decode_strings=False,
-    array_hook=None,
-):
+def load(fp: BytesIO) -> Any:
     """Read a string from the open file object `fp` and interpret it as a
     data stream of PHP-serialized objects, reconstructing and returning
     the original object hierarchy.
@@ -54,15 +45,13 @@ def load(
     for all array items.  This can for example be set to
     `collections.OrderedDict` for an ordered, hashed dictionary.
     """
-    if array_hook is None:
-        array_hook = dict
 
-    def _expect(e):
+    def __expect(e):
         v = fp.read(len(e))
         if v != e:  # pragma: no cover
             raise ValueError(f"failed expectation, expected {e!r} got {v!r}")
 
-    def _read_until(delim):
+    def __read_until(delim):
         buf = []
         while 1:
             char = fp.read(1)
@@ -73,74 +62,65 @@ def load(
             buf.append(char)
         return b"".join(buf)
 
-    def _load_array():
-        items = int(_read_until(b":")) * 2
-        _expect(b"{")
+    def __load_array():
+        item_count = int(__read_until(b":"))
+
+        __expect(b"{")
+
         result = []
-        last_item = Ellipsis
-        for _ in range(items):
-            item = _unserialize()
-            if last_item is Ellipsis:
-                last_item = item
-            else:
-                result.append((last_item, item))
-                last_item = Ellipsis
-        _expect(b"}")
+
+        for _ in range(item_count):
+            key = __decode()
+            value = __decode()
+            result.append((key, value))
+
+        __expect(b"}")
         return result
 
-    def _unserialize():
-        type_ = fp.read(1).lower()
-        if type_ == b"n":
-            _expect(b";")
+    def __decode():
+        opcode = fp.read(1)
+        if opcode == b"N":
+            __expect(b";")
             return None
-        if type_ in b"idb":
-            _expect(b":")
-            data = _read_until(b";")
-            if type_ == b"i":
+        if opcode in b"idb":
+            __expect(b":")
+            data = __read_until(b";")
+            if opcode == b"i":
                 return int(data)
-            if type_ == b"d":
+            if opcode == b"d":
                 return float(data)
-            return int(data) != 0
-        if type_ == b"s":
-            _expect(b":")
-            length = int(_read_until(b":"))
-            _expect(b'"')
-            data = fp.read(length)
-            _expect(b'"')
-            if decode_strings:
-                data = data.decode(charset, errors)
-            _expect(b";")
+            return data != b"0"
+        if opcode == b"s":
+            __expect(b":")
+            length = int(__read_until(b":"))
+            __expect(b'"')
+            data = fp.read(length).decode()
+            __expect(b'"')
+            __expect(b";")
             return data
-        if type_ == b"a":
-            _expect(b":")
-            return array_hook(_load_array())
-        if type_ == b"o":
+        if opcode == b"a":
+            __expect(b":")
+            return dict(__load_array())
+        if opcode in (b"O", b"C"):
             raise ValueError("deserialize php object is not allowed")
-        raise ValueError("unexpected opcode")  # pragma: no cover
+        raise ValueError(f"unexpected opcode {opcode}")  # pragma: no cover
 
-    return _unserialize()
+    return __decode()
 
 
-def loads(
-    data,
-    charset="utf-8",
-    errors=default_errors,
-    decode_strings=True,
-    array_hook=None,
-):
+def loads(data: bytes) -> Any:
     """Read a PHP-serialized object hierarchy from a string.  Characters in the
     string past the object's representation are ignored.  On Python 3 the
     string must be a bytestring.
     """
     with BytesIO(data) as fp:
-        return load(fp, charset, errors, decode_strings, array_hook)
+        return load(fp)
 
 
-def dict_to_list(d):
+def dict_to_list(d: dict[int, Any]) -> list[Any]:
     """Converts an ordered dict into a list."""
     # make sure it's a dict, that way dict_to_list can be used as an
     # array_hook.
-    d = dict(d)
     try:
         return [d[x] for x in range(len(d))]
     except KeyError as e:  # pragma: no cover
