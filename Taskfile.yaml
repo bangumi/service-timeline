@@ -48,6 +48,20 @@ tasks:
       - a-file-not-exists-so-it-always-rerun
     cmd: python start_grpc_server.py
 
+  graphql:
+    dotenv:
+      - .env
+    sources:
+      - '*.py'
+      - 'chii/**/*.py'
+      - 'rpc/**/*.py'
+      - 'gql/**/*.py'
+      - 'gql/**/*.graphql'
+    generates:
+      - a-file-not-exists-so-it-always-rerun
+    cmds:
+      - uvicorn gql.app:app
+
   mypy: mypy --show-column-numbers chii rpc
 
   lint:

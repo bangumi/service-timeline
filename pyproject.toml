@@ -16,6 +16,8 @@ pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
 sslog = "0.0.0a45"
 protobuf = "5.27.2"
+ariadne = "^0.23.0"
+uvicorn = { version = "^0.30.6", extras = ['standard'] }
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"
@@ -111,6 +113,7 @@ ignore = [
   'N806',
   'N802',
   'N803',
+  'N999',
   'E501',
   'BLE001',
   'RUF002',
@@ -135,7 +138,11 @@ ignore = [
   'PLR0912',
   'PLR0915',
   'PLR2004',
+  'SIM102',
+  'TRY002',
+  'ERA001',
   'PGH003',
+  'INP001',
 ]
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]

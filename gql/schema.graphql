@@ -1,0 +1,9 @@
+type Query {
+  timeline_collection:[CollectTimeline!]!
+}
+
+type CollectTimeline {
+  action: Int!
+  subject_name: String!
+  subject_name_cn: String!
+}
