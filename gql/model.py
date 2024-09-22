@@ -1,8 +1,7 @@
-from dataclasses import dataclass
+from typing import TypedDict
 
 
-@dataclass(kw_only=True)
-class CollectTimeline:
+class CollectTimeline(TypedDict):
     id: int
     action: int
     user_id: int

@@ -1,3 +1,4 @@
+import logging.config
 import time
 
 from sqlalchemy import (
@@ -57,6 +58,29 @@ def get(T, *where, order=None):
     if order is not None:
         return s.order_by(order)
     return s
+
+
+if config.debug:
+    # redirect echo logger to sslog
+    logging.config.dictConfig(
+        {
+            "version": 1,
+            "handlers": {
+                "sslog": {
+                    "class": "sslog.InterceptHandler",
+                    "level": "DEBUG",
+                }
+            },
+            "loggers": {
+                "": {"level": "INFO", "handlers": ["sslog"]},
+                "sqlalchemy.engine.Engine": {
+                    "level": "INFO",
+                    "handlers": ["sslog"],
+                    "propagate": False,
+                },
+            },
+        }
+    )
 
 
 def sync_session_maker():
