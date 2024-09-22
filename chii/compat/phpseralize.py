@@ -21,8 +21,10 @@ __all__ = (
     "dumps",
 )
 
+import six
 
-def load(fp: BytesIO) -> Any:
+
+def __load(fp: BytesIO) -> Any:
     """Read a string from the open file object `fp` and interpret it as a
     data stream of PHP-serialized objects, reconstructing and returning
     the original object hierarchy.
@@ -32,7 +34,7 @@ def load(fp: BytesIO) -> Any:
     reading, a `StringIO` object (`BytesIO` on Python 3), or any other custom
     object that meets this interface.
 
-    `load` will read exactly one object from the stream.  See the docstring of
+    `__load` will read exactly one object from the stream.  See the docstring of
     the module for this chained behavior.
 
     If an object hook is given object-opcodes are supported in the serilization
@@ -108,13 +110,13 @@ def load(fp: BytesIO) -> Any:
     return __decode()
 
 
-def loads(data: bytes) -> Any:
+def loads(data: bytes | str) -> Any:
     """Read a PHP-serialized object hierarchy from a string.  Characters in the
     string past the object's representation are ignored.  On Python 3 the
     string must be a bytestring.
     """
-    with BytesIO(data) as fp:
-        return load(fp)
+    with BytesIO(six.ensure_binary(data)) as fp:
+        return __load(fp)
 
 
 def dict_to_list(d: dict[int, Any]) -> list[Any]:

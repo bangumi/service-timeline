@@ -3,6 +3,8 @@ from dataclasses import dataclass
 
 @dataclass(kw_only=True)
 class CollectTimeline:
+    id: int
     action: int
-    subject_name: str
-    subject_name_cn: str
+    user_id: int
+    subject_id: list[int]
+    created_at: int

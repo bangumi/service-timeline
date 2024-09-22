@@ -19,6 +19,7 @@ from sqlalchemy import (
     update,
 )
 from sqlalchemy.dialects.mysql import insert
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
 from sslog import logger
 
@@ -73,6 +74,19 @@ def sync_session_maker():
         event.listen(engine, "after_cursor_execute", after_cursor_execute)
 
     return sessionmaker(engine)
+
+
+def async_session_maker():
+    engine = create_async_engine(
+        config.MYSQL_ASYNC_DSN(),
+        pool_recycle=14400,
+        pool_size=10,
+        max_overflow=20,
+        echo=config.debug,
+        execution_options={"statement_timeout": config.MYSQL_STMT_TIMEOUT},
+    )
+
+    return async_sessionmaker(engine)
 
 
 def before_cursor_execute(

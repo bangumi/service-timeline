@@ -3,7 +3,10 @@ type Query {
 }
 
 type CollectTimeline {
+  id: Int!
   action: Int!
-  subject_name: String!
-  subject_name_cn: String!
+  user_id: Int!
+  subject_id: [Int!]!
+  # unix timestamp in seconds
+  created_at: Int!
 }

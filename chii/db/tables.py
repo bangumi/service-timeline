@@ -60,8 +60,8 @@ class ChiiTimeline:
             )
         },
     )
-    memo: bytes = field(
-        default=b"", metadata={"sa": Column("tml_memo", MEDIUMTEXT, nullable=False)}
+    memo: str = field(
+        default="", metadata={"sa": Column("tml_memo", MEDIUMTEXT, nullable=False)}
     )
     img: str = field(
         default="",
@@ -91,7 +91,7 @@ class ChiiTimeline:
             )
         },
     )
-    dateline: int = field(
+    created_at: int = field(
         default_factory=lambda: int(time.time()),
         metadata={
             "sa": Column(
@@ -111,7 +111,10 @@ reg.mapped(ChiiTimeline)
 
 # type helper for ChiiTimeline.uid.desc()
 ChiiTimeline_column_id: Column[int] = cast(Column[int], ChiiTimeline.id)
+ChiiTimeline_column_cat: Column[int] = cast(Column[int], ChiiTimeline.cat)
+ChiiTimeline_column_type: Column[int] = cast(Column[int], ChiiTimeline.type)
 ChiiTimeline_column_uid: Column[int] = cast(Column[int], ChiiTimeline.uid)
+ChiiTimeline_column_created_at: Column[int] = cast(Column[int], ChiiTimeline.created_at)
 
 
 class HTMLEscapedString(types.TypeDecorator):
