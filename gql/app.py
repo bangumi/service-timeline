@@ -10,13 +10,10 @@ from starlette.routing import Mount
 from chii.compat import phpseralize
 from chii.const import CollectionType
 from chii.db import sa
-from chii.db.tables import (
-    ChiiTimeline,
-    ChiiTimeline_column_cat,
-    ChiiTimeline_column_id,
-)
+from chii.db.tables import ChiiTimeline, ChiiTimeline_column_cat, ChiiTimeline_column_id
 from chii.timeline import TimelineCat
 from gql.model import CollectTimeline
+from gql.rules import depth_limit_validator
 
 # Define types using Schema Definition Language (https://graphql.org/learn/schema/)
 # Wrapping string in gql function provides validation and better error traceback
@@ -24,7 +21,7 @@ type_defs = gql(
     Path(__file__, "..", "schema.graphql").resolve().read_text(encoding="utf8")
 )
 
-CessionMaker = sa.async_session_maker()
+CreateSession = sa.async_session_maker()
 
 # Map resolver functions to Query fields using QueryType
 query = QueryType()
@@ -33,8 +30,8 @@ query = QueryType()
 # Resolvers are simple python functions
 @query.field("timeline_collection")
 async def timeline_collection(*_: Any) -> list[CollectTimeline]:
-    async with CessionMaker() as session:
-        rows: list[ChiiTimeline] = await session.execute(
+    async with CreateSession() as session:
+        rows: list[tuple[ChiiTimeline,]] = await session.execute(
             select(ChiiTimeline)
             .where(ChiiTimeline_column_cat == TimelineCat.Subject)
             .order_by(ChiiTimeline_column_id.desc())
@@ -77,6 +74,13 @@ schema = make_executable_schema(type_defs, query, person)
 app = Starlette(
     debug=True,
     routes=[
-        Mount("/graphql", GraphQL(schema, debug=True)),
+        Mount(
+            "/graphql",
+            GraphQL(
+                schema,
+                debug=True,
+                validation_rules=[depth_limit_validator(max_depth=5)],
+            ),
+        ),
     ],
 )
