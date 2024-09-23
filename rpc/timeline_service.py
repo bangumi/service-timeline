@@ -193,7 +193,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             )
 
             if tl and tl.dateline >= int(time.time() - 15 * 60):
-                logger.info("find previous timeline, updating")
+                logger.info("find previous timeline, updating", user_id=req.user_id)
                 if (
                     tl.cat == TimelineCat.Progress
                     and tl.type == tlType
@@ -263,7 +263,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             )
 
             if tl and tl.dateline >= int(time.time() - 15 * 60):
-                logger.info("find previous timeline, updating")
+                logger.info("find previous timeline, updating", user_id=req.user_id)
                 if (
                     tl.cat == TimelineCat.Progress
                     and tl.type == tlType
