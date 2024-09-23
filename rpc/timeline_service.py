@@ -76,7 +76,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 .scalar()
             )
 
-            if tl and tl.dateline >= int(time.time() - 10 * 60):
+            if tl and tl.created_at >= int(time.time() - 10 * 60):
                 logger.info("find previous timeline, merging")
                 if tl.cat == TimelineCat.Subject and tl.type == tlType:
                     self.merge_previous_timeline(session, tl, req)
@@ -192,7 +192,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 .scalar()
             )
 
-            if tl and tl.dateline >= int(time.time() - 15 * 60):
+            if tl and tl.created_at >= int(time.time() - 15 * 60):
                 logger.info("find previous timeline, updating", user_id=req.user_id)
                 if (
                     tl.cat == TimelineCat.Progress
@@ -262,7 +262,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 .scalar()
             )
 
-            if tl and tl.dateline >= int(time.time() - 15 * 60):
+            if tl and tl.created_at >= int(time.time() - 15 * 60):
                 logger.info("find previous timeline, updating", user_id=req.user_id)
                 if (
                     tl.cat == TimelineCat.Progress

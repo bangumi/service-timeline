@@ -1,3 +1,4 @@
+import logging.config
 import time
 
 from sqlalchemy import (
@@ -19,6 +20,7 @@ from sqlalchemy import (
     update,
 )
 from sqlalchemy.dialects.mysql import insert
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import joinedload, selectinload, sessionmaker, subqueryload
 from sslog import logger
 
@@ -58,6 +60,29 @@ def get(T, *where, order=None):
     return s
 
 
+if config.debug:
+    # redirect echo logger to sslog
+    logging.config.dictConfig(
+        {
+            "version": 1,
+            "handlers": {
+                "sslog": {
+                    "class": "sslog.InterceptHandler",
+                    "level": "DEBUG",
+                }
+            },
+            "loggers": {
+                "": {"level": "INFO", "handlers": ["sslog"]},
+                "sqlalchemy.engine.Engine": {
+                    "level": "INFO",
+                    "handlers": ["sslog"],
+                    "propagate": False,
+                },
+            },
+        }
+    )
+
+
 def sync_session_maker():
     engine = create_engine(
         config.MYSQL_SYNC_DSN,
@@ -73,6 +98,19 @@ def sync_session_maker():
         event.listen(engine, "after_cursor_execute", after_cursor_execute)
 
     return sessionmaker(engine)
+
+
+def async_session_maker():
+    engine = create_async_engine(
+        config.MYSQL_ASYNC_DSN(),
+        pool_recycle=14400,
+        pool_size=10,
+        max_overflow=20,
+        echo=config.debug,
+        execution_options={"statement_timeout": config.MYSQL_STMT_TIMEOUT},
+    )
+
+    return async_sessionmaker(engine)
 
 
 def before_cursor_execute(

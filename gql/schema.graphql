@@ -1,0 +1,12 @@
+type Query {
+  timeline_collection:[CollectTimeline!]!
+}
+
+type CollectTimeline {
+  id: Int!
+  action: Int!
+  user_id: Int!
+  subject_id: [Int!]!
+  # unix timestamp in seconds
+  created_at: Int!
+}

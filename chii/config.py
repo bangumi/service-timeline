@@ -29,6 +29,15 @@ class Settings(BaseSettings, validate_default=True):
             self.MYSQL_DB,
         )
 
+    def MYSQL_ASYNC_DSN(self) -> str:
+        return "mysql+aiomysql://{}:{}@{}:{}/{}".format(
+            self.MYSQL_USER,
+            self.MYSQL_PASS,
+            self.MYSQL_HOST,
+            self.MYSQL_PORT,
+            self.MYSQL_DB,
+        )
+
 
 config = Settings()
 

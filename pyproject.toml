@@ -16,6 +16,9 @@ pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
 sslog = "0.0.0a47"
 protobuf = "5.27.2"
+ariadne = "^0.23.0"
+uvicorn = { version = "^0.30.6", extras = ['standard'] }
+aiomysql = "^0.2.0"
 six = "1.16.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -59,7 +62,7 @@ ignore_missing_imports = true
 warn_return_any = true
 warn_unused_configs = true
 show_error_codes = true
-plugins = ['sqlalchemy.ext.mypy.plugin', 'pydantic.mypy']
+plugins = ['sqlalchemy.ext.mypy.plugin']
 explicit_package_bases = true
 
 [tool.black]
@@ -113,6 +116,7 @@ ignore = [
   'N806',
   'N802',
   'N803',
+  'N999',
   'E501',
   'BLE001',
   'RUF002',
@@ -137,7 +141,11 @@ ignore = [
   'PLR0912',
   'PLR0915',
   'PLR2004',
+  'SIM102',
+  'TRY002',
+  'ERA001',
   'PGH003',
+  'INP001',
 ]
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
