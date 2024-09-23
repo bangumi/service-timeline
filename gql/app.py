@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 from ariadne import ObjectType, QueryType, gql, make_executable_schema
 from ariadne.asgi import GraphQL
@@ -24,14 +24,14 @@ type_defs = gql(
 CreateSession = sa.async_session_maker()
 
 # Map resolver functions to Query fields using QueryType
-query = QueryType()
+gql_query = QueryType()
 
 
 # Resolvers are simple python functions
-@query.field("timeline_collection")
+@gql_query.field("timeline_collection")
 async def timeline_collection(*_: Any) -> list[CollectTimeline]:
     async with CreateSession() as session:
-        rows: list[tuple[ChiiTimeline,]] = await session.execute(
+        rows: Iterator[ChiiTimeline] = await session.scalars(
             select(ChiiTimeline)
             .where(ChiiTimeline_column_cat == TimelineCat.Subject)
             .order_by(ChiiTimeline_column_id.desc())
@@ -39,7 +39,7 @@ async def timeline_collection(*_: Any) -> list[CollectTimeline]:
         )
 
         result = []
-        for (row,) in rows:
+        for row in rows:
             meme = phpseralize.loads(row.memo.encode())
             if not row.batch:
                 result.append(
@@ -66,10 +66,10 @@ async def timeline_collection(*_: Any) -> list[CollectTimeline]:
 
 
 # Map resolver functions to custom type fields using ObjectType
-person = ObjectType("CollectTimeline")
+gql_collect_timeline = ObjectType("CollectTimeline")
 
 # Create executable GraphQL schema
-schema = make_executable_schema(type_defs, query, person)
+schema = make_executable_schema(type_defs, gql_query, gql_collect_timeline)
 
 app = Starlette(
     debug=True,
