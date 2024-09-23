@@ -1208,13 +1208,13 @@ sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "sslog"
-version = "0.0.0a45"
+version = "0.0.0a47"
 description = "opinionated logger based on structlog"
 optional = false
 python-versions = "~=3.8"
 files = [
-    {file = "sslog-0.0.0a45-py3-none-any.whl", hash = "sha256:fe4777e90c9caba57af183db6eed7d0ba797da829e5f4acb920c32a7b9ed54f3"},
-    {file = "sslog-0.0.0a45.tar.gz", hash = "sha256:169e17e5fdc7f302fe0e33b94cb22a2cf8f2f296899ed6c239a643de5b3847d0"},
+    {file = "sslog-0.0.0a47-py3-none-any.whl", hash = "sha256:f77bb238acaf56116fc1606ffe1c9e7e7f6d9db627f2d716dfe6bd802527982f"},
+    {file = "sslog-0.0.0a47.tar.gz", hash = "sha256:2590a7b02d2b7dc6b3db014a89281330a6a7314b6bf54b1a3c64dcbaded79350"},
 ]
 
 [package.dependencies]
@@ -1226,13 +1226,13 @@ dev = ["colorama", "loguru", "mypy", "pre-commit", "rich"]
 
 [[package]]
 name = "starlette"
-version = "0.38.5"
+version = "0.38.6"
 description = "The little ASGI library that shines."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "starlette-0.38.5-py3-none-any.whl", hash = "sha256:632f420a9d13e3ee2a6f18f437b0a9f1faecb0bc42e1942aa2ea0e379a4c4206"},
-    {file = "starlette-0.38.5.tar.gz", hash = "sha256:04a92830a9b6eb1442c766199d62260c3d4dc9c4f9188360626b1e0273cb7077"},
+    {file = "starlette-0.38.6-py3-none-any.whl", hash = "sha256:4517a1409e2e73ee4951214ba012052b9e16f60e90d73cfb06192c19203bbb05"},
+    {file = "starlette-0.38.6.tar.gz", hash = "sha256:863a1588f5574e70a821dadefb41e4881ea451a47a3cd1b4df359d4ffefe5ead"},
 ]
 
 [package.dependencies]
@@ -1603,4 +1603,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "104561027d63d90c63a003e06bb4a1fdc6ece7baec1e9f5e1f26a23fb46fdf06"
+content-hash = "60071f5e6d6a5289b4f661eebf1e513334898a3ee8d8727bd68eb9ca3fe3930f"

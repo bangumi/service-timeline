@@ -14,12 +14,12 @@ pymysql = "1.1.1"
 pydantic = "2.9.2"
 pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
-sslog = "0.0.0a45"
+sslog = "0.0.0a47"
 protobuf = "5.27.2"
 ariadne = "^0.23.0"
 uvicorn = { version = "^0.30.6", extras = ['standard'] }
 aiomysql = "^0.2.0"
-six = "^1.16.0"
+six = "1.16.0"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"

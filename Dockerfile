@@ -29,6 +29,6 @@ RUN pip install -U pip && \
 
 WORKDIR /app
 
-ENTRYPOINT [ "python", "./start_grpc_server.py" ]
+ENTRYPOINT [ "python", "-m", "start_grpc_server" ]
 
 COPY . ./
