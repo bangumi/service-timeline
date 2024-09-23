@@ -915,6 +915,17 @@ test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "ini2toml[lite] (>=
 type = ["importlib-metadata (>=7.0.2)", "jaraco.develop (>=7.21)", "mypy (==1.11.*)", "pytest-mypy"]
 
 [[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+
+[[package]]
 name = "sqlacodegen"
 version = "3.0.0rc5"
 description = "Automatic model code generator for SQLAlchemy"
@@ -1099,6 +1110,17 @@ files = [
 ]
 
 [[package]]
+name = "types-six"
+version = "1.16.21.20240513"
+description = "Typing stubs for six"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-six-1.16.21.20240513.tar.gz", hash = "sha256:cdf445b5161bf17753500713a475ab79a45bd0d87728b8bfcecd86e2fbf66402"},
+    {file = "types_six-1.16.21.20240513-py3-none-any.whl", hash = "sha256:af2a105be6d504339bfed81319cc8e8697865f0ee5c6baa63658f127b33b9e63"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1132,4 +1154,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9deae6ff84848edaf08417f7f0fc531743e318d93be4b5e2ecfe7e8f5188874b"
+content-hash = "45cd5baf4992692c79a22da3e4bde9fe61fbaca4b987751d3d4f8b2610a985f8"

@@ -21,6 +21,8 @@ __all__ = (
     "dumps",
 )
 
+import six
+
 
 def load(fp: BytesIO) -> Any:
     """Read a string from the open file object `fp` and interpret it as a
@@ -108,12 +110,12 @@ def load(fp: BytesIO) -> Any:
     return __decode()
 
 
-def loads(data: bytes) -> Any:
+def loads(data: bytes | str) -> Any:
     """Read a PHP-serialized object hierarchy from a string.  Characters in the
     string past the object's representation are ignored.  On Python 3 the
     string must be a bytestring.
     """
-    with BytesIO(data) as fp:
+    with BytesIO(six.ensure_binary(data)) as fp:
         return load(fp)
 
 

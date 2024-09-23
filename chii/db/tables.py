@@ -60,8 +60,8 @@ class ChiiTimeline:
             )
         },
     )
-    memo: bytes = field(
-        default=b"", metadata={"sa": Column("tml_memo", MEDIUMTEXT, nullable=False)}
+    memo: str = field(
+        default="", metadata={"sa": Column("tml_memo", MEDIUMTEXT, nullable=False)}
     )
     img: str = field(
         default="",
