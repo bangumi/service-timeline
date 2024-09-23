@@ -16,7 +16,7 @@ pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
 sslog = "0.0.0a45"
 protobuf = "5.27.2"
-six = "^1.16.0"
+six = "1.16.0"
 
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"
