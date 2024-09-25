@@ -35,38 +35,22 @@ class EpisodeCollectResponse(_message.Message):
     def __init__(self, ok: bool = ...) -> None: ...
 
 class Subject(_message.Message):
-    __slots__ = ("id", "type", "name", "name_cn", "image", "series", "vols_total", "eps_total")
+    __slots__ = ("id", "type", "vols_total", "eps_total")
     ID_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    NAME_CN_FIELD_NUMBER: _ClassVar[int]
-    IMAGE_FIELD_NUMBER: _ClassVar[int]
-    SERIES_FIELD_NUMBER: _ClassVar[int]
     VOLS_TOTAL_FIELD_NUMBER: _ClassVar[int]
     EPS_TOTAL_FIELD_NUMBER: _ClassVar[int]
     id: int
     type: int
-    name: str
-    name_cn: str
-    image: str
-    series: bool
     vols_total: int
     eps_total: int
-    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., image: _Optional[str] = ..., series: bool = ..., vols_total: _Optional[int] = ..., eps_total: _Optional[int] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., vols_total: _Optional[int] = ..., eps_total: _Optional[int] = ...) -> None: ...
 
 class Episode(_message.Message):
-    __slots__ = ("id", "type", "name", "name_cn", "sort")
+    __slots__ = ("id",)
     ID_FIELD_NUMBER: _ClassVar[int]
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    NAME_CN_FIELD_NUMBER: _ClassVar[int]
-    SORT_FIELD_NUMBER: _ClassVar[int]
     id: int
-    type: int
-    name: str
-    name_cn: str
-    sort: float
-    def __init__(self, id: _Optional[int] = ..., type: _Optional[int] = ..., name: _Optional[str] = ..., name_cn: _Optional[str] = ..., sort: _Optional[float] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ...) -> None: ...
 
 class SubjectCollectRequest(_message.Message):
     __slots__ = ("user_id", "subject", "collection", "comment", "rate", "collection_id")
