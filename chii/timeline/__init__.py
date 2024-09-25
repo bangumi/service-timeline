@@ -26,10 +26,7 @@ class ProgressMemo(BaseModel):
 
     subject_id: Optional[str] = None
     subject_type_id: Optional[str] = None
-    subject_name: Optional[str] = None
 
-    ep_name: Optional[str] = None
-    ep_sort: Optional[float] = None
     ep_id: Optional[int] = None
 
 

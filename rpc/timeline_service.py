@@ -176,11 +176,8 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         tlType = 2
         memo = ProgressMemo(
             ep_id=req.last.id,
-            subject_name=req.subject.name,
-            ep_name=req.last.name,
             subject_id=str(req.subject.id),
             subject_type_id=str(req.subject.type),
-            ep_sort=req.last.sort,
         )
 
         with self.SessionMaker.begin() as session:
@@ -244,7 +241,6 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         tlType = 0
 
         memo = ProgressMemo(
-            subject_name=req.subject.name,
             subject_id=str(req.subject.id),
             subject_type_id=str(req.subject.type),
             eps_total=str(req.subject.eps_total) if req.subject.eps_total else "??",
