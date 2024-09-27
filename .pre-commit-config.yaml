@@ -10,7 +10,6 @@ repos:
       - id: check-toml
       - id: check-yaml
       - id: check-json
-      - id: check-docstring-first
       - id: check-merge-conflict
       - id: check-added-large-files # check for file bigger than 500kb
       - id: debug-statements

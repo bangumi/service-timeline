@@ -10,6 +10,22 @@ tasks:
       - black .
       - mypy .
 
+  gen-gql:
+    desc: generate grpc python files
+    generates:
+      - ./api/**/*.py
+    sources:
+      - ./proto/**/*.proto
+      - poetry.lock
+    cmds:
+      - >-
+        datamodel-codegen
+        --input gql/schema.graphql
+        --input-file-type graphql
+        --output gql/model.py
+        --output-model-type dataclasses.dataclass
+#        --use-standard-collections
+
   gen-grpc:
     desc: generate grpc python files
     generates:
