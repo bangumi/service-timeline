@@ -471,6 +471,7 @@ files = [
     {file = "greenlet-3.1.1-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:d0028e725ee18175c6e422797c407874da24381ce0690d6b9396c204c7f7276e"},
     {file = "greenlet-3.1.1-cp39-cp39-win32.whl", hash = "sha256:5e06afd14cbaf9e00899fae69b24a32f2196c19de08fcb9f4779dd4f004e5e7c"},
     {file = "greenlet-3.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:3319aa75e0e0639bc15ff54ca327e8dc7a6fe404003496e3c6925cd3142e0e22"},
+    {file = "greenlet-3.1.1.tar.gz", hash = "sha256:4ce3ac6cdb6adf7946475d7ef31777c26d94bccc377e070a7986bd2d5c515467"},
 ]
 
 [package.extras]
@@ -1444,13 +1445,13 @@ sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "sslog"
-version = "0.0.0a47"
+version = "0.0.0a48"
 description = "opinionated logger based on structlog"
 optional = false
 python-versions = "~=3.8"
 files = [
-    {file = "sslog-0.0.0a47-py3-none-any.whl", hash = "sha256:f77bb238acaf56116fc1606ffe1c9e7e7f6d9db627f2d716dfe6bd802527982f"},
-    {file = "sslog-0.0.0a47.tar.gz", hash = "sha256:2590a7b02d2b7dc6b3db014a89281330a6a7314b6bf54b1a3c64dcbaded79350"},
+    {file = "sslog-0.0.0a48-py3-none-any.whl", hash = "sha256:c18082feb581e7734c8d5933ed3aad8ea87b8fdf2c8f19c03f1282f30420abbe"},
+    {file = "sslog-0.0.0a48.tar.gz", hash = "sha256:df3696e7663dafdfa7a7cb6e62c0c800314f279839a23237c4ed18a116e72dbf"},
 ]
 
 [package.dependencies]
@@ -1832,4 +1833,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "fd6fd8e180d7fb1bfdd63d3391e1c4070bca65b0990e118d124fd77b1cd40640"
+content-hash = "de5025722be6584e0d947086b824fce0013f69324ab888dab1e1fc6b9c791f54"
