@@ -1,13 +1,13 @@
 from pathlib import Path
 from typing import Any, Iterator
 
-from ariadne import ObjectType, QueryType, gql, make_executable_schema
+from ariadne import ObjectType, QueryType, gql
 from ariadne.asgi import GraphQL
+from ariadne.contrib.federation import make_federated_schema
 from sqlalchemy import select
-from starlette.applications import Starlette
-from starlette.routing import Mount
 
 from chii.compat import phpseralize
+from chii.config import config
 from chii.const import CollectionType
 from chii.db import sa
 from chii.db.tables import ChiiTimeline, ChiiTimeline_column_cat, ChiiTimeline_column_id
@@ -69,18 +69,10 @@ async def timeline_collection(*_: Any) -> list[CollectTimeline]:
 gql_collect_timeline = ObjectType("CollectTimeline")
 
 # Create executable GraphQL schema
-schema = make_executable_schema(type_defs, gql_query, gql_collect_timeline)
+schema = make_federated_schema(type_defs, gql_query, gql_collect_timeline)
 
-app = Starlette(
-    debug=True,
-    routes=[
-        Mount(
-            "/graphql",
-            GraphQL(
-                schema,
-                debug=True,
-                validation_rules=[depth_limit_validator(max_depth=5)],
-            ),
-        ),
-    ],
+app = GraphQL(
+    schema,
+    debug=config.debug,
+    validation_rules=[depth_limit_validator(max_depth=5)],
 )
