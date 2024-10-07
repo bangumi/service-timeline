@@ -9,7 +9,7 @@ package-mode = false
 python = "^3.10"
 # dependencies
 SQLAlchemy = { version = "2.0.35" }
-grpcio = "1.66.1"
+grpcio = "1.66.2"
 pymysql = "1.1.1"
 pydantic = "2.9.2"
 pydantic-settings = "2.5.2"
