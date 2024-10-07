@@ -11,16 +11,30 @@
   "pre-commit": {
     "enabled": true
   },
+  "git-submodules": {
+    "enabled": true
+  },
   "semanticCommitType": "build",
   "packageRules": [
     {
-      "matchManagers": ["pre-commit"],
+      "matchDepNames": [
+        "python"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "pre-commit"
+      ],
       "semanticCommitType": "chore",
       "groupName": "pre-commit",
       "semanticCommitScope": ""
     },
     {
-      "matchManagers": ["dockerfile"],
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "pinDigests": true,
       "rangeStrategy": "pin",
       "minor": {
         "enabled": false
