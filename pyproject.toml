@@ -24,7 +24,7 @@ six = "1.16.0"
 [tool.poetry.group.dev.dependencies]
 sqlacodegen = "3.0.0rc5"
 # grpc py generator
-grpcio-tools = "1.66.1"
+grpcio-tools = "1.66.2"
 datamodel-code-generator = { url = "https://github.com/trim21/datamodel-code-generator/archive/2a84a14a.zip", extras = ['graphql'] }
 
 # tests
