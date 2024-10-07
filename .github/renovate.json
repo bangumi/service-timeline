@@ -17,12 +17,6 @@
   "semanticCommitType": "build",
   "packageRules": [
     {
-      "matchDepNames": [
-        "python"
-      ],
-      "enabled": false
-    },
-    {
       "matchManagers": [
         "pre-commit"
       ],
