@@ -2,6 +2,7 @@ import html
 import time
 from typing import Optional
 
+import php_serialize
 import pydantic
 from grpc import RpcContext
 from sqlalchemy.orm import Session
@@ -18,7 +19,6 @@ from api.v1.timeline_pb2 import (
     SubjectProgressRequest,
     SubjectProgressResponse,
 )
-from chii.compat import phpseralize
 from chii.config import config
 from chii.db import sa
 from chii.db.tables import (
@@ -96,9 +96,9 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
     ):
         escaped = html.escape(req.comment)
         if tl.batch:
-            memo = BatchMeme.validate_python(phpseralize.loads(tl.memo))
+            memo = BatchMeme.validate_python(php_serialize.loads(tl.memo))
         else:
-            m = SubjectMemo.model_validate(phpseralize.loads(tl.memo))
+            m = SubjectMemo.model_validate(php_serialize.loads(tl.memo))
             if int(m.subject_id) == req.subject.id:
                 # save request called twice, just ignore
                 should_update = False
@@ -111,7 +111,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     m.collect_rate = req.rate
 
                 if should_update:
-                    tl.memo = phpseralize.dumps(m.model_dump()).decode()
+                    tl.memo = php_serialize.dumps(m.model_dump()).decode()
                     session.add(tl)
                 return
 
@@ -125,7 +125,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
         )
 
         tl.batch = 1
-        tl.memo = phpseralize.dumps(
+        tl.memo = php_serialize.dumps(
             {key: value.model_dump() for key, value in memo.items()}
         ).decode()
 
@@ -147,7 +147,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                 cat=TimelineCat.Subject,
                 type=type,
                 uid=req.user_id,
-                memo=phpseralize.dumps(memo.model_dump()).decode(),
+                memo=php_serialize.dumps(memo.model_dump()).decode(),
                 batch=0,
                 related=str(req.subject.id),
                 source=TimelineSource.api,
@@ -197,7 +197,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     and tl.batch == 0
                     and tl.related == str(req.subject.id)
                 ):
-                    tl.memo = phpseralize.dumps(memo.model_dump()).decode()
+                    tl.memo = php_serialize.dumps(memo.model_dump()).decode()
                     tl.source = TimelineSource.api
                     session.add(tl)
                     return EpisodeCollectResponse(ok=True)
@@ -205,7 +205,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             session.add(
                 ChiiTimeline(
                     uid=req.user_id,
-                    memo=phpseralize.dumps(memo.model_dump()).decode(),
+                    memo=php_serialize.dumps(memo.model_dump()).decode(),
                     cat=TimelineCat.Progress,
                     type=tlType,
                     source=TimelineSource.api,
@@ -266,7 +266,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
                     and tl.batch == 0
                     and tl.related == str(req.subject.id)
                 ):
-                    tl.memo = phpseralize.dumps(memo.model_dump()).decode()
+                    tl.memo = php_serialize.dumps(memo.model_dump()).decode()
                     tl.source = TimelineSource.api
                     session.add(tl)
                     session.commit()
@@ -275,7 +275,7 @@ class TimeLineService(timeline_pb2_grpc.TimeLineServiceServicer):
             session.add(
                 ChiiTimeline(
                     uid=req.user_id,
-                    memo=phpseralize.dumps(memo.model_dump()).decode(),
+                    memo=php_serialize.dumps(memo.model_dump()).decode(),
                     cat=TimelineCat.Progress,
                     type=tlType,
                     batch=0,
