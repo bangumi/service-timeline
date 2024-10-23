@@ -40,6 +40,7 @@ pre-commit = "==4.0.0"
 mypy = "==1.11.2"
 types-protobuf = "^5.27.0.20240920"
 types-six = "^1.16.21.20240513"
+grpc-stubs = "^1.53.0.5"
 
 [tool.poetry-plugin-bump]
 commit_msg = 'bump: v{version}'
@@ -60,7 +61,7 @@ addopts = '-rav'
 env = ['D:TESTING=true', 'SQLALCHEMY_WARN_20=true']
 
 [tool.mypy]
-ignore_missing_imports = true
+ignore_missing_imports = false
 warn_return_any = true
 warn_unused_configs = true
 show_error_codes = true

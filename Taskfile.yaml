@@ -4,7 +4,6 @@ dotenv: [ .env ]
 
 tasks:
   default:
-    silent: true
     cmds:
       - ruff check .
       - black .
@@ -24,7 +23,7 @@ tasks:
         --input-file-type graphql
         --output gql/model.py
         --output-model-type dataclasses.dataclass
-#        --use-standard-collections
+  #        --use-standard-collections
 
   gen-grpc:
     desc: generate grpc python files

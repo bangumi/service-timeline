@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import Any, Iterator
 
+import php_serialize
 from ariadne import ObjectType, QueryType, gql
 from ariadne.asgi import GraphQL
 from ariadne.contrib.federation import make_federated_schema
 from sqlalchemy import select
 
-from chii.compat import phpseralize
 from chii.config import config
 from chii.const import CollectionType
 from chii.db import sa
@@ -40,7 +40,7 @@ async def timeline_collection(*_: Any) -> list[CollectTimeline]:
 
         result = []
         for row in rows:
-            meme = phpseralize.loads(row.memo.encode())
+            meme = php_serialize.loads(row.memo.encode())
             if not row.batch:
                 result.append(
                     CollectTimeline(
