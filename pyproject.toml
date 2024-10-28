@@ -17,7 +17,7 @@ typing-extensions = '4.12.2'
 sslog = "0.0.0a48"
 protobuf = "5.28.2"
 ariadne = "0.23.0"
-uvicorn = { version = "0.31.0", extras = ['standard'] }
+uvicorn = { version = "0.32.0", extras = ['standard'] }
 aiomysql = "0.2.0"
 six = "1.16.0"
 serialize-php = "0.0.3"
