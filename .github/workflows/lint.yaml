@@ -64,7 +64,7 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}.
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: task gen-grpc
 
