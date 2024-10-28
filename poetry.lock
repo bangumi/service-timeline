@@ -1523,13 +1523,13 @@ sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "sslog"
-version = "0.0.0a48"
+version = "0.0.0a50"
 description = "opinionated logger based on structlog"
 optional = false
 python-versions = "~=3.8"
 files = [
-    {file = "sslog-0.0.0a48-py3-none-any.whl", hash = "sha256:c18082feb581e7734c8d5933ed3aad8ea87b8fdf2c8f19c03f1282f30420abbe"},
-    {file = "sslog-0.0.0a48.tar.gz", hash = "sha256:df3696e7663dafdfa7a7cb6e62c0c800314f279839a23237c4ed18a116e72dbf"},
+    {file = "sslog-0.0.0a50-py3-none-any.whl", hash = "sha256:ab2f4d9da9e38d24a43e6d9003bc3103f73ae75870daeee11d7e20b78e5bedb9"},
+    {file = "sslog-0.0.0a50.tar.gz", hash = "sha256:0b7e8740d3599373cdd97d5fa61f4663e822777952d6dcc0b477842efb110ee7"},
 ]
 
 [package.dependencies]
@@ -1918,4 +1918,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "5abe14efed34e4636bc97890c3ee56b754fffa8fa4ee4478dc6b6d287e9e6a4d"
+content-hash = "c0c369724fc3d21659ea94e3669f7252d732b0ab28971c1385532776ff055b96"
