@@ -15,7 +15,7 @@ pydantic = "2.9.2"
 pydantic-settings = "2.5.2"
 typing-extensions = '4.12.2'
 sslog = "0.0.0a50"
-protobuf = "5.28.2"
+protobuf = "5.28.3"
 ariadne = "0.23.0"
 uvicorn = { version = "0.32.0", extras = ['standard'] }
 aiomysql = "0.2.0"
