@@ -10,7 +10,7 @@ dependencies = [
   'SQLAlchemy (==2.0.36)',
   'aiomysql (==0.2.0)',
   'grpcio (==1.68.0)',
-  'protobuf (==5.28.3)',
+  'protobuf (==5.29.3)',
   'pydantic (==2.9.2)',
   'pydantic-settings (==2.6.1)',
   'pymysql (==1.1.1)',
