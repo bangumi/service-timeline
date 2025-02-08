@@ -29,7 +29,7 @@ dev = [
   'pytest (==8.3.3)',
   'pytest-dotenv (==0.5.2)',
   'pytest-env (==1.1.5)',
-  'pytest-github-actions-annotate-failures (==0.2.0)',
+  'pytest-github-actions-annotate-failures (==0.3.0)',
   'sqlacodegen (==3.0.0rc5)',
   'types-protobuf (==5.29.1.20250208)',
   'types-six (==1.17.0.20241205)',
