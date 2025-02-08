@@ -1,6 +1,6 @@
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["flit-core~=3.10"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = 'rpc'
