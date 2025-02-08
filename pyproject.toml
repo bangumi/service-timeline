@@ -12,7 +12,7 @@ dependencies = [
   'grpcio (==1.68.0)',
   'protobuf (==5.29.3)',
   'pydantic (==2.9.2)',
-  'pydantic-settings (==2.6.1)',
+  'pydantic-settings (==2.7.1)',
   'pymysql (==1.1.1)',
   'serialize-php (==0.0.3)',
   'six (==1.16.0)',
