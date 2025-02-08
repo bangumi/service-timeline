@@ -9,7 +9,6 @@ requires-python = '~=3.10.0'
 dependencies = [
   'SQLAlchemy (==2.0.36)',
   'aiomysql (==0.2.0)',
-  'ariadne (==0.23.0)',
   'grpcio (==1.68.0)',
   'protobuf (==5.28.3)',
   'pydantic (==2.9.2)',

@@ -38,20 +38,6 @@ wheels = [
 ]
 
 [[package]]
-name = "ariadne"
-version = "0.23.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "graphql-core" },
-    { name = "starlette" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/4f/74/dc0232bc311a705c3cc642007bbbea817832c7fedb9655c870240804ad05/ariadne-0.23.0.tar.gz", hash = "sha256:84c46ae27fad98e1a6553c8930e6fc8e755f8dcd54a959d33caf04ecfe026a93", size = 75112 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/14/e2e13d6d2937f8fca9d220234f775e56119bce3cc3d6a807324faf5c80df/ariadne-0.23.0-py2.py3-none-any.whl", hash = "sha256:594206e4fc20fa05d6872f0ccd6e3aafe0575b9da36945211762445126b28bcb", size = 108265 },
-]
-
-[[package]]
 name = "cfgv"
 version = "3.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -130,15 +116,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/dc/9c/0b15fb47b464e1b663b1acd1253a062aa5feecb07d4e597daea542ebd2b5/filelock-3.17.0.tar.gz", hash = "sha256:ee4e77401ef576ebb38cd7f13b9b28893194acc20a8e68e18730ba9c0e54660e", size = 18027 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/89/ec/00d68c4ddfedfe64159999e5f8a98fb8442729a63e2077eb9dcd89623d27/filelock-3.17.0-py3-none-any.whl", hash = "sha256:533dc2f7ba78dc2f0f531fc6c4940addf7b70a481e269a5a3b93be94ffbe8338", size = 16164 },
-]
-
-[[package]]
-name = "graphql-core"
-version = "3.2.6"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c4/16/7574029da84834349b60ed71614d66ca3afe46e9bf9c7b9562102acb7d4f/graphql_core-3.2.6.tar.gz", hash = "sha256:c08eec22f9e40f0bd61d805907e3b3b1b9a320bc606e23dc145eebca07c8fbab", size = 505353 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ae/4f/7297663840621022bc73c22d7d9d80dbc78b4db6297f764b545cd5dd462d/graphql_core-3.2.6-py3-none-any.whl", hash = "sha256:78b016718c161a6fb20a7d97bbf107f331cd1afe53e45566c59f776ed7f0b45f", size = 203416 },
 ]
 
 [[package]]
@@ -543,7 +520,6 @@ version = "0"
 source = { virtual = "." }
 dependencies = [
     { name = "aiomysql" },
-    { name = "ariadne" },
     { name = "grpcio" },
     { name = "protobuf" },
     { name = "pydantic" },
@@ -577,7 +553,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "aiomysql", specifier = "==0.2.0" },
-    { name = "ariadne", specifier = "==0.23.0" },
     { name = "grpcio", specifier = "==1.68.0" },
     { name = "protobuf", specifier = "==5.28.3" },
     { name = "pydantic", specifier = "==2.9.2" },
@@ -696,18 +671,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/6a/d5/f7988f1d589fc7bef590907598cfff73baad62229e966a9439403c72ac41/sslog-0.0.0a51.tar.gz", hash = "sha256:7cffce8bbcdd82399b09fb60a36788aec6437c952d19906a60cd413c8c93ecd2", size = 7867 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/00/bf/78f4f5ddf4083fbdfcb1a85b3c9ea320e4bce1623fe7f59138f5f00f8437/sslog-0.0.0a51-py3-none-any.whl", hash = "sha256:786c091c9fd072d629730aeaa8cd49c677449369bf218136658867dba321b750", size = 7154 },
-]
-
-[[package]]
-name = "starlette"
-version = "0.45.3"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anyio" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ff/fb/2984a686808b89a6781526129a4b51266f678b2d2b97ab2d325e56116df8/starlette-0.45.3.tar.gz", hash = "sha256:2cbcba2a75806f8a41c722141486f37c28e30a0921c5f6fe4346cb0dcee1302f", size = 2574076 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/61/f2b52e107b1fc8944b33ef56bf6ac4ebbe16d91b94d2b87ce013bf63fb84/starlette-0.45.3-py3-none-any.whl", hash = "sha256:dfb6d332576f136ec740296c7e8bb8c8a7125044e7c6da30744718880cdd059d", size = 71507 },
 ]
 
 [[package]]
