@@ -9,7 +9,7 @@ requires-python = '~=3.10.0'
 dependencies = [
   'SQLAlchemy (==2.0.36)',
   'aiomysql (==0.2.0)',
-  'grpcio (==1.68.0)',
+  'grpcio (==1.70.0)',
   'protobuf (==5.29.3)',
   'pydantic (==2.9.2)',
   'pydantic-settings (==2.7.1)',
@@ -24,7 +24,7 @@ dependencies = [
 [dependency-groups]
 dev = [
   'grpc-stubs (==1.53.0.5)',
-  'grpcio-tools (==1.68.0)',
+  'grpcio-tools (==1.70.0)',
   'mypy (==1.15.0)',
   'pytest (==8.3.4)',
   'pytest-dotenv (==0.5.2)',
