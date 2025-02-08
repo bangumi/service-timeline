@@ -5,7 +5,7 @@ import warnings
 
 from api.v1 import timeline_pb2 as api_dot_v1_dot_timeline__pb2
 
-GRPC_GENERATED_VERSION = '1.68.0'
+GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
