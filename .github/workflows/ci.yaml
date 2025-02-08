@@ -1,38 +1,37 @@
-name: ci
+name: test
 
 on:
-  pull_request:
-    branches:
-      - "master"
   push:
     branches:
-      - "master"
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - run: git clone https://github.com/bangumi/dev-env $HOME/dev-env
       - run: cd ~/dev-env && docker compose up -d
-
       - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-      - uses: trim21/setup-poetry@dist/v2
-      - uses: trim21/install-poetry-project@dist/v2
+          python-version-file: ".python-version"
+
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
 
       - run: bash $HOME/dev-env/wait_mysql_ready.sh
 
-      - run: pytest --cov
+      - run: uv run pytest -rva
         timeout-minutes: 10
         env:
-          MYSQL_HOST: '127.0.0.1'
-          MYSQL_PORT: '3306'
-          MYSQL_USER: 'user'
-          MYSQL_PASS: 'password'
-          MYSQL_DB: 'bangumi'
-
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v4
+          MYSQL_HOST: "127.0.0.1"
+          MYSQL_PORT: "3306"
+          MYSQL_USER: "user"
+          MYSQL_PASS: "password"
+          MYSQL_DB: "bangumi"
