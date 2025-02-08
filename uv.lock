@@ -59,30 +59,6 @@ wheels = [
 ]
 
 [[package]]
-name = "coverage"
-version = "7.6.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/52/12/3669b6382792783e92046730ad3327f53b2726f0603f4c311c4da4824222/coverage-7.6.4.tar.gz", hash = "sha256:29fc0f17b1d3fea332f8001d4558f8214af7f1d87a345f3a133c901d60347c73", size = 798716 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a5/93/4ad92f71e28ece5c0326e5f4a6630aa4928a8846654a65cfff69b49b95b9/coverage-7.6.4-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:5f8ae553cba74085db385d489c7a792ad66f7f9ba2ee85bfa508aeb84cf0ba07", size = 206713 },
-    { url = "https://files.pythonhosted.org/packages/01/ae/747a580b1eda3f2e431d87de48f0604bd7bc92e52a1a95185a4aa585bc47/coverage-7.6.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:8165b796df0bd42e10527a3f493c592ba494f16ef3c8b531288e3d0d72c1f6f0", size = 207149 },
-    { url = "https://files.pythonhosted.org/packages/07/1a/1f573f8a6145f6d4c9130bbc120e0024daf1b24cf2a78d7393fa6eb6aba7/coverage-7.6.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c7c8b95bf47db6d19096a5e052ffca0a05f335bc63cef281a6e8fe864d450a72", size = 235584 },
-    { url = "https://files.pythonhosted.org/packages/40/42/c8523f2e4db34aa9389caee0d3688b6ada7a84fcc782e943a868a7f302bd/coverage-7.6.4-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:8ed9281d1b52628e81393f5eaee24a45cbd64965f41857559c2b7ff19385df51", size = 233486 },
-    { url = "https://files.pythonhosted.org/packages/8d/95/565c310fffa16ede1a042e9ea1ca3962af0d8eb5543bc72df6b91dc0c3d5/coverage-7.6.4-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0809082ee480bb8f7416507538243c8863ac74fd8a5d2485c46f0f7499f2b491", size = 234649 },
-    { url = "https://files.pythonhosted.org/packages/d5/81/3b550674d98968ec29c92e3e8650682be6c8b1fa7581a059e7e12e74c431/coverage-7.6.4-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:d541423cdd416b78626b55f123412fcf979d22a2c39fce251b350de38c15c15b", size = 233744 },
-    { url = "https://files.pythonhosted.org/packages/0d/70/d66c7f51b3e33aabc5ea9f9624c1c9d9655472962270eb5e7b0d32707224/coverage-7.6.4-cp310-cp310-musllinux_1_2_i686.whl", hash = "sha256:58809e238a8a12a625c70450b48e8767cff9eb67c62e6154a642b21ddf79baea", size = 232204 },
-    { url = "https://files.pythonhosted.org/packages/23/2d/2b3a2dbed7a5f40693404c8a09e779d7c1a5fbed089d3e7224c002129ec8/coverage-7.6.4-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:c9b8e184898ed014884ca84c70562b4a82cbc63b044d366fedc68bc2b2f3394a", size = 233335 },
-    { url = "https://files.pythonhosted.org/packages/5a/4f/92d1d2ad720d698a4e71c176eacf531bfb8e0721d5ad560556f2c484a513/coverage-7.6.4-cp310-cp310-win32.whl", hash = "sha256:6bd818b7ea14bc6e1f06e241e8234508b21edf1b242d49831831a9450e2f35fa", size = 209435 },
-    { url = "https://files.pythonhosted.org/packages/c7/b9/cdf158e7991e2287bcf9082670928badb73d310047facac203ff8dcd5ff3/coverage-7.6.4-cp310-cp310-win_amd64.whl", hash = "sha256:06babbb8f4e74b063dbaeb74ad68dfce9186c595a15f11f5d5683f748fa1d172", size = 210243 },
-    { url = "https://files.pythonhosted.org/packages/cc/56/e1d75e8981a2a92c2a777e67c26efa96c66da59d645423146eb9ff3a851b/coverage-7.6.4-pp39.pp310-none-any.whl", hash = "sha256:3c65d37f3a9ebb703e710befdc489a38683a5b152242664b973a7b7b22348a4e", size = 198954 },
-]
-
-[package.optional-dependencies]
-toml = [
-    { name = "tomli" },
-]
-
-[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
@@ -452,7 +428,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "coverage", extra = ["toml"] },
     { name = "grpc-stubs" },
     { name = "grpcio-tools" },
     { name = "mypy" },
@@ -483,7 +458,6 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "coverage", extras = ["toml"], specifier = "==7.6.4" },
     { name = "grpc-stubs", specifier = ">=1.53.0.5,<2.0.0.0" },
     { name = "grpcio-tools", specifier = "==1.68.0" },
     { name = "mypy", specifier = "==1.13.0" },
