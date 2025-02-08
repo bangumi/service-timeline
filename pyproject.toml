@@ -15,7 +15,7 @@ dependencies = [
   'pydantic-settings (==2.7.1)',
   'pymysql (==1.1.1)',
   'serialize-php (==0.0.3)',
-  'six (==1.16.0)',
+  'six (==1.17.0)',
   'sslog (==0.0.0a52)',
   'typing-extensions (==4.12.2)',
   'uvicorn[standard] (==0.34.0)',
