@@ -18,14 +18,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version-file: ".python-version"
 
-      - uses: trim21/setup-poetry@dist/v2
-      - uses: trim21/install-poetry-project@dist/v2
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+
       - name: Install Task
         uses: arduino/setup-task@v2
         with:

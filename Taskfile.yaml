@@ -9,22 +9,6 @@ tasks:
       - black .
       - mypy .
 
-  gen-gql:
-    desc: generate grpc python files
-    generates:
-      - ./api/**/*.py
-    sources:
-      - ./proto/**/*.proto
-      - poetry.lock
-    cmds:
-      - >-
-        datamodel-codegen
-        --input gql/schema.graphql
-        --input-file-type graphql
-        --output gql/model.py
-        --output-model-type dataclasses.dataclass
-  #        --use-standard-collections
-
   gen-grpc:
     desc: generate grpc python files
     generates:
@@ -34,7 +18,7 @@ tasks:
       - poetry.lock
     cmds:
       - >-
-        poetry run python -m grpc_tools.protoc
+        python -m grpc_tools.protoc
         -I ./proto/
         --python_out=.
         --pyi_out=.
@@ -78,7 +62,3 @@ tasks:
       - uvicorn gql.app:app
 
   mypy: mypy --show-column-numbers chii rpc
-
-  lint:
-    - poetry run ruff check .
-    - poetry run mypy chii rpc
