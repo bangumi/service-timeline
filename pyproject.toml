@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit-core~=3.10"]
+requires = ["flit-core==3.10.1"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -23,7 +23,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-  'grpc-stubs (>=1.53.0.5,<2.0.0.0)',
+  'grpc-stubs (==1.53.0.5)',
   'grpcio-tools (==1.68.0)',
   'mypy (==1.13.0)',
   'pytest (==8.3.3)',
@@ -31,8 +31,8 @@ dev = [
   'pytest-env (==1.1.5)',
   'pytest-github-actions-annotate-failures (==0.2.0)',
   'sqlacodegen (==3.0.0rc5)',
-  'types-protobuf (>=5.27.0.20240920,<6.0.0.0)',
-  'types-six (>=1.16.21.20240513,<2.0.0.0)',
+  'types-protobuf (==5.29.1.20250208)',
+  'types-six (==1.17.0.20241205)',
 ]
 
 [tool.uv]
