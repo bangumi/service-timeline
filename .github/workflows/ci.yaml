@@ -12,6 +12,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - run: git clone https://github.com/bangumi/dev-env $HOME/dev-env
+      - run: cd ~/dev-env && docker compose up -d
       - uses: actions/checkout@v4
         with:
           submodules: "true"
@@ -22,4 +24,14 @@ jobs:
 
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --frozen
-      - run: uv run python -m pytest -rva
+
+      - run: bash $HOME/dev-env/wait_mysql_ready.sh
+
+      - run: uv run pytest --cov
+        timeout-minutes: 10
+        env:
+          MYSQL_HOST: '127.0.0.1'
+          MYSQL_PORT: '3306'
+          MYSQL_USER: 'user'
+          MYSQL_PASS: 'password'
+          MYSQL_DB: 'bangumi'
