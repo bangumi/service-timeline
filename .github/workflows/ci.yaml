@@ -27,7 +27,7 @@ jobs:
 
       - run: bash $HOME/dev-env/wait_mysql_ready.sh
 
-      - run: uv run pytest --cov
+      - run: uv run pytest -rva --cov
         timeout-minutes: 10
         env:
           MYSQL_HOST: '127.0.0.1'
@@ -35,3 +35,6 @@ jobs:
           MYSQL_USER: 'user'
           MYSQL_PASS: 'password'
           MYSQL_DB: 'bangumi'
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v4
