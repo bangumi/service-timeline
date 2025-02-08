@@ -11,6 +11,7 @@ FROM python:3.10-slim@sha256:66aad90b231f011cb80e1966e03526a7175f0586724981969b2
 ENTRYPOINT [ "python", "-m", "start_grpc_server" ]
 
 ENV PIP_ROOT_USER_ACTION=ignore
+ENV PYTHONPATH=/app
 WORKDIR /app
 
 COPY --from=build /app/requirements.txt .
