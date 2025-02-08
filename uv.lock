@@ -458,7 +458,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "grpc-stubs", specifier = ">=1.53.0.5,<2.0.0.0" },
+    { name = "grpc-stubs", specifier = "==1.53.0.5" },
     { name = "grpcio-tools", specifier = "==1.68.0" },
     { name = "mypy", specifier = "==1.13.0" },
     { name = "pytest", specifier = "==8.3.3" },
@@ -466,8 +466,8 @@ dev = [
     { name = "pytest-env", specifier = "==1.1.5" },
     { name = "pytest-github-actions-annotate-failures", specifier = "==0.2.0" },
     { name = "sqlacodegen", specifier = "==3.0.0rc5" },
-    { name = "types-protobuf", specifier = ">=5.27.0.20240920,<6.0.0.0" },
-    { name = "types-six", specifier = ">=1.16.21.20240513,<2.0.0.0" },
+    { name = "types-protobuf", specifier = "==5.29.1.20250208" },
+    { name = "types-six", specifier = "==1.17.0.20241205" },
 ]
 
 [[package]]
