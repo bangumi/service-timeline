@@ -23,7 +23,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-  'coverage[toml] (==7.6.4)',
   'grpc-stubs (>=1.53.0.5,<2.0.0.0)',
   'grpcio-tools (==1.68.0)',
   'mypy (==1.13.0)',
@@ -38,17 +37,6 @@ dev = [
 
 [tool.uv]
 package = false
-
-[tool.coverage.run]
-concurrency = ['thread', 'greenlet']
-
-[tool.coverage.report]
-exclude_lines = [
-  'pragma: no cover',
-  'if TYPE_CHECKING:',
-  'if __name__ == "__main__":',
-  'raise NotImplementedError'
-]
 
 [tool.pytest.ini_options]
 addopts = '-rav'
