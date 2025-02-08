@@ -18,7 +18,7 @@ dependencies = [
   'six (==1.16.0)',
   'sslog (==0.0.0a52)',
   'typing-extensions (==4.12.2)',
-  'uvicorn[standard] (==0.32.0)',
+  'uvicorn[standard] (==0.34.0)',
 ]
 
 [dependency-groups]
