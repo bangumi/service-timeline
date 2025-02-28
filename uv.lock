@@ -469,7 +469,7 @@ dev = [
     { name = "pytest-dotenv", specifier = "==0.5.2" },
     { name = "pytest-env", specifier = "==1.1.5" },
     { name = "pytest-github-actions-annotate-failures", specifier = "==0.3.0" },
-    { name = "sqlacodegen", specifier = "==3.0.0rc5" },
+    { name = "sqlacodegen", specifier = "==3.0.0" },
     { name = "types-protobuf", specifier = "==5.29.1.20250208" },
     { name = "types-six", specifier = "==1.17.0.20241205" },
 ]
@@ -519,15 +519,15 @@ wheels = [
 
 [[package]]
 name = "sqlacodegen"
-version = "3.0.0rc5"
+version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "inflect" },
     { name = "sqlalchemy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9d/b7/77d652cfa405107d4c47c4bd9036cc6c71ae4539030cc57df154e070e551/sqlacodegen-3.0.0rc5.tar.gz", hash = "sha256:7dbc0e4c6e1cdc91d016192942d66eb8922bc4080a76d6e03866ba4ef8eb56f6", size = 38440 }
+sdist = { url = "https://files.pythonhosted.org/packages/93/ed/633a47383bc1640ae94625b9df1e6f7f461644c0c539c7e69c7654ab1239/sqlacodegen-3.0.0.tar.gz", hash = "sha256:785bc9307b787a9ae7ffc1460abf0a718862b6fa47f304259503612298e523f2", size = 39182 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ea/69/9cc050fe53efe6055d68afb7a6be0b5a4ffff1adf828fa15be5e30d0cae9/sqlacodegen-3.0.0rc5-py3-none-any.whl", hash = "sha256:1fd84a6fc4bff701f396016b5d639a2cdf264ff433ac7a37755909e13d2240d5", size = 21381 },
+    { url = "https://files.pythonhosted.org/packages/92/6a/0398fa0ab13142d8836258814dc6069c57f459afa5adfd60859e8657fd6a/sqlacodegen-3.0.0-py3-none-any.whl", hash = "sha256:ce3042fff03ceb0426cdfb7237a4a13781166718ae22b63156e5f4b3232137e4", size = 21661 },
 ]
 
 [[package]]
